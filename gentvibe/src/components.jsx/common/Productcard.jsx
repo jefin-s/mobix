@@ -5,7 +5,7 @@ const ProductCard = ({name,price,id,image}) => {
   return (
     <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden max-w-xs w-full mx-auto">
       {/* Product Image Container */}
-      <div className="relative overflow-hidden bg-gray-100">
+      <div className="relative overflow-hidden bg-gray-100 ">
         <img 
           src={image} 
           alt="Product" 
@@ -39,6 +39,7 @@ const ProductCard = ({name,price,id,image}) => {
         <div className="flex items-center mb-3">
           <div className="flex text-amber-400">
             {'★'.repeat(4)}
+            {/*  */}
             <span className="text-gray-300">★</span>
           </div>
           <span className="text-xs text-gray-500 ml-2">(4.0)</span>

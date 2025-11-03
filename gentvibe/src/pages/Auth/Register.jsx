@@ -1,7 +1,9 @@
 import { useFormik } from "formik";
 import React from "react";
+import axios from "axios";
 import { registerSchema } from "../../validation.jsx/registerschema";
 import { useNavigate } from "react-router-dom";
+import { base_url } from "../../api/api";
 
 const initialValues = {
   name: "",
@@ -15,10 +17,27 @@ const Register = () => {
   const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: initialValues,
     validationSchema: registerSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      localStorage.setItem("user", JSON.stringify(values));
-      navigate('/login')
+    onSubmit: async (values) => {
+      try {
+        const newUser = {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          role: "User",
+          isBlock: false,
+          cart: [],
+          orders: [],
+          wishlist: [],
+          created_at: new Date().toISOString(),
+        };
+        await axios.post(`${base_url}/users`, newUser);
+
+        alert("✅ Registration successful!");
+        navigate("/login");
+      } catch (error) {
+        console.error("Registration failed:", error);
+        alert("❌ Failed to register user.");
+      }
     },
   });
 
@@ -41,21 +60,16 @@ const Register = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.name}
-              placeholder="Enter your name"
               autoComplete="off"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+              placeholder="Enter your name"
+              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
             />
             {errors.name && (
               <small className="text-red-500 text-sm">{errors.name}</small>
             )}
           </div>
-
-          {/* Email Field */}
           <div>
-            <label
-              htmlFor="email"
-              className="text-sm text-gray-700 font-medium"
-            >
+            <label htmlFor="email" className="text-sm text-gray-700 font-medium">
               Email
             </label>
             <input
@@ -66,14 +80,12 @@ const Register = () => {
               value={values.email}
               placeholder="Enter your email"
               autoComplete="off"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
             />
             {errors.email && (
               <small className="text-red-500 text-sm">{errors.email}</small>
             )}
           </div>
-
-          {/* Password Field */}
           <div>
             <label
               htmlFor="password"
@@ -89,28 +101,24 @@ const Register = () => {
               value={values.password}
               placeholder="Enter your password"
               autoComplete="new-password"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
             />
             {errors.password && (
               <small className="text-red-500 text-sm">{errors.password}</small>
             )}
           </div>
-
-          {/* Register Button */}
           <button
             type="submit"
-            onClick={() => navigate("/login")}
             className="w-full bg-black text-white py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition duration-300"
           >
             Register
           </button>
         </form>
 
-        {/* Footer */}
         <p className="text-center text-gray-600 text-sm mt-6">
           Already have an account?{" "}
           <span
-            
+            onClick={() => navigate("/login")}
             className="text-indigo-600 font-medium hover:underline cursor-pointer"
           >
             Login here

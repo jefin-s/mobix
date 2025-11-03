@@ -1,1 +1,1 @@
-export const URL=''
+export const URL="https://dummyjson.com/products/category/smartphones"
