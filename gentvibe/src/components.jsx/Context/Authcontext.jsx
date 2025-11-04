@@ -2,6 +2,7 @@ import {  createContext, useEffect, useState } from "react";
 export const Authcontext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     const savedUser = localStorage.getItem("currentUser");
     if (savedUser) {
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <Authcontext.Provider value={{ user, loginUser, logoutUser }}>
+    <Authcontext.Provider value={{ user, loginUser, logoutUser,searchTerm,setSearchTerm}}>
         
       {children}
       

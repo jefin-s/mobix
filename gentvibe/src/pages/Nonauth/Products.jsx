@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { useFetch } from "../../hooks/Usefetch";
 import ProductCard from "../../components.jsx/common/Productcard";
 import { base_url } from "../../api/api";
-const Products = ({searchTerm}) => {
+import { SearchContext } from "../../components.jsx/Context/Searchcontext";
+const Products = () => {
+  const{searchTerm}=useContext(SearchContext)
   const { data} = useFetch(`${base_url}/products`);
 
   const filteredProducts = data.filter((product) =>

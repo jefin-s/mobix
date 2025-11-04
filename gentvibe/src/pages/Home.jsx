@@ -6,14 +6,14 @@ import Products from "./Nonauth/Products";
 import Navbar from "../components.jsx/common/Navbar";
 
 const Home = () => {
-   const [searchTerm, setSearchTerm] = useState("");
+  //  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   return (
     <div>
-      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+      {/* <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/> */}
       <section>
         <ProductSlider />
-        <Products searchTerm={searchTerm}/>
+        <Products/>
       </section>
     </div>
   );

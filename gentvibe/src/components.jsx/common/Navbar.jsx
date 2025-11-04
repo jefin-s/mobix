@@ -1,21 +1,23 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Authcontext } from "../Context/Authcontext";
-import { BsPerson } from "react-icons/bs";  
-const Navbar = ({searchTerm,setSearchTerm}) => {
+import { BsPerson } from "react-icons/bs";
+
+const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { user, logoutUser } = useContext(Authcontext);
- 
-  const navigate=useNavigate()
+
+  const navigate = useNavigate();
   return (
     <header>
       <nav className="bg-white text-white px-6 py-4 flex items-center justify-between overflow-hidden">
-        <div className="text-2xl font-bold text-black">Mobix</div>
+        <div className="text-2xl font-bold text-black ml-5">icloud</div>
         <div>
           <input
             type="text"
             placeholder="Search for products..."
             className="w-full md:w-96 px-4 py-2 border border-black rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-grey-500 placeholder-gray-400 shadow-sm transition duration-200"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
           />
         </div>
         <ul className="hidden md:flex gap-8 text-lg">
@@ -23,7 +25,10 @@ const Navbar = ({searchTerm,setSearchTerm}) => {
             Home
           </li>
           <li>
-            <button onClick={logoutUser} className="text-black">
+            <button
+              onClick={logoutUser}
+              className="text-black bg-teal-100 p-1 rounded-2xl"
+            >
               Logout
             </button>
           </li>
