@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Jefin Jefi",
       "email": "jefin@gmail.com",
       "password": "123456",
@@ -19,7 +19,22 @@
       "password": "12345678",
       "role": "User",
       "isBlock": false,
-      "cart": [],
+      "cart": [
+        {
+          "name": "iPhone 15 Pro Max",
+          "price": 1399,
+          "id": "1",
+          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "quantity": 4
+        },
+        {
+          "name": "iPhone 14 ",
+          "price": 1199,
+          "id": "2",
+          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
+          "quantity": 4
+        }
+      ],
       "orders": [],
       "wishlist": [],
       "created_at": "2025-11-03T05:05:17.962Z"
@@ -35,11 +50,30 @@
       "orders": [],
       "wishlist": [],
       "created_at": "2025-11-03T09:33:27.329Z"
+    },
+    {
+      "id": "9246",
+      "name": "amal",
+      "email": "amal@g",
+      "password": "12345678",
+      "role": "User",
+      "isBlock": false,
+      "cart": [
+        {
+          "name": "AirPods Pro (2nd Generation)",
+          "price": 249,
+          "id": "4",
+          "image": "https://www.machines.com.my/cdn/shop/products/AirPods_PDP_1_77f5bd3f-817f-417a-9211-04ddeb52d5a8_550x.jpg?v=1705407825"
+        }
+      ],
+      "orders": [],
+      "wishlist": [],
+      "created_at": "2025-11-04T09:34:12.836Z"
     }
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "title": "iPhone 15 Pro Max",
       "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
       "price": 1399,
@@ -56,7 +90,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "iPhone 14 ",
       "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
       "price": 1199,
@@ -73,7 +107,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "iPhone 13",
       "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
       "price": 899,
@@ -90,7 +124,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "AirPods Pro (2nd Generation)",
       "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
       "price": 249,
@@ -106,7 +140,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Apple Watch Ultra 2",
       "description": "Designed for adventure with titanium case, precision dual-frequency GPS, and S9 chip.",
       "price": 799,
@@ -122,7 +156,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "MagSafe Charger",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
       "price": 39,
@@ -138,7 +172,7 @@
       ]
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "iPhone 17 Pro Max",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
       "price": 39,
@@ -154,7 +188,7 @@
       ]
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "iPhone 17 Air",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
       "price": 39,

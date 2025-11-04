@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Authcontext } from "../Context/Authcontext";
 import { BsPerson } from "react-icons/bs";
-
+import { FaShoppingCart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
 const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { user, logoutUser } = useContext(Authcontext);
 
@@ -41,8 +42,12 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <li className="hover:text-blue-400 cursor-pointer text-amber-900 ">
             Contact
           </li>
+          <li className="text-amber-900"  onClick={()=>navigate('/cart')}><FaShoppingCart /></li>
+          <li className="text-amber-900"><CiHeart /></li>
+
+          
           <li
-            className="mt-1 text-amber-900"
+            className=" text-amber-900"
             onClick={() => navigate("/login")}
           >
             <BsPerson />
