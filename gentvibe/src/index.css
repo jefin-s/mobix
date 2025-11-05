@@ -1,11 +1,19 @@
 @import "tailwindcss";
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   width: 100%;
   overflow-x: hidden;
+  font-family: var(--font-poppins);
+}
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
 }

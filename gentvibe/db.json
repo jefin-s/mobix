@@ -25,14 +25,14 @@
           "price": 1399,
           "id": "1",
           "image": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
-          "quantity": 4
+          "quantity": 3
         },
         {
-          "name": "iPhone 14 ",
-          "price": 1199,
-          "id": "2",
-          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
-          "quantity": 4
+          "name": "iPhone 13",
+          "price": 899,
+          "id": "3",
+          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+          "quantity": 2
         }
       ],
       "orders": [],

@@ -17,7 +17,9 @@ const Login = () => {
 
   const { values, handleBlur, handleSubmit, handleChange, errors } = useFormik({
     initialValues: initialValues,
+    // validation schema from validation.jsx
     validationSchema: validationschema,
+    
     onSubmit: async (values) => {
       try {
         const response = await axios.get(`${base_url}/users`);

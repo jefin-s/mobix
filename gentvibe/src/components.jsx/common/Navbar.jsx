@@ -4,8 +4,10 @@ import { Authcontext } from "../Context/Authcontext";
 import { BsPerson } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import { ThemeContext } from "../Context/ThemeContext";
 const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { user, logoutUser } = useContext(Authcontext);
+  
 
   const navigate = useNavigate();
   return (
@@ -33,6 +35,8 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
               Logout
             </button>
           </li>
+
+         
           <li className="hover:text-blue-400 cursor-pointer text-amber-900">
             Products
           </li>
@@ -42,14 +46,14 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <li className="hover:text-blue-400 cursor-pointer text-amber-900 ">
             Contact
           </li>
-          <li className="text-amber-900"  onClick={()=>navigate('/cart')}><FaShoppingCart /></li>
-          <li className="text-amber-900"><CiHeart /></li>
+          <li className="text-amber-900" onClick={() => navigate("/cart")}>
+            <FaShoppingCart />
+          </li>
+          <li className="text-amber-900">
+            <CiHeart />
+          </li>
 
-          
-          <li
-            className=" text-amber-900"
-            onClick={() => navigate("/login")}
-          >
+          <li className=" text-amber-900" onClick={() => navigate("/login")}>
             <BsPerson />
           </li>
           <li className="text-black">{user ? user.name : ""}</li>
