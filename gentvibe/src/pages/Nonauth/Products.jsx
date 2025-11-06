@@ -20,10 +20,7 @@ const Products = () => {
         {filteredProducts.map((value, index) => {
           return (
             <ProductCard
-              name={value.title}
-              price={value.price}
-              id={value.id} 
-              image={value.thumbnail}
+                 product={value}
             />
           );
         })}

@@ -20,8 +20,8 @@ const Cart = () => {
               {/* Product Image */}
               <div className="shrink-0">
                 <img
-                  src={item.image}
-                  alt={item.name}
+                  src={item.thumbnail}
+                  alt={item.title}
                   className="rounded-2xl h-40 w-40 object-cover"
                 />
               </div>
@@ -29,7 +29,7 @@ const Cart = () => {
               {/* Product Info */}
               <div className="flex flex-col justify-between items-center flex-1 h-full py-3">
                 <div className="text-center">
-                  <h1 className="font-semibold text-lg">{item.name}</h1>
+                  <h1 className="font-semibold text-lg">{item.title}</h1>
                   <h1 className="text-gray-700 font-medium">₹{item.price*item.quantity}</h1>
                 </div>
 

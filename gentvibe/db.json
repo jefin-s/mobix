@@ -21,18 +21,58 @@
       "isBlock": false,
       "cart": [
         {
-          "name": "iPhone 15 Pro Max",
-          "price": 1399,
-          "id": "1",
-          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "id": "2",
+          "title": "iPhone 14 ",
+          "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
+          "price": 1199,
+          "discountPercentage": 12,
+          "rating": 4.8,
+          "stock": 30,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
+          ],
           "quantity": 3
         },
         {
-          "name": "iPhone 13",
-          "price": 899,
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": 1399,
+          "discountPercentage": 10,
+          "rating": 4.9,
+          "stock": 25,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ],
+          "quantity": 1
+        },
+        {
           "id": "3",
-          "image": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
-          "quantity": 2
+          "title": "iPhone 13",
+          "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+          "price": 899,
+          "discountPercentage": 15,
+          "rating": 4.7,
+          "stock": 40,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+          ],
+          "quantity": 1
         }
       ],
       "orders": [],
@@ -69,6 +109,64 @@
       "orders": [],
       "wishlist": [],
       "created_at": "2025-11-04T09:34:12.836Z"
+    },
+    {
+      "id": "c4e4",
+      "name": "afin",
+      "email": "a@gmail.com",
+      "password": "12345678",
+      "role": "User",
+      "isBlock": false,
+      "cart": [
+        {
+          "product": {
+            "id": "3",
+            "title": "iPhone 13",
+            "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+            "price": 899,
+            "discountPercentage": 15,
+            "rating": 4.7,
+            "stock": 40,
+            "brand": "Apple",
+            "isActive": true,
+            "category": "smartphones",
+            "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+            "images": [
+              "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+              "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+            ]
+          },
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": 1399,
+          "discountPercentage": 10,
+          "rating": 4.9,
+          "stock": 25,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ],
+          "quantity": 3
+        },
+        {
+          "name": "Apple Watch Ultra 2",
+          "price": 799,
+          "id": "5",
+          "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ultra-case-unselect-gallery-1-202509_GEO_IN_FMT_WHH?wid=752&hei=720&fmt=p-jpg&qlt=80&.v=aTVJSEliNW9jb25zalBlTm16VmMxcWpkNHRJWDMzcTg3NWRxV0pydTcvSlBnRWpBclhudmFXcEpxSFV4OEZ4VVh2WnVKTjEySjVmY2ZteE1GdEFoNWM2c3NSYUM4YjA0RTQxLytvRzE4M0RLbzVxZ0IvQUd3ejhJa1hOQUl0eUlyWGd5R3FWb3Q0Uy8veXpDZThMWXB3",
+          "quantity": 1
+        }
+      ],
+      "orders": [],
+      "wishlist": [],
+      "created_at": "2025-11-05T12:22:34.277Z"
     }
   ],
   "products": [
