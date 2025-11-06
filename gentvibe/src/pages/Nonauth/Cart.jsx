@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../components.jsx/Context/Cartcontext";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cart,removeCartitem,incementQuantity ,decremnetQuantity} = useContext(CartContext);
+  const { cart,removeCartitem,incementQuantity ,decremnetQuantity,totalQuantity,totalprice} = useContext(CartContext);
+  const navigate=useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+  <>
       <h1 className="text-3xl font-bold text-center mb-10">🛒 Your Cart</h1>
+    <div className="min-h-screen bg-gray-100 p-10 flex  justify-around">
 
       {cart.length === 0 ? (
         <h1 className="text-center text-gray-500">Your Cart is empty</h1>
@@ -51,9 +54,35 @@ const Cart = () => {
               </div>
             </div>
           ))}
+          
         </div>
       )}
+        
+        <div>
+          <div className="h-96 w-96  bg-white rounded-2xl shadow-2xl p-2" >
+          <h1 className="text-2xl text-center mt-5">Order Summary</h1>
+            <div className="flex  justify-between h-96 w-96  p-5 leading-12">
+              <div>
+                <h1>Quantity</h1>
+                <h1>Shipping</h1>
+                <h1>Total Price</h1>
+                <div className="mx-auto"><button className="bg-red-400 rounded-md p-2" onClick={()=>navigate('/checkout')}>Proceed to checkout</button></div>
+              </div>
+              <div>
+                <h1>{totalQuantity}</h1>
+                <h1>Free</h1>
+                <h1>{totalprice}</h1>
+
+              </div>
+                
+             
+            </div>
+                  
+            </div>
+        </div>
+
     </div>
+  </>
   );
 };
 

@@ -34,17 +34,17 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
         <ul className="hidden md:flex gap-8 text-lg">
           <li className="hover:text-blue-400 cursor-pointer text-amber-900" onClick={() => navigate("/")}>Home</li>
           <li>
-            <button onClick={logoutUser} className="text-black bg-teal-100 p-1 rounded-2xl">Logout</button>
+           {user?<button onClick={logoutUser} className="text-black bg-teal-100 p-1 rounded-2xl">Logout</button>:""} 
           </li>
           <li className="hover:text-blue-400 cursor-pointer text-amber-900" onClick={() => navigate("/prdctpage")}>Products</li>
           <li className="hover:text-blue-400 cursor-pointer text-amber-900" onClick={()=>{navigate('/about')}}>About</li>
           <li className="hover:text-blue-400 cursor-pointer text-amber-900">Contact</li>
           <li className="text-amber-900 cursor-pointer" onClick={() => navigate("/cart")}><FaShoppingCart /></li>
-          <li className="text-amber-900 cursor-pointer"><CiHeart /></li>
+          <li className="text-amber-900 cursor-pointer" onClick={()=>{navigate('/wish')}}><CiHeart /></li>
           <li className="text-amber-900 cursor-pointer" onClick={() => navigate("/login")}><BsPerson /></li>
           <li className="text-black">{user ? user.name : ""}</li>
         </ul>
-
+    
         {/* MOBILE MENU BUTTON */}
         <button className="md:hidden text-3xl text-amber-900" onClick={() => setIsOpen(!isOpen)}>
           ☰
@@ -71,7 +71,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <li className="cursor-pointer" onClick={()=>{navigate('/about')}}>About</li>   
           <li className="cursor-pointer">Contact</li>
           <li className="cursor-pointer flex items-center gap-2" onClick={() => navigate("/cart")}><FaShoppingCart /> Cart</li>
-          <li className="cursor-pointer flex items-center gap-2"><CiHeart /> Wishlist</li>
+          <li className="cursor-pointer flex items-center gap-2" onClick={()=>{navigate('/wish')}}><CiHeart /> Wishlist</li>
           <li className="cursor-pointer flex items-center gap-2" onClick={() => navigate("/login")}><BsPerson /> Login</li>
           <li className="font-semibold">{user ? user.name : ""}</li>
         </ul>

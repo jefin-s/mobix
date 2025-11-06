@@ -6,7 +6,7 @@ import Navbar from '../common/Navbar'
 
 const PrivateLayout = () => {
     const{user}=useContext(Authcontext)
-    const location =useLocation()
+ 
      if (!user) {
             return <Navigate to='/login'/>
         }

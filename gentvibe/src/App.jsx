@@ -10,6 +10,8 @@ import Cart from "./pages/Nonauth/Cart";
 import PrivateLayout from "./components.jsx/Layouts/PrivateLayout";
 import ProductDetails from "./pages/Nonauth/ProductDetails";
 import About from "./pages/Nonauth/About";
+import Whishlist from "./pages/Nonauth/Whishlist";
+import Checkout from "./pages/Nonauth/Checkout";
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
       
         {/* <Route path='/login' element={<Login/>}/> */}
         <Route path='/cart' element={<Cart/>}/>
+        <Route path='/wish' element={<Whishlist/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
         </Route>
       </Routes>
     </div>

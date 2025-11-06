@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { base_url } from "../../api/api";
 import axios from "axios";
 import { CartContext } from "../../components.jsx/Context/Cartcontext";
@@ -7,7 +7,8 @@ import { CartContext } from "../../components.jsx/Context/Cartcontext";
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-   const{addToCart}=useContext(CartContext)
+   const{addToCart,isIncart}=useContext(CartContext)
+   const navigate = useNavigate()
   useEffect(() => {
     try {
       axios.get(`${base_url}/products/${id}`).then((response) => {
@@ -51,10 +52,41 @@ const ProductDetails = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
-          <button className="w-full sm:w-1/2 bg-black text-white py-3 px-4 rounded-xl font-semibold hover:bg-gray-800 transition-transform duration-200 hover:scale-[1.03]" onClick={()=>addToCart(product)}>
+        <div className="flex flex-col  sm:flex-row gap-4 mt-4">
+          {isIncart(product.id) ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate("/cart");
+            }}
+            className="w-full bg-green-600 text-white py-3 rounded-xl"
+          >
+            Go to Cart ✅
+          </button>
+        ) : (
+          <button
+            className="w-full bg-linear-to-r cursor-pointer from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product);
+            }}
+          >
+            <svg
+              className="w-5 h-5 group-hover/btn:scale-110 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
             Add to Cart
           </button>
+        )}
           <button className="w-full sm:w-1/2 bg-indigo-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-indigo-700 transition-transform duration-200 hover:scale-[1.03]">
             Buy Now
           </button>

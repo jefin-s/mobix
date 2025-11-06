@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./components.jsx/Context/Authcontext.jsx";
 import { SearchProvider } from "./components.jsx/Context/Searchcontext.jsx";
 import { CartProvider } from "./components.jsx/Context/Cartcontext.jsx";
+import { WhishProvider } from "./components.jsx/Context/Wishcontext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -13,7 +14,10 @@ createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <SearchProvider>
           <CartProvider>
+            <WhishProvider>
+
             <App />
+            </WhishProvider>
           </CartProvider>
         </SearchProvider>
       </AuthProvider>

@@ -14,7 +14,7 @@
         setUser(storedUser);
         fetchCart(storedUser.id);
       }
-    }, []);
+    }, []); 
 
     const fetchCart = async (userId) => {
       try {
@@ -97,8 +97,13 @@
       
     }
     }
+    const totalQuantity= cart.reduce((acc,item)=>acc+item.quantity,0)
+    const totalprice=cart.reduce((acc,item)=>acc+item.price*item.quantity,0)
+    const isIncart=(productId)=>{
+      return cart.some((item)=> item.id===productId)
+    }
     return (
-      <CartContext.Provider value={{ cart, addToCart ,removeCartitem,incementQuantity,decremnetQuantity}}>
+      <CartContext.Provider value={{ cart, addToCart ,removeCartitem,incementQuantity,decremnetQuantity,isIncart,totalQuantity,totalprice}}>
         {children}
       </CartContext.Provider>
     );
