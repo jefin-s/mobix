@@ -1,6 +1,7 @@
   import React, { createContext, useEffect, useState } from "react";
   import axios from "axios";
   import { base_url } from "../../api/api";
+ import { toast } from "react-toastify";
 
   export const CartContext = createContext();
 
@@ -27,7 +28,7 @@
 
     const addToCart = async (product) => {
       if (!user) {
-        alert("Please log in to add items to cart!");
+       toast.warning("Please log in to add items to cart!");
         return;
       }  
 
@@ -46,14 +47,15 @@
         await axios.patch(`${base_url}/users/${user.id}`, {
           cart: updatedcart,
         });
-        console.log("Cart updated successfully!");
+       toast.success("Item succesfully added to cart")
       } catch (error) {
         console.error("Error updating cart:", error);
+        toast.error("An error to updating the cart")
       }
     };
     const removeCartitem= async(productId)=>{
       if(!user){
-          console.log("please Login to remove the cart item");
+          toast.warning("please login to remove")
           
       }
       const updatedCart=cart.filter((item)=>item.id!=productId)
@@ -102,6 +104,10 @@
     const isIncart=(productId)=>{
       return cart.some((item)=> item.id===productId)
     }
+    
+    
+  
+    
     return (
       <CartContext.Provider value={{ cart, addToCart ,removeCartitem,incementQuantity,decremnetQuantity,isIncart,totalQuantity,totalprice}}>
         {children}

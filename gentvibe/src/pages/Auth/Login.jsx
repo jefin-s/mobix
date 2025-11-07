@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 
 import { Authcontext } from "../../components.jsx/Context/Authcontext";
+import { toast } from "react-toastify";
 const initialValues = {
   email: "",
   password: "",
@@ -30,15 +31,15 @@ const Login = () => {
         );
 
         if (matchedUser) {
-          alert("✅ Login successful!");
+          toast.success("Login successful!");
           loginUser(matchedUser)
           navigate("/");
         } else {
-          alert("❌ Invalid email or password");
+          toast.error("Invalid email or password");
         }
       } catch (error) {
         console.error("Login failed:", error);
-        alert("Server error, please try again.");
+        
       }
     },
   });

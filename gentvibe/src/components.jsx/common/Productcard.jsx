@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { CartContext } from "../Context/Cartcontext";
 import { useNavigate } from "react-router-dom";
 import { Wishcontext } from "../Context/Wishcontext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const ProductCard = ({ product }) => {
     navigate(`/prdctdet/${product.id}`);
   };
   const { addToCart, isIncart } = useContext(CartContext);
-  const { Togglewhishlist } = useContext(Wishcontext);
+  const { Togglewhishlist, alreadyinWhislist } = useContext(Wishcontext);
   return (
     <div
       className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden max-w-xs w-full mx-auto"
@@ -37,7 +38,7 @@ const ProductCard = ({ product }) => {
             Togglewhishlist(product);
           }}
         >
-          ♡
+          {alreadyinWhislist(product.id)? <FaHeart className="text-red-500 text-xl" /> :<FaRegHeart className="text-gray-600 text-xl" />}
         </button>
       </div>
 

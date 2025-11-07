@@ -4,6 +4,7 @@ import axios from "axios";
 import { registerSchema } from "../../validation.jsx/registerschema";
 import { useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
+import { toast } from "react-toastify";
 
 const initialValues = {
   name: "",
@@ -32,11 +33,11 @@ const Register = () => {
         };
         await axios.post(`${base_url}/users`, newUser);
 
-        alert("✅ Registration successful!");
+        toast.success("Register Succesfully")
         navigate("/login");
       } catch (error) {
         console.error("Registration failed:", error);
-        alert("❌ Failed to register user.");
+        toast.error("Failed to register user.");
       }
     },
   });

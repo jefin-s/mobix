@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import two from "/src/assets/2.jpg";
 import three from '/src/assets/3.webp';
 import four from "/src/assets/4.png";
+
 const ProductSlider = () => {
   const settings = {
     dots: true,

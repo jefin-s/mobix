@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { base_url } from "../../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Wishcontext= createContext()
 export  const WhishProvider=({children})=>{
@@ -35,12 +36,12 @@ export  const WhishProvider=({children})=>{
       let updatedWishlist;
       if(existing){
         updatedWishlist=whishlist.filter((item)=>item.id!==product.id)
-        alert("removed from wishlist")
+        toast.success("removed from wishlist")
 
       }
       else{
         updatedWishlist=[...whishlist,product]
-        alert("added to whish list")
+        toast.success("added to whish list")
       }
       setWhishlist(updatedWishlist)
 
@@ -54,9 +55,14 @@ export  const WhishProvider=({children})=>{
         console.log(error);
         
       }
+      
    }
+   const alreadyinWhislist=(ProductId)=>{
+    return whishlist.some((item)=>item.id===ProductId)
+   }
+   
    return(
-    <Wishcontext.Provider value={{whishlist,Togglewhishlist}}>
+    <Wishcontext.Provider value={{whishlist,Togglewhishlist,alreadyinWhislist}}>
 {children}
     </Wishcontext.Provider>
    )
