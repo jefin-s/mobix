@@ -42,43 +42,42 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
         {/* DESKTOP MENU */}
         <ul className="hidden md:flex gap-8 text-lg">
           <li
-            className="hover:text-blue-400 cursor-pointer text-amber-900"
+            className="hover:text-blue-400 cursor-pointer text-black"
             onClick={() => navigate("/")}
           >
             Home
           </li>
-          <li>
+          {/* <li>
             {user && (
               <button
                 onClick={logoutUser}
-                className="text-black bg-teal-100 p-1 rounded-2xl"
+                className="text-black  rounded-md"
               >
                 Logout
               </button>
             )}
-          </li>
+          </li> */}
           <li
-            className="hover:text-blue-400 cursor-pointer text-amber-900"
+            className="hover:text-blue-400 cursor-pointer text-black"
             onClick={() => navigate("/prdctpage")}
           >
             Products
           </li>
+          <li className="cursor-pointer hover:text-blue-400" onClick={()=>navigate('/order')}>My orders</li>
           <li
-            className="hover:text-blue-400 cursor-pointer text-amber-900"
+            className="hover:text-blue-400 cursor-pointer text-black"
             onClick={() => {
               navigate("/about");
             }}
           >
             About
           </li>
-          <li className="hover:text-blue-400 cursor-pointer text-amber-900">
-            Contact
-          </li>
+          
           <div
             className="relative cursor-pointer"
             onClick={() => navigate("/cart")}
           >
-            <FaShoppingCart className="text-2xl text-amber-900" />
+            <FaShoppingCart className="text-2xl text-black" />
 
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
@@ -88,25 +87,33 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           </div>
 
           <li
-            className="text-amber-900 cursor-pointer"
+            className="text-black cursor-pointer"
             onClick={() => {
               navigate("/wish");
             }}
           >
            {whishlist.length>0?<FaHeart className="text-red-500 text-xl" /> :<FaRegHeart className="text-gray-600 text-xl" />} 
           </li>
-          <li
-            className="text-amber-900 cursor-pointer"
+          {
+            !user?
+          (<li
+            className="text-black cursor-pointer"
             onClick={() => navigate("/login")}
           >
             <BsPerson />
-          </li>
+          </li>):<button
+                onClick={logoutUser}
+                className="text-black  rounded-md"
+              >
+                Logout
+              </button>
+           }
           <li className="text-black">{user ? user.name : ""}</li>
         </ul>
 
         {/* MOBILE MENU BUTTON */}
         <button
-          className="md:hidden text-3xl text-amber-900"
+          className="md:hidden text-3xl text-black"
           onClick={() => setIsOpen(!isOpen)}
         >
           ☰
@@ -147,7 +154,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           >
             About
           </li>
-          <li className="cursor-pointer">Contact</li>
+         
           <li
             className="cursor-pointer flex items-center gap-2"
             onClick={() => navigate("/cart")}

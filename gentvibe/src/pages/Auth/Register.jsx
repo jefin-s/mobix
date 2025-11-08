@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { registerSchema } from "../../validation.jsx/registerschema";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 import { toast } from "react-toastify";
+import { Authcontext } from "../../components.jsx/Context/Authcontext";
 
 const initialValues = {
   name: "",
@@ -13,6 +14,10 @@ const initialValues = {
 };
 
 const Register = () => {
+    const{user}=useContext(Authcontext)
+    if(user){
+      return <Navigate to='/' replace/>
+    }
   const navigate = useNavigate();
 
   const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({

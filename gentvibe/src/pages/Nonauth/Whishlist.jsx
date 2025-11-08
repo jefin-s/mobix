@@ -12,7 +12,7 @@
            
             {
                 whishlist.map((item)=>
-               ( <div className='bg-white h-1/2 w-70 rounded-2xl shadow-2xl m-5 border '>
+               ( <div className='bg-white h-1/2 w-70 rounded-2xl shadow-2xl m-5 border'>
                 <div>
                     <img src={item.thumbnail} alt="" className='h-65 p-5'/>
                 </div>

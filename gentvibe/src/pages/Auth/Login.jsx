@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import axios from "axios";
 import { validationschema } from "../../validation.jsx/loginschema";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 
 import { Authcontext } from "../../components.jsx/Context/Authcontext";
@@ -13,8 +13,12 @@ const initialValues = {
 };
 
 const Login = () => {
-  const {loginUser}=useContext(Authcontext)
+  const {user,loginUser}=useContext(Authcontext)
+     if(user){
+      return <Navigate to='/' replace/>
+     }
   const navigate = useNavigate();
+ 
 
   const { values, handleBlur, handleSubmit, handleChange, errors } = useFormik({
     initialValues: initialValues,
