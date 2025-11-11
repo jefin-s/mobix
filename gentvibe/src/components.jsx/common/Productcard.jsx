@@ -1,103 +1,92 @@
-import React from "react";
-import { useContext } from "react";
-import { CartContext } from "../Context/Cartcontext";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../Context/Cartcontext";
 import { Wishcontext } from "../Context/Wishcontext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const gotoProduct = () => {
-    navigate(`/prdctdet/${product.id}`);
-  };
   const { addToCart, isIncart } = useContext(CartContext);
   const { Togglewhishlist, alreadyinWhislist } = useContext(Wishcontext);
+
+  const gotoProduct = () => navigate(`/prdctdet/${product.id}`);
+
   return (
     <div
-      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden max-w-xs w-full mx-auto"
       onClick={gotoProduct}
+      className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 overflow-hidden max-w-xs w-full mx-auto cursor-pointer"
     >
-      {/* Product Image Container */}
-      <div className="relative overflow-hidden bg-gray-100 ">
+      {/* IMAGE */}
+      <div className="relative bg-gray-100 aspect-square overflow-hidden">
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        {/* Badge - You can add "Sale", "New", etc. */}
-        <div className="absolute top-3 left-3">
-          <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-            New
-          </span>
-        </div>
-        {/* Quick Action Button */}
+
+        {/* NEW TAG */}
+        <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow">
+          New
+        </span>
+
+        {/* WISHLIST BUTTON */}
         <button
-          className="absolute top-3 right-3 bg-white/90 hover:bg-white text-gray-800 hover:text-red-500 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 shadow-md"
-          onClick={(e) => {
-            e.stopPropagation(); // ✅ Stop card click
+          onClick={(e) => { 
+            e.stopPropagation();
             Togglewhishlist(product);
           }}
+          className="absolute top-3 right-3 bg-white/90 hover:bg-white text-gray-800 hover:text-red-500 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 shadow-md"
         >
-          {alreadyinWhislist(product.id)? <FaHeart className="text-red-500 text-xl" /> :<FaRegHeart className="text-gray-600 text-xl" />}
+          {alreadyinWhislist(product.id) ? (
+            <FaHeart className="text-red-500 text-lg" />
+          ) : (
+            <FaRegHeart className="text-gray-700 text-lg" />
+          )}
         </button>
       </div>
 
-      {/* Product Info */}
-      <div className="p-4">
-        {/* Category */}
-        <div className="text-xs text-gray-500 uppercase font-medium mb-1">
+      {/* DETAILS */}
+      <div className="p-4 flex flex-col justify-between h-[210px]">
+        {/* CATEGORY */}
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
           Category
-        </div>
+        </p>
 
-        {/* Product Name */}
-        <h3 className="font-semibold text-gray-800 text-lg mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors">
+        {/* TITLE */}
+        <h3 className="font-semibold text-gray-900 text-base mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors">
           {product.title}
         </h3>
 
-        {/* Rating */}
-        <div className="flex items-center mb-3">
-          <div className="flex text-amber-400">
-            {"★".repeat(4)}
-            {/*  */}
-            <span className="text-gray-300">★</span>
-          </div>
-          <span className="text-xs text-gray-500 ml-2">(4.0)</span>
-        </div>
-
-        {/* Price */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-gray-900">
-              {product.price}
+        {/* PRICE */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-col">
+            <span className="text-xl font-bold text-gray-900">
+              ₹{product.price}
             </span>
-            <span className="text-sm text-gray-500 line-through">
-              {product.price + 1000}
+            <span className="text-sm text-gray-400 line-through">
+              ₹{product.price + 1000}
             </span>
           </div>
-          {/* Stock Status */}
-          <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded-full">
-            In Stock
-          </span>
         </div>
 
-        {/* Add to Cart Button */}
+        {/* ADD TO CART */}
         {isIncart(product.id) ? (
           <button
             onClick={(e) => {
               e.stopPropagation();
               navigate("/cart");
             }}
-            className="w-full bg-green-600 text-white py-3 rounded-xl"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
           >
             Go to Cart ✅
           </button>
         ) : (
           <button
-            className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
             onClick={(e) => {
               e.stopPropagation();
               addToCart(product);
             }}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center gap-2 group/btn"
           >
             <svg
               className="w-5 h-5 group-hover/btn:scale-110 transition-transform"

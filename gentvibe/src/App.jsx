@@ -12,9 +12,16 @@ import ProductDetails from "./pages/Nonauth/ProductDetails";
 import About from "./pages/Nonauth/About";
 import Whishlist from "./pages/Nonauth/Whishlist";
 import Checkout from "./pages/Nonauth/Checkout";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import { Toaster } from "react-hot-toast";
 import Orders from "./pages/Nonauth/Orders";
+import AdminLayout from "./components.jsx/Layouts/AdminLayout";
+import Dashboard from "./Admin/Dashboard";
+import ManageUser from "./Admin/ManageUser";
+import Manageorders from "./Admin/Manageorders";
+import ManageProduct from "./Admin/ManageProduct";
+import AddForm from "./Admin/AddForm";
+import DetailedUser from "./Admin/DetailedUser";
 
 const App = () => {
   return (
@@ -29,16 +36,27 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
-          <Route path="/order" element={<Orders/>}/>
+         
         </Route>
         <Route element={<PrivateLayout />}>
           <Route path="/cart" element={<Cart />} />
           <Route path="/wish" element={<Whishlist />} />
           <Route path="/checkout" element={<Checkout />} />
+           <Route path="/order" element={<Orders/>}/> 
           
         </Route>
+
+        <Route element={<AdminLayout/>}>
+          <Route path="/admin" element={<Dashboard/>}/>
+          <Route path="/userlist" element={<ManageUser/>}/>
+          <Route path="/userorder" element={<Manageorders/>}/>
+          <Route path="/allproducts" element={<ManageProduct/>}/>
+          <Route path="/addform" element={<AddForm/>}/>
+          <Route path="/detailuser/:userid" element={<DetailedUser/>}/>
+
+        </Route>
       </Routes>
-      <ToastContainer position="top-right" autoClose={3000} />
+     <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

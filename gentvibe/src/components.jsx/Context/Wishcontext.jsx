@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { base_url } from "../../api/api";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export const Wishcontext= createContext()
 export  const WhishProvider=({children})=>{

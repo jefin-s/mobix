@@ -1,7 +1,7 @@
   import React, { createContext, useEffect, useState } from "react";
   import axios from "axios";
   import { base_url } from "../../api/api";
- import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
   export const CartContext = createContext();
 

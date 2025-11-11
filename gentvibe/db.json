@@ -13,6 +13,14 @@
       "created_at": "2025-11-03T12:00:00Z"
     },
     {
+      "id": "a1",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "role": "admin",
+      "created_at": "2025-11-03T12:00:00Z"
+    },
+    {
       "id": "1a4d",
       "name": "Jefins",
       "email": "j@gmail.com",
@@ -20,6 +28,24 @@
       "role": "User",
       "isBlock": false,
       "cart": [
+        {
+          "id": "3",
+          "title": "iPhone 13",
+          "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+          "price": 899,
+          "discountPercentage": 15,
+          "rating": 4.7,
+          "stock": 40,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+          ],
+          "quantity": 2
+        },
         {
           "id": "2",
           "title": "iPhone 14 ",
@@ -36,7 +62,135 @@
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
           ],
+          "quantity": 2
+        },
+        {
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": 1399,
+          "discountPercentage": 10,
+          "rating": 4.9,
+          "stock": 25,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ],
           "quantity": 1
+        },
+        {
+          "id": "4",
+          "title": "AirPods Pro (2nd Generation)",
+          "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
+          "price": 249,
+          "discountPercentage": 8,
+          "rating": 4.8,
+          "stock": 60,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "audio",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/AirPods_PDP_1_77f5bd3f-817f-417a-9211-04ddeb52d5a8_550x.jpg?v=1705407825",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQD83_AV2.png"
+          ],
+          "quantity": 1
+        }
+      ],
+      "orders": [
+        {
+          "orderId": 1762626266818,
+          "items": [
+            {
+              "id": "1",
+              "title": "iPhone 15 Pro Max",
+              "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+              "price": 1399,
+              "discountPercentage": 10,
+              "rating": 4.9,
+              "stock": 25,
+              "brand": "Apple",
+              "isActive": true,
+              "category": "smartphones",
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+              ],
+              "quantity": 3
+            },
+            {
+              "id": "2",
+              "title": "iPhone 14 ",
+              "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
+              "price": 1199,
+              "discountPercentage": 12,
+              "rating": 4.8,
+              "stock": 30,
+              "brand": "Apple",
+              "isActive": true,
+              "category": "smartphones",
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
+              ],
+              "quantity": 2
+            },
+            {
+              "id": "3",
+              "title": "iPhone 13",
+              "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+              "price": 899,
+              "discountPercentage": 15,
+              "rating": 4.7,
+              "stock": 40,
+              "brand": "Apple",
+              "isActive": true,
+              "category": "smartphones",
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+              ],
+              "quantity": 2
+            }
+          ],
+          "totalAmount": 8393,
+          "status": "Placed (COD)",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": " j    MMMPMP",
+            "address": "df",
+            "city": "f",
+            "pincode": "   d",
+            "phoneNumber": "f"
+          },
+          "created_at": "2025-11-08T18:24:26.818Z"
+        }
+      ],
+      "wishlist": [],
+      "created_at": "2025-11-03T05:05:17.962Z",
+      "whishlist": [
+        {
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": 1399,
+          "discountPercentage": 10,
+          "rating": 4.9,
+          "stock": 25,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ]
         },
         {
           "id": "3",
@@ -53,29 +207,23 @@
           "images": [
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
-          ],
-          "quantity": 1
-        }
-      ],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "2025-11-03T05:05:17.962Z",
-      "whishlist": [
+          ]
+        },
         {
-          "id": "3",
-          "title": "iPhone 13",
-          "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
-          "price": 899,
-          "discountPercentage": 15,
-          "rating": 4.7,
-          "stock": 40,
+          "id": "2",
+          "title": "iPhone 14 ",
+          "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
+          "price": 1199,
+          "discountPercentage": 12,
+          "rating": 4.8,
+          "stock": 30,
           "brand": "Apple",
           "isActive": true,
           "category": "smartphones",
-          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
           "images": [
-            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
-            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
           ]
         }
       ]
@@ -168,6 +316,53 @@
       "orders": [],
       "wishlist": [],
       "created_at": "2025-11-05T12:22:34.277Z"
+    },
+    {
+      "id": "15c6",
+      "name": "lnoeno",
+      "email": "k@gmail.com",
+      "password": "12345678",
+      "role": "User",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "orderId": 1762597849970,
+          "items": [
+            {
+              "id": "1",
+              "title": "iPhone 15 Pro Max",
+              "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+              "price": 1399,
+              "discountPercentage": 10,
+              "rating": 4.9,
+              "stock": 25,
+              "brand": "Apple",
+              "isActive": true,
+              "category": "smartphones",
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+              ],
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 1399,
+          "status": "Placed (COD)",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": "n",
+            "address": "j",
+            "city": "j",
+            "pincode": "j",
+            "phoneNumber": "h"
+          },
+          "created_at": "2025-11-08T10:30:49.970Z"
+        }
+      ],
+      "wishlist": [],
+      "created_at": "2025-11-08T10:29:39.035Z"
     }
   ],
   "products": [
@@ -175,7 +370,7 @@
       "id": "1",
       "title": "iPhone 15 Pro Max",
       "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
-      "price": 1399,
+      "price": 75000,
       "discountPercentage": 10,
       "rating": 4.9,
       "stock": 25,
@@ -192,7 +387,7 @@
       "id": "2",
       "title": "iPhone 14 ",
       "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
-      "price": 1199,
+      "price": 45000,
       "discountPercentage": 12,
       "rating": 4.8,
       "stock": 30,
@@ -209,7 +404,7 @@
       "id": "3",
       "title": "iPhone 13",
       "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
-      "price": 899,
+      "price": 30000,
       "discountPercentage": 15,
       "rating": 4.7,
       "stock": 40,
@@ -226,7 +421,7 @@
       "id": "4",
       "title": "AirPods Pro (2nd Generation)",
       "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
-      "price": 249,
+      "price": 14000,
       "discountPercentage": 8,
       "rating": 4.8,
       "stock": 60,
@@ -242,7 +437,7 @@
       "id": "5",
       "title": "Apple Watch Ultra 2",
       "description": "Designed for adventure with titanium case, precision dual-frequency GPS, and S9 chip.",
-      "price": 799,
+      "price": 49000,
       "discountPercentage": 5,
       "rating": 4.9,
       "stock": 15,
@@ -258,7 +453,7 @@
       "id": "6",
       "title": "MagSafe Charger",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
-      "price": 39,
+      "price": 26000,
       "discountPercentage": 0,
       "rating": 4.6,
       "stock": 100,
@@ -274,13 +469,13 @@
       "id": "7",
       "title": "iPhone 17 Pro Max",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
-      "price": 39,
+      "price": 149000,
       "discountPercentage": 0,
       "rating": 4.6,
       "stock": 100,
       "brand": "Apple",
       "isActive": true,
-      "category": "accessories",
+      "category": "smartphones",
       "thumbnail": "https://www.machines.com.my/cdn/shop/files/iPhone_17_Pro_Max_Deep_Blue_PDP_Image_Position_1_Deep_Blue_Colour__MY-EN.jpg?v=1757457313&width=823",
       "images": [
         "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3_AV2.png"
@@ -290,17 +485,30 @@
       "id": "8",
       "title": "iPhone 17 Air",
       "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
-      "price": 39,
+      "price": 95000,
       "discountPercentage": 0,
       "rating": 4.6,
       "stock": 100,
       "brand": "Apple",
       "isActive": true,
-      "category": "accessories",
+      "category": "smartphones",
       "thumbnail": "https://www.machines.com.my/cdn/shop/files/iPhone_Air_Space_Black_PDP_Image_Position_1_Space_Black_Colour__MY-EN_13e08d70-9272-4881-bf28-f6e99f07f8c1.jpg?v=1757461747&width=823",
       "images": [
         "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3_AV2.png"
       ]
+    },
+    {
+      "id": "b613",
+      "title": "MacBook Pro 16-inch (M3 Pro)",
+      "price": "185000",
+      "desciption": "\"Apple’s high-performance laptop featuring the M3 Pro chip, 16.2-inch Liquid Retina XDR display, long battery life, and premium aluminum build.",
+      "discountPercentage": "8",
+      "rating": "",
+      "stock": "12",
+      "brand": "Apple",
+      "isActive": "true",
+      "category": "laptops",
+      "thumbnail": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp14-silver-cto-hero-202410?wid=400&hei=400&fmt=jpeg&qlt=90&.v=VS9GZkg3REhOOHRkSTlzK0dOQWlHamNzMjVqd0pPMk5YaURoT1Axa2JuNndFa0VSTUdtalp5em5HUHRaQ2NaeU14MXJScFRZN3Y5OWZsRXVrN1k4cFVOT3U5QlVNVTk0bHpNT0RnVmordWM"
     }
   ]
 }

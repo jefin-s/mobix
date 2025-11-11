@@ -7,6 +7,11 @@ import { AuthProvider } from "./components.jsx/Context/Authcontext.jsx";
 import { SearchProvider } from "./components.jsx/Context/Searchcontext.jsx";
 import { CartProvider } from "./components.jsx/Context/Cartcontext.jsx";
 import { WhishProvider } from "./components.jsx/Context/Wishcontext.jsx";
+import { Userprovider } from "./Admin/context/Userscontext.jsx";
+import { OrderProvider } from "./Admin/context/Oredercontext.jsx";
+import { ProductProvider } from "./Admin/Productcontext.jsx";
+import Modal from "react-modal";
+Modal.setAppElement("#root")
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -15,8 +20,14 @@ createRoot(document.getElementById("root")).render(
         <SearchProvider>
           <CartProvider>
             <WhishProvider>
-
-            <App />
+              <Userprovider>
+                <OrderProvider>
+                  <ProductProvider>
+                  <App />
+                  </ProductProvider>
+                </OrderProvider>
+                
+              </Userprovider>
             </WhishProvider>
           </CartProvider>
         </SearchProvider>

@@ -74,128 +74,149 @@ const Checkout = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen w-full flex flex-col md:flex-row justify-around items-start p-6 bg-gray-100">
-      {/* Left: Address + Payment */}
-      <div className="space-y-8 w-full md:w-1/2 bg-white rounded-2xl p-6 shadow-md">
-        <div>
-          <h1 className="text-2xl font-semibold mb-4">Shipping Details</h1>
-          <form className="flex flex-col space-y-3">
+ return (
+  <div className="min-h-screen w-full bg-gray-100 pt-24 pb-10 px-6 flex flex-col md:flex-row gap-10 justify-center">
+
+    {/* LEFT SECTION */}
+    <div className="w-full md:w-1/2 bg-white shadow-lg rounded-2xl p-8 space-y-8 border border-gray-200">
+
+      {/* Shipping Details */}
+      <div>
+        <h1 className="text-2xl font-bold mb-5 text-gray-800">
+          Shipping Details
+        </h1>
+        <form className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="border rounded-lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
+            onChange={(e) => setName(e.target.value)}
+            disabled={paymentMethod !== "cod"}
+          />
+          <input
+            type="text"
+            placeholder="Phone Number"
+            className="border rounded-lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            disabled={paymentMethod !== "cod"}
+          />
+
+          <input
+            type="text"
+            placeholder="Address"
+            className="border rounded-lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300 col-span-2"
+            onChange={(e) => setAddress(e.target.value)}
+            disabled={paymentMethod !== "cod"}
+          />
+
+          <input
+            type="text"
+            placeholder="City"
+            className="border rounded-lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
+            onChange={(e) => setCity(e.target.value)}
+            disabled={paymentMethod !== "cod"}
+          />
+          <input
+            type="text"
+            placeholder="Pincode"
+            className="border rounded-lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
+            onChange={(e) => setPicode(e.target.value)}
+            disabled={paymentMethod !== "cod"}
+          />
+        </form>
+      </div>
+
+      {/* Payment Method */}
+      <div>
+        <h1 className="text-2xl font-bold mb-5 text-gray-800">
+          Payment Method
+        </h1>
+        <div className="space-y-4">
+          <label className="flex items-center gap-3 cursor-pointer">
             <input
-              type="text"
-              placeholder="Full Name"
-              className="border rounded-md p-2"
-              onChange={(e) => setName(e.target.value)}
-              disabled={paymentMethod !== "cod"}
+              type="radio"
+              name="payment"
+              value="online"
+              checked={paymentMethod === "online"}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="w-5 h-5 cursor-pointer"
             />
+            <span className="text-gray-700 text-lg">Online Payment (Razorpay)</span>
+          </label>
+
+          <label className="flex items-center gap-3 cursor-pointer">
             <input
-              type="text"
-              placeholder="Address"
-              className="border rounded-md p-2"
-              onChange={(e) => setAddress(e.target.value)}
-              disabled={paymentMethod !== "cod"}
+              type="radio"
+              name="payment"
+              value="cod"
+              checked={paymentMethod === "cod"}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="w-5 h-5 cursor-pointer"
             />
-            <input
-              type="text"
-              placeholder="City"
-              className="border rounded-md p-2"
-              onChange={(e) => setCity(e.target.value)}
-              disabled={paymentMethod !== "cod"}
-            />
-            <input
-              type="text"
-              placeholder="Pincode"
-              className="border rounded-md p-2"
-              onChange={(e) => setPicode(e.target.value)}
-              disabled={paymentMethod !== "cod"}
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className="border rounded-md p-2"
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              disabled={paymentMethod !== "cod"}
-            />
-          </form>
+            <span className="text-gray-700 text-lg">Cash on Delivery</span>
+          </label>
         </div>
+      </div>
+    </div>
 
-        <div>
-          <h1 className="text-2xl font-semibold mb-4">Payment Method</h1>
-          <div className="space-y-2">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="payment"
-                value="online"
-                checked={paymentMethod === "online"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <span>Online Payment (Razorpay)</span>
-            </label>
+    {/* RIGHT SECTION */}
+    <div className="w-full md:w-1/3 h-fit bg-white shadow-lg rounded-2xl p-8 border border-gray-200">
+      <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
+        Order Summary
+      </h1>
 
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="payment"
-                value="cod"
-                checked={paymentMethod === "cod"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <span>Cash on Delivery</span>
-            </label>
+      {/* If Buy Now */}
+      {buyNowData ? (
+        <div className="space-y-3 text-center">
+          <img
+            src={buyNowData.image}
+            alt={buyNowData.title}
+            className="h-32 object-contain mx-auto"
+          />
+          <h2 className="text-lg font-semibold">{buyNowData.title}</h2>
+          <p className="text-gray-600">Quantity: {buyNowQuantity}</p>
+          <p className="text-xl font-bold text-green-600">
+            ₹{buyNowData.price * buyNowQuantity}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-2 text-lg">
+          <div className="flex justify-between">
+            <span className="text-gray-700">Items</span>
+            <span className="font-semibold">{totalQuantity}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-700">Shipping</span>
+            <span className="font-semibold text-green-600">Free</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-700">Total Amount</span>
+            <span className="font-semibold text-black">₹{totalprice}</span>
           </div>
         </div>
-      </div>
+      )}
 
-      
-      <div className="h-96 w-96 bg-white rounded-2xl shadow-md p-4 mt-6 md:mt-0">
-        <h1 className="text-2xl text-center mb-5 font-semibold">
-          Order Summary
-        </h1>
-   {buyNowData ? (
-    
-    <div className="flex flex-col items-center gap-4">
-      
-      <h2 className="text-lg font-semibold">{buyNowData.title}</h2>
-      <p>Quantity: {buyNowQuantity}</p>
-      <p className="font-semibold text-green-600">
-        ₹{buyNowData.price * buyNowQuantity}
-      </p>
-    </div>
-  ) : (
-  
-    <div className="flex justify-between px-4 leading-8">
-      <div>
-        <h1>Quantity</h1>
-        <h1>Shipping</h1>
-        <h1>Total Price</h1>
-      </div>
-      <div className="text-right">
-        <h1>{totalQuantity}</h1>
-        <h1>Free</h1>
-        <h1>₹{totalprice}</h1>
+      {/* Place Order Button */}
+      <div className="mt-8">
+        <button
+          className={`w-full py-3 rounded-xl text-lg font-semibold shadow-md transition ${
+            paymentMethod === "cod"
+              ? "bg-blue-600 hover:bg-blue-700 text-white"
+              : "bg-gray-300 text-gray-600 cursor-not-allowed"
+          }`}
+          onClick={placeorder}
+          disabled={paymentMethod !== "cod"}
+        >
+          {paymentMethod === "cod"
+            ? "Place Order"
+            : "COD Only Available"}
+        </button>
       </div>
     </div>
-  )}
-        
-        <div className="flex justify-center mt-8">
-          <button
-            className={`px-6 py-2 rounded-md transition text-white ${
-              paymentMethod === "cod"
-                ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            onClick={placeorder}
-            disabled={paymentMethod !== "cod"}
-          >
-            {paymentMethod === "cod"
-              ? "Place Order"
-              : "COD Only Available"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};  
+  </div>
+);
+}
 
 export default Checkout;

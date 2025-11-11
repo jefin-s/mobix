@@ -6,25 +6,28 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 
 import { Authcontext } from "../../components.jsx/Context/Authcontext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 const initialValues = {
   email: "",
   password: "",
 };
 
 const Login = () => {
-  const {user,loginUser}=useContext(Authcontext)
-     if(user){
-      return <Navigate to='/' replace/>
-     }
+  const { user, loginUser } = useContext(Authcontext);
+  if (user) {
+    if (user.role === "admin") {
+      return <Navigate to="/admin" replace />;
+    }
+    return <Navigate to="/" replace />;
+  }
+
   const navigate = useNavigate();
- 
 
   const { values, handleBlur, handleSubmit, handleChange, errors } = useFormik({
     initialValues: initialValues,
     // validation schema from validation.jsx
     validationSchema: validationschema,
-    
+
     onSubmit: async (values) => {
       try {
         const response = await axios.get(`${base_url}/users`);
@@ -36,24 +39,25 @@ const Login = () => {
 
         if (matchedUser) {
           toast.success("Login successful!");
-          loginUser(matchedUser)
-          navigate("/");
+          loginUser(matchedUser);
+          if (matchedUser.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
         } else {
           toast.error("Invalid email or password");
         }
       } catch (error) {
         console.error("Login failed:", error);
-        
       }
     },
   });
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-white">
-      <div className="bg-white/90 backdrop-blur-md shadow-2xl p-8 rounded-2xl w-[360px] border border-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-6 text-black tracking-wide">
-          Welcome Back
-        </h2>
+    // <div className="h-screen w-screen flex justify-center items-center bg-white">
+      <div className="bg-white backdrop-blur-md  p-8 rounded-2xl w-80 sm:w-96 md:w-[360px]">
+       
 
         <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
           {/* Email Field */}
@@ -119,7 +123,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
-    </div>
+    // </div>
   );
 };
 
