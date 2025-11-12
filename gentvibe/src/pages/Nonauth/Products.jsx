@@ -6,17 +6,29 @@ import { SearchContext } from "../../components.jsx/Context/Searchcontext";
 
 
 const Products = () => {
+  // url search params for pagination issue
+  const queryParams = new URLSearchParams(window.location.search);
+const initialPage = Number(queryParams.get("page")) || 1;
  
-   const [currentPage, setCurrentPage] = useState(1);
+   const [currentPage, setCurrentPage] = useState(initialPage);
    const[category,setCategory]=useState("all")
    const[sortOrder,setOrder]=useState("none")
 
   const { searchTerm } = useContext(SearchContext);
   const { data } = useFetch(`${base_url}/products`);
+
+  // pagination issue solving using url search params
+    const updatePageInURL = (pageNum) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", pageNum);
+    window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
+
+  };
  
 
   // for  product  browsing
   let  filteredProducts = data.filter((product) =>
+    product.title&&
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -36,10 +48,6 @@ const Products = () => {
     filteredProducts.sort((a,b)=>b.price-a.price)
   }
 
-  useEffect(() => {
-   
-    setCurrentPage(1)
-  }, [searchTerm]);
 
   // ✅ Pagination Logic
   const totalProducts = filteredProducts.length;
@@ -52,16 +60,26 @@ const Products = () => {
   const goPrev = () => {
     if (currentPage > 1){
       setCurrentPage(currentPage-1)
+      updatePageInURL(currentPage-1)
     } 
   };
 
   const goNext = () => {
-    if (currentPage < totalPages) {setCurrentPage(currentPage+1)}
+    if (currentPage < totalPages) {setCurrentPage(currentPage+1)
+      updatePageInURL(currentPage+1)
+    }
   };
 
   const handlePageNumberClick = (pageNum) => {
     setCurrentPage(pageNum)
+    updatePageInURL(pageNum)
   };
+   useEffect(() => {
+  if (category !== "all" || sortOrder !== "none") {
+    setCurrentPage(1);
+    updatePageInURL(1);
+  }
+}, [category, sortOrder]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-8 pt-20">
@@ -109,7 +127,7 @@ const Products = () => {
           gap-6 sm:gap-8
         "
       >
-        {currentProducts.map((product) => (
+        {currentProducts.map((product) =>product.isDeleted==false&& (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

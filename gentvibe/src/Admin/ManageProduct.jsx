@@ -1,11 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ProductContext } from './Productcontext'
 import { useNavigate } from 'react-router-dom'
+import Confirmodal from '../Modal/Confirmodal'
 
 const ManageProduct = () => {
   const { products,delteProductWithid } = useContext(ProductContext)
-  const navigate = useNavigate()
 
+  // modal logic for the delete confirmation
+  const[showmodal,setShowmodal]=useState(false)
+  const [selectwithProductId,setSelectwithProductId]=useState(null) 
+  const handleWithid=(itemId)=>{
+    setSelectwithProductId(itemId)
+    setShowmodal(true)
+
+  }
+  const confirmDelete=()=>{
+      if(selectwithProductId){
+        delteProductWithid(selectwithProductId)
+      }
+      setShowmodal(false)
+      setSelectwithProductId(null)
+  }
+
+  const cancelDelete=()=>{
+    setShowmodal(false)
+    setSelectwithProductId(null)
+  }
+
+
+  const navigate = useNavigate()
+  
   return (
     <div className="pt-20 px-6">
       
@@ -46,7 +70,7 @@ const ManageProduct = () => {
 
             {/* Buttons */}
             <div className="flex justify-between mt-5">
-              <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 shadow" onClick={()=>{delteProductWithid(item.id)}}>
+              <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 shadow" onClick={()=>{handleWithid(item.id)}}>
                 Delete
               </button>
               <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 shadow" onClick={()=>{}}>
@@ -57,7 +81,15 @@ const ManageProduct = () => {
           </div>
         ))}
       </div>
+      {showmodal&&(<Confirmodal title="Confirm Deletion"
+          message="Are you sure you want to delete this product?"
+          confirmText="Yes, Delete"
+          cancelText="Cancel"
+          confirmDelete={confirmDelete}
+          cancelDelete={cancelDelete} />)}
+      
     </div>
+    
   )
 }
 

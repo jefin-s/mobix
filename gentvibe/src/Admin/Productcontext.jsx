@@ -33,7 +33,7 @@ export const ProductProvider = ({ children }) => {
 
   const delteProductWithid = async(id) => {
     try {
-        await axios.delete(`${base_url}/products/${id}`)
+        await axios.patch(`${base_url}/products/${id}`,{isDeleted:true})
         setProducts(products.filter((item)=>item.id!=id))
     } catch (error) {
       console.log(error);

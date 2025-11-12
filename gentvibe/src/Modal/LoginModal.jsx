@@ -30,7 +30,7 @@
         </p>
 
         {/* Login Form Component */}
-        <Login />
+        <Login  onclose={onClose}/>
           <h1 className="text-center text-shadow-black font-bold">icloud</h1>
           <h1 className="text-center text-sm ">Best Premium Apple sellers</h1>
         

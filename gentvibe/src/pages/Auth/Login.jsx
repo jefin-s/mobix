@@ -12,7 +12,7 @@ const initialValues = {
   password: "",
 };
 
-const Login = () => {
+const Login = ({onclose}) => {
   const { user, loginUser } = useContext(Authcontext);
   if (user) {
     if (user.role === "admin") {
@@ -40,6 +40,7 @@ const Login = () => {
         if (matchedUser) {
           toast.success("Login successful!");
           loginUser(matchedUser);
+          if(onclose) onclose();
           if (matchedUser.role === "admin") {
             navigate("/admin");
           } else {

@@ -169,7 +169,7 @@ const Checkout = () => {
       {buyNowData ? (
         <div className="space-y-3 text-center">
           <img
-            src={buyNowData.image}
+            src={buyNowData.thumbnail}
             alt={buyNowData.title}
             className="h-32 object-contain mx-auto"
           />

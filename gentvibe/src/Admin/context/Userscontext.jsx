@@ -18,7 +18,12 @@ export const Userprovider = ({ children }) => {
     };
     fetchUser();
   },[]);
+
+  const deletewithuserid=(userid)=>{
+   return  users.filter((item)=>item.id!=userid)
+
+  }
   return (
-    <Usercontext.Provider value={{ users }}>{children}</Usercontext.Provider>
+    <Usercontext.Provider value={{ users,deletewithuserid }}>{children}</Usercontext.Provider>
   );
 };
