@@ -36,8 +36,12 @@ const Login = ({onclose}) => {
           (user) =>
             user.email === values.email && user.password === values.password
         );
-
+       
         if (matchedUser) {
+          if(matchedUser.isBlock){
+            toast.error("Admin is Blocked You")
+            return 
+          }
           toast.success("Login successful!");
           loginUser(matchedUser);
           if(onclose) onclose();

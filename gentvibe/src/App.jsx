@@ -22,6 +22,7 @@ import Manageorders from "./Admin/Manageorders";
 import ManageProduct from "./Admin/ManageProduct";
 import AddForm from "./Admin/AddForm";
 import DetailedUser from "./Admin/DetailedUser";
+import Updateproduct from "./Admin/Updateproduct";
 
 const App = () => {
   return (
@@ -36,27 +37,25 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
-         
         </Route>
         <Route element={<PrivateLayout />}>
           <Route path="/cart" element={<Cart />} />
           <Route path="/wish" element={<Whishlist />} />
           <Route path="/checkout" element={<Checkout />} />
-           <Route path="/order" element={<Orders/>}/> 
-          
+          <Route path="/order" element={<Orders />} />
         </Route>
 
-        <Route element={<AdminLayout/>}>
-          <Route path="/admin" element={<Dashboard/>}/>
-          <Route path="/userlist" element={<ManageUser/>}/>
-          <Route path="/userorder" element={<Manageorders/>}/>
-          <Route path="/allproducts" element={<ManageProduct/>}/>
-          <Route path="/addform" element={<AddForm/>}/>
-          <Route path="/detailuser/:userid" element={<DetailedUser/>}/>
-
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/userlist" element={<ManageUser />} />
+          <Route path="/userorder" element={<Manageorders />} />
+          <Route path="/allproducts" element={<ManageProduct />} />
+          <Route path="/addform" element={<AddForm />} />
+          <Route path="/detailuser/:userid" element={<DetailedUser />} />
+          <Route path="/updatept/:p_id" element={<Updateproduct/>}/>
         </Route>
       </Routes>
-     <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

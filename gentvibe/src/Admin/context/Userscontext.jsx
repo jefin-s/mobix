@@ -19,8 +19,16 @@ export const Userprovider = ({ children }) => {
     fetchUser();
   },[]);
 
-  const deletewithuserid=(userid)=>{
-   return  users.filter((item)=>item.id!=userid)
+  const deletewithuserid= async(userid)=>{
+    try{
+       await axios.patch(`${base_url}/users/${userid}`,{isBlock: true})
+       setUsers((prevuser)=>prevuser.filter((item)=>item.id!==userid))
+    }
+    catch(error){
+      console.log(error);
+      
+    }
+ 
 
   }
   return (

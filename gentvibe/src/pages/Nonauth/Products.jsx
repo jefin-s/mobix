@@ -34,7 +34,7 @@ const initialPage = Number(queryParams.get("page")) || 1;
 
 
   // for catgeory 
-  if(category!="all"){
+  if(category!="all"){  
     filteredProducts=filteredProducts.filter((product)=>product.category===category)
   }
 

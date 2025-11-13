@@ -347,7 +347,7 @@
       "email": "a@gmail.com",
       "password": "12345678",
       "role": "User",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [
         {
           "product": {
@@ -398,53 +398,6 @@
       "orders": [],
       "wishlist": [],
       "created_at": "2025-11-05T12:22:34.277Z"
-    },
-    {
-      "id": "15c6",
-      "name": "lnoeno",
-      "email": "k@gmail.com",
-      "password": "12345678",
-      "role": "User",
-      "isBlock": false,
-      "cart": [],
-      "orders": [
-        {
-          "orderId": 1762597849970,
-          "items": [
-            {
-              "id": "1",
-              "title": "iPhone 15 Pro Max",
-              "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
-              "price": 1399,
-              "discountPercentage": 10,
-              "rating": 4.9,
-              "stock": 25,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
-              ],
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 1399,
-          "status": "Placed (COD)",
-          "paymentMethod": "Cash on Delivery",
-          "address": {
-            "name": "n",
-            "address": "j",
-            "city": "j",
-            "pincode": "j",
-            "phoneNumber": "h"
-          },
-          "created_at": "2025-11-08T10:30:49.970Z"
-        }
-      ],
-      "wishlist": [],
-      "created_at": "2025-11-08T10:29:39.035Z"
     }
   ],
   "products": [
@@ -454,7 +407,7 @@
       "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
       "price": 75000,
       "discountPercentage": 10,
-      "rating": 4.9,
+      "rating": "5",
       "stock": 25,
       "brand": "Apple",
       "isDeleted": false,

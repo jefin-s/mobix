@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 export const Authcontext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("currentUser");
     navigate('/')
+    toast.success("Logout successfully")
     
   };
 

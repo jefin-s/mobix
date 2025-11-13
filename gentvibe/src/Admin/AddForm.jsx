@@ -5,16 +5,16 @@ const AddForm = () => {
     const {addProducts}=useContext(ProductContext)
 
     const[products,setProducts]=useState({
-        title:"",
-        price:"",
-        desciption:"",
-        discountPercentage:"",
-        rating:"",
-        stock:"",
-        brand:"",
-        isActive:"",
-        category:"",
-        thumbnail:""       
+          title:"",
+          price:"",
+          desciption:"",
+          discountPercentage:"",
+          rating:"",
+          stock:"",
+          brand:"",
+          isActive:"",
+          category:"",
+          thumbnail:""       
     })
 
     
@@ -68,6 +68,7 @@ const AddForm = () => {
       name='thumbnail'
     />
 
+ 
     <input
       type="text"
       placeholder="Brand"
