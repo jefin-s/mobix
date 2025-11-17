@@ -11,7 +11,7 @@ import { Userprovider } from "./Admin/context/Userscontext.jsx";
 import { OrderProvider } from "./Admin/context/Oredercontext.jsx";
 import { ProductProvider } from "./Admin/Productcontext.jsx";
 import Modal from "react-modal";
-Modal.setAppElement("#root")
+Modal.setAppElement("#root");
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -23,10 +23,9 @@ createRoot(document.getElementById("root")).render(
               <Userprovider>
                 <OrderProvider>
                   <ProductProvider>
-                  <App />
+                    <App />
                   </ProductProvider>
                 </OrderProvider>
-                
               </Userprovider>
             </WhishProvider>
           </CartProvider>

@@ -8,218 +8,9 @@
       "role": "User",
       "isBlock": false,
       "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "2025-11-03T12:00:00Z"
-    },
-    {
-      "id": "a1",
-      "name": "admin",
-      "email": "admin@gmail.com",
-      "password": "admin123",
-      "role": "admin",
-      "created_at": "2025-11-03T12:00:00Z"
-    },
-    {
-      "id": "1a4d",
-      "name": "Jefins",
-      "email": "j@gmail.com",
-      "password": "12345678",
-      "role": "User",
-      "isBlock": false,
-      "cart": [],
       "orders": [
         {
-          "orderId": 1762626266818,
-          "items": [
-            {
-              "id": "1",
-              "title": "iPhone 15 Pro Max",
-              "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
-              "price": 1399,
-              "discountPercentage": 10,
-              "rating": 4.9,
-              "stock": 25,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
-              ],
-              "quantity": 3
-            },
-            {
-              "id": "2",
-              "title": "iPhone 14 ",
-              "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
-              "price": 1199,
-              "discountPercentage": 12,
-              "rating": 4.8,
-              "stock": 30,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
-              ],
-              "quantity": 2
-            },
-            {
-              "id": "3",
-              "title": "iPhone 13",
-              "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
-              "price": 899,
-              "discountPercentage": 15,
-              "rating": 4.7,
-              "stock": 40,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
-              ],
-              "quantity": 2
-            }
-          ],
-          "totalAmount": 8393,
-          "status": "Placed (COD)",
-          "paymentMethod": "Cash on Delivery",
-          "address": {
-            "name": " j    MMMPMP",
-            "address": "df",
-            "city": "f",
-            "pincode": "   d",
-            "phoneNumber": "f"
-          },
-          "created_at": "2025-11-08T18:24:26.818Z"
-        },
-        {
-          "orderId": 1762879294200,
-          "items": [
-            {
-              "id": "3",
-              "title": "iPhone 13",
-              "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
-              "price": 30000,
-              "discountPercentage": 15,
-              "rating": 4.7,
-              "stock": 40,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
-              ],
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 30000,
-          "status": "Placed (COD)",
-          "paymentMethod": "Cash on Delivery",
-          "address": {
-            "name": "fffr",
-            "address": "ferf",
-            "city": "frfgr",
-            "pincode": "gr",
-            "phoneNumber": "edfe"
-          },
-          "created_at": "2025-11-11T16:41:34.200Z"
-        },
-        {
-          "orderId": 1762929851118,
-          "items": [
-            {
-              "id": "4",
-              "title": "AirPods Pro (2nd Generation)",
-              "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
-              "price": 14000,
-              "discountPercentage": 8,
-              "rating": 4.8,
-              "stock": 60,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "audio",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/AirPods_PDP_1_77f5bd3f-817f-417a-9211-04ddeb52d5a8_550x.jpg?v=1705407825",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQD83_AV2.png"
-              ],
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 14000,
-          "status": "Placed (COD)",
-          "paymentMethod": "Cash on Delivery",
-          "address": {
-            "name": "nenfe",
-            "address": "kfeln",
-            "city": "egf",
-            "pincode": "rg",
-            "phoneNumber": "febjk"
-          },
-          "created_at": "2025-11-12T06:44:11.118Z"
-        },
-        {
-          "orderId": 1762929898377,
-          "items": [
-            {
-              "id": "3",
-              "title": "iPhone 13",
-              "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
-              "price": 30000,
-              "discountPercentage": 15,
-              "rating": 4.7,
-              "stock": 40,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
-              ],
-              "quantity": 1
-            },
-            {
-              "id": "2",
-              "title": "iPhone 14 ",
-              "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
-              "price": 45000,
-              "discountPercentage": 12,
-              "rating": 4.8,
-              "stock": 30,
-              "brand": "Apple",
-              "isActive": true,
-              "category": "smartphones",
-              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
-              "images": [
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
-                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
-              ],
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 75000,
-          "status": "Placed (COD)",
-          "paymentMethod": "Cash on Delivery",
-          "address": {
-            "name": "jefin s",
-            "address": "sathyekkal house",
-            "city": "Tirur,malappuram",
-            "pincode": "676562",
-            "phoneNumber": "09995721011"
-          },
-          "created_at": "2025-11-12T06:44:58.377Z"
-        },
-        {
-          "orderId": 1762965764328,
+          "orderId": 1763101796855,
           "items": [
             {
               "id": "3",
@@ -242,16 +33,250 @@
             }
           ],
           "totalAmount": 30000,
-          "status": "Placed (COD)",
+          "status": "Processing",
           "paymentMethod": "Cash on Delivery",
           "address": {
-            "name": "kfe",
-            "address": "grg",
-            "city": "b",
-            "pincode": "b",
-            "phoneNumber": "fr"
+            "name": "Afin sathyekkal",
+            "address": "sathyekkal House",
+            "city": "Malappuram",
+            "pincode": "676562",
+            "phoneNumber": "9995721011"
           },
-          "created_at": "2025-11-12T16:42:44.328Z"
+          "created_at": "2025-11-14T06:29:56.855Z"
+        }
+      ],
+      "wishlist": [],
+      "created_at": "2025-11-03T12:00:00Z"
+    },
+    {
+      "id": "a1",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "role": "admin",
+      "created_at": "2025-11-03T12:00:00Z"
+    },
+    {
+      "id": "1a4d",
+      "name": "Jefins",
+      "email": "j@gmail.com",
+      "password": "12345678",
+      "role": "User",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": "65000",
+          "discountPercentage": 10,
+          "rating": "5",
+          "stock": 25,
+          "brand": "Apple",
+          "isDeleted": false,
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ],
+          "quantity": 2
+        },
+        {
+          "id": "2",
+          "title": "iPhone 14 ",
+          "description": "Experience Dynamic Island and ProMotion technology with iPhone 14 Pro’s A16 Bionic performance.",
+          "price": 45000,
+          "discountPercentage": 12,
+          "rating": 4.8,
+          "stock": 30,
+          "brand": "Apple",
+          "isActive": true,
+          "isDeleted": false,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_14_Starlight_PDP_Image_Position-1A__WWEN_9c27d050-f476-40ea-9371-f2f265865893.jpg?v=1705598611&width=823   ",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-deeppurple.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-pro-silver.png"
+          ],
+          "quantity": 2
+        },
+        {
+          "id": "3",
+          "title": "iPhone 13",
+          "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+          "price": 30000,
+          "discountPercentage": 15,
+          "rating": 4.7,
+          "stock": 40,
+          "brand": "Apple",
+          "isActive": true,
+          "isDeleted": false,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+          ],
+          "quantity": 2
+        },
+        {
+          "id": "4",
+          "title": "AirPods Pro (2nd Generation)",
+          "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
+          "price": 14000,
+          "discountPercentage": 8,
+          "rating": 4.8,
+          "stock": 60,
+          "brand": "Apple",
+          "isActive": true,
+          "category": "audio",
+          "isDeleted": false,
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/AirPods_PDP_1_77f5bd3f-817f-417a-9211-04ddeb52d5a8_550x.jpg?v=1705407825",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQD83_AV2.png"
+          ],
+          "quantity": 1
+        }
+      ],
+      "orders": [
+        {
+          "orderId": 1763101467193,
+          "items": [
+            {
+              "id": "3",
+              "title": "iPhone 13",
+              "description": "A classic Apple device with A15 Bionic chip, dual-camera system, and all-day battery life.",
+              "price": 30000,
+              "discountPercentage": 15,
+              "rating": 4.7,
+              "stock": 40,
+              "brand": "Apple",
+              "isActive": true,
+              "isDeleted": false,
+              "category": "smartphones",
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_13_Midnight_PDP_Image_Position-1A__GBEN_de8251ca-01c9-418d-b3df-cf689a8aa010.jpg?v=1705598358&width=823",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pink.png",
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-blue.png"
+              ],
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 30000,
+          "status": "Delivered",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": "Neha Basheer",
+            "address": "sathyekkal House",
+            "city": "Malappuram",
+            "pincode": "676562",
+            "phoneNumber": "9995721011"
+          },
+          "created_at": "2025-11-14T06:24:27.193Z"
+        },
+        {
+          "orderId": 1763143432358,
+          "items": [
+            {
+              "id": "4",
+              "title": "AirPods Pro (2nd Generation)",
+              "description": "Active Noise Cancellation, Adaptive Transparency, and personalized spatial audio for immersive sound.",
+              "price": 14000,
+              "discountPercentage": 8,
+              "rating": 4.8,
+              "stock": 60,
+              "brand": "Apple",
+              "isActive": true,
+              "category": "audio",
+              "isDeleted": false,
+              "thumbnail": "https://www.machines.com.my/cdn/shop/products/AirPods_PDP_1_77f5bd3f-817f-417a-9211-04ddeb52d5a8_550x.jpg?v=1705407825",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQD83_AV2.png"
+              ],
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 14000,
+          "status": "Shipping",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": "jefin",
+            "address": "sathyekkaln house",
+            "city": "tirur",
+            "pincode": "676562",
+            "phoneNumber": "953912011"
+          },
+          "created_at": "2025-11-14T18:03:52.358Z"
+        },
+        {
+          "orderId": 1763143476497,
+          "items": [
+            {
+              "id": "6",
+              "title": "MagSafe Charger",
+              "description": "Magnetic wireless charger for iPhone models with fast charging and snap alignment.",
+              "price": 26000,
+              "discountPercentage": 0,
+              "rating": 4.6,
+              "stock": 100,
+              "brand": "Apple",
+              "isActive": true,
+              "isDeleted": false,
+              "category": "accessories",
+              "thumbnail": "https://www.jiomart.com/images/product/original/494423130/apple-magsafe-charger-200-cm-2-m-digital-o494423130-p609946242-5-202409111736.jpeg?im=Resize=(1000,1000)",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3_AV2.png"
+              ],
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 26000,
+          "status": "Shipping",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": "f",
+            "address": "f",
+            "city": "f",
+            "pincode": "f",
+            "phoneNumber": "f"
+          },
+          "created_at": "2025-11-14T18:04:36.497Z"
+        },
+        {
+          "orderId": 1763187254683,
+          "items": [
+            {
+              "id": "5",
+              "title": "Apple Watch Ultra 2",
+              "description": "Designed for adventure with titanium case, precision dual-frequency GPS, and S9 chip.",
+              "price": 49000,
+              "discountPercentage": 5,
+              "rating": 4.9,
+              "stock": 15,
+              "brand": "Apple",
+              "isActive": true,
+              "isDeleted": false,
+              "category": "wearables",
+              "thumbnail": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ultra-case-unselect-gallery-1-202509_GEO_IN_FMT_WHH?wid=752&hei=720&fmt=p-jpg&qlt=80&.v=aTVJSEliNW9jb25zalBlTm16VmMxcWpkNHRJWDMzcTg3NWRxV0pydTcvSlBnRWpBclhudmFXcEpxSFV4OEZ4VVh2WnVKTjEySjVmY2ZteE1GdEFoNWM2c3NSYUM4YjA0RTQxLytvRzE4M0RLbzVxZ0IvQUd3ejhJa1hOQUl0eUlyWGd5R3FWb3Q0Uy8veXpDZThMWXB3",
+              "images": [
+                "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/watch-ultra2-side.png"
+              ],
+              "quantity": 1
+            }
+          ],
+          "totalAmount": 49000,
+          "status": "Pending",
+          "paymentMethod": "Cash on Delivery",
+          "address": {
+            "name": "jefin",
+            "address": "g",
+            "city": "gg",
+            "pincode": "g",
+            "phoneNumber": "vg"
+          },
+          "created_at": "2025-11-15T06:14:14.683Z"
         }
       ],
       "wishlist": [],
@@ -405,8 +430,8 @@
       "id": "1",
       "title": "iPhone 15 Pro Max",
       "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
-      "price": 75000,
-      "discountPercentage": 10,
+      "price": "74999",
+      "discountPercentage": "9",
       "rating": "5",
       "stock": 25,
       "brand": "Apple",

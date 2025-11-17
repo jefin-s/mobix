@@ -44,7 +44,7 @@ const Cart = () => {
                       {item.title}
                     </h2>
                     <p className="text-gray-500 text-sm">
-                      ₹{item.price.toFixed(2)} each
+                      ₹{item.price} each
                     </p>
                   </div>
                 </div>

@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("currentUser");
     navigate('/')
     toast.success("Logout successfully")
-    
   };
 
   return (

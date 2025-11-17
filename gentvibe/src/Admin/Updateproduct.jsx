@@ -43,7 +43,7 @@ const Updateproduct = () => {
     e.preventDefault()
     await axios.put(`${base_url}/products/${p_id}`, productsWithid)
     toast.success('Product Updated Successfully ✅')
-    navigate('/allproducts')
+    navigate('/admin/allproducts')
   }
 
   return (

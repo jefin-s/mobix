@@ -60,7 +60,7 @@ const Orders = () => {
               <p>
                 <strong>Order ID:</strong> {order.orderId}
               </p>
-              <p className="text-green-600 font-semibold">{order.status}</p>
+              <p className="text-green-600 font-semibold">status:{order.status}</p>
             </div>
 
             {/* Delete Button */}
@@ -90,6 +90,7 @@ const Orders = () => {
                 />
                 <p>{item.title}</p>
                 <p className="font-semibold">x{item.quantity}</p>
+                
               </div>
             ))}
           </div>

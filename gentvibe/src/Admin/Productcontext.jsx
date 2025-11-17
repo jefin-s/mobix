@@ -39,10 +39,12 @@ export const ProductProvider = ({ children }) => {
       console.log(error);
     }
   };
+ 
+
 
   return (
     <ProductContext.Provider
-      value={{ products, addProducts, delteProductWithid }}
+      value={{ products, addProducts, delteProductWithid}}
     >
       {children}
     </ProductContext.Provider>

@@ -5,6 +5,7 @@ import { base_url } from "../../api/api";
 export const Usercontext = createContext();
 export const Userprovider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -21,7 +22,7 @@ export const Userprovider = ({ children }) => {
 
   const deletewithuserid= async(userid)=>{
     try{
-       await axios.patch(`${base_url}/users/${userid}`,{isBlock: true})
+       await axios.patch(`${base_url}/users/${userid}`,{ isBlock: !users.find(u => u.id === userid)?.isBlock })
        setUsers((prevuser)=>prevuser.filter((item)=>item.id!==userid))
     }
     catch(error){

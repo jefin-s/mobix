@@ -30,7 +30,6 @@ const App = () => {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
-
           <Route path="/prodcrd" element={<Productcard />} />
           <Route path="prdctpage" element={<Products />} />
           <Route path="prdctdet/:id" element={<ProductDetails />} />
@@ -45,14 +44,14 @@ const App = () => {
           <Route path="/order" element={<Orders />} />
         </Route>
 
-        <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/userlist" element={<ManageUser />} />
-          <Route path="/userorder" element={<Manageorders />} />
-          <Route path="/allproducts" element={<ManageProduct />} />
-          <Route path="/addform" element={<AddForm />} />
-          <Route path="/detailuser/:userid" element={<DetailedUser />} />
-          <Route path="/updatept/:p_id" element={<Updateproduct/>}/>
+        <Route  path='/admin'element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="userlist" element={<ManageUser />} />
+          <Route path="userorder" element={<Manageorders />} />
+          <Route path="allproducts" element={<ManageProduct />} />
+          <Route path="addform" element={<AddForm />} />
+          <Route path="detailuser/:userid" element={<DetailedUser />} />
+          <Route path="updatept/:p_id" element={<Updateproduct/>}/>
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

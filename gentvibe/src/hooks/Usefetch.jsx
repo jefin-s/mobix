@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 export const useFetch=(url)=>{
     const[data,setData]=useState([])
+    const [urlS,setUrlS]=useState(url)
     useEffect(()=>{
         const fethApis=async()=>{
             try{
@@ -19,5 +20,5 @@ export const useFetch=(url)=>{
         }
         fethApis()
     },[url])
-    return {data}
+    return {data,setUrlS}
 }

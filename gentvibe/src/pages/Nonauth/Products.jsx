@@ -9,13 +9,16 @@ const Products = () => {
   // url search params for pagination issue
   const queryParams = new URLSearchParams(window.location.search);
 const initialPage = Number(queryParams.get("page")) || 1;
+const initialCategory=queryParams.get("category")||"all"
+const initialSort=queryParams.get("sort")||"none"
+
  
    const [currentPage, setCurrentPage] = useState(initialPage);
-   const[category,setCategory]=useState("all")
-   const[sortOrder,setOrder]=useState("none")
-
+   const[category,setCategory]=useState(initialCategory)
+   const[sortOrder,setOrder]=useState(initialSort)
+   
   const { searchTerm } = useContext(SearchContext);
-  const { data } = useFetch(`${base_url}/products`);
+  const { data ,setUrlS} = useFetch(`${base_url}/products`);
 
   // pagination issue solving using url search params
     const updatePageInURL = (pageNum) => {
@@ -24,12 +27,40 @@ const initialPage = Number(queryParams.get("page")) || 1;
     window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
 
   };
+//  category issue 
+ const updateCategoryInURL = (value) => {
+  const params = new URLSearchParams(window.location.search);
+  params.set("category", value);
+  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
+};
+// sort issue
+const updateSortInURL = (value) => {
+  const params = new URLSearchParams(window.location.search);
+  params.set("sort", value);
+  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
+};
+
+// debouncing logic 
+const [debounceValue,setDebounceValue]=useState(searchTerm)
+
+ useEffect(()=>{
+  const handler=setTimeout(()=>{
+    setDebounceValue(searchTerm)
+    console.log(searchTerm);
+    
+  },500)
+  return()=>clearTimeout(handler)
+ },[searchTerm])
+
+ useEffect(()=>{
+  setUrlS(`${base_url}/products?search=${debounceValue}`)
  
 
+ },[debounceValue])
   // for  product  browsing
   let  filteredProducts = data.filter((product) =>
     product.title&&
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    product.title.toLowerCase().includes(debounceValue.toLowerCase())
   );
 
 
@@ -92,7 +123,8 @@ const initialPage = Number(queryParams.get("page")) || 1;
         <div>
        <select
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) =>{setCategory(e.target.value)
+          updateCategoryInURL(e.target.value)}}
           className="border px-4 py-2 rounded-lg shadow-sm"
         >
           <option value="all">All Categories</option>
@@ -109,7 +141,9 @@ const initialPage = Number(queryParams.get("page")) || 1;
         
          <select
           value={sortOrder}
-          onChange={(e) => setOrder(e.target.value)}
+          onChange={(e) => {setOrder(e.target.value)
+             updateSortInURL(e.target.value)}
+          }
           className="border px-4 py-2 rounded-lg shadow-sm ml-5"
         >
           <option value="none">Sort by Price</option>

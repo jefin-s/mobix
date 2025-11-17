@@ -12,7 +12,9 @@ const PublicLayout = () => {
   
   const hideNavbar =
     location.pathname === "/login" || location.pathname === "/register";
-
+  if (user && user.role === "admin") {
+    return <Navigate to="/admin" replace />;
+  }
   
   return (
     <div>

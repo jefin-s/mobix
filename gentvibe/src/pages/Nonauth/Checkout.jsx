@@ -34,7 +34,7 @@ const Checkout = () => {
       return;
     }
 
-    if (cart.length === 0) {
+    if (!buyNowData&&cart.length === 0) {
       toast.warning("Your cart is empty");
       return;
     }
@@ -42,12 +42,14 @@ const Checkout = () => {
     try {
       const res = await axios.get(`${base_url}/users/${user.id}`);
       const userData = res.data;
-
+      //  if the buy now data is  exist return  an array name as order items store an array array containg  spead the buy now data adn set quantiry is 1
+     const orderitems=buyNowData?[{...buyNowData,quantity:buyNowQuantity}]:cart;
+     const totalAmount=buyNowData?buyNowData.price*buyNowQuantity:totalprice
       const newOrder = {
         orderId: Date.now(),
-        items: cart,
-        totalAmount: totalprice,
-        status: "Placed (COD)",
+        items: orderitems,
+        totalAmount: totalAmount,
+        status: "Pending",
         paymentMethod: "Cash on Delivery",
         address: {
           name,
@@ -62,7 +64,7 @@ const Checkout = () => {
       const updatedData = {
         ...userData,
         orders: [...userData.orders, newOrder],
-        cart: [],
+        cart: buyNowData?userData.cart:[],
       };
 
       await axios.patch(`${base_url}/users/${user.id}`, updatedData);
