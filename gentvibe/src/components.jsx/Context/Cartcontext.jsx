@@ -108,6 +108,7 @@ import toast from "react-hot-toast";
     
   
     
+    
     return (
       <CartContext.Provider value={{ cart, addToCart ,removeCartitem,incementQuantity,decremnetQuantity,isIncart,totalQuantity,totalprice}}>
         {children}

@@ -80,7 +80,7 @@ const [debounceValue,setDebounceValue]=useState(searchTerm)
   }
 
 
-  // ✅ Pagination Logic
+  
   const totalProducts = filteredProducts.length;
   const perPage = 4;
   const offset = (currentPage - 1) * perPage;

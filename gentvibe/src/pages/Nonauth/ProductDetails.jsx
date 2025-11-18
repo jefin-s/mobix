@@ -4,41 +4,50 @@ import { base_url } from "../../api/api";
 import axios from "axios";
 import { CartContext } from "../../components.jsx/Context/Cartcontext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+
 import { Wishcontext } from "../../components.jsx/Context/Wishcontext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const { addToCart, isIncart } = useContext(CartContext);
+  const { cart,addToCart, isIncart,incementQuantity,decremnetQuantity,removeCartitem } = useContext(CartContext);
+
   const{Togglewhishlist,alreadyinWhislist}=useContext(Wishcontext)
   const navigate = useNavigate();
-
+   
   useEffect(() => {
     try {
       axios.get(`${base_url}/products/${id}`).then((response) => {
         setProduct(response.data);
+        console.log(response.data);
+        
       });
     } catch (error) {
       console.log(error);
     }
   }, [id]);
 
+
   if (!product)
     return <p className="text-center text-gray-600 mt-10">Loading...</p>;
 
+  // cart is an array of object it retirn a single objeect and inthis id wil mathc it return a single object so we can cartitemm .quantit
+  const cartitem=cart.find((item)=>item.id===product.id)
+
+
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-10 p-6 md:p-12 max-w-6xl mx-auto rounded-xl mt-10">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-10 p-6 md:p-12 max-w-6xl mx-auto rounded-xl h-screen ">
       {/* Left Image Section */}
       <div className="w-full md:w-1/2 flex justify-center">
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="w-full md:w-4/5 lg:w-3/5 rounded-xl object-contain bg-transparent"
+          className="w-full md:w-4/5 lg:w-3/5 rounded-xl object-contain bg-transparent mt-10 border"
         />
       </div>
 
       
-      <div className="w-full md:w-1/2 flex flex-col gap-4">
+      <div className="w-full md:w-1/2 flex flex-col gap-4" >
 
       
         <div className="flex justify-between items-center">
@@ -83,15 +92,36 @@ const ProductDetails = () => {
        
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           {isIncart(product.id) ? (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate("/cart");
-              }}
-              className="w-full bg-green-600 text-white py-3 rounded-xl"
-            >
-              Go to Cart ✅
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 sm:mt-0">
+                  <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
+                    <button
+                      onClick={() => decremnetQuantity(product.id)}
+                      className="px-3 py-1 text-gray-700 hover:bg-gray-100"
+                    >
+                      −
+                    </button>
+                    <span className="px-4 py-1 text-gray-800 font-medium">
+                      {cartitem?cartitem.quantity:"no"}
+                    </span>
+                    <button
+                      onClick={() => incementQuantity(product.id)}
+                      className="px-3 py-1 text-gray-700 hover:bg-gray-100"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => removeCartitem(product.id)}
+                    className="text-red-500 hover:text-red-600 font-medium text-sm"
+                  >
+                    Remove
+                  </button>
+
+                  <h3 className="font-semibold text-gray-800 text-lg sm:ml-6">
+                    ₹{(product.price * cartitem.quantity).toFixed(2)}
+                  </h3>
+                </div>
           ) : (
             <button
               className="w-full bg-linear-to-r cursor-pointer from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
@@ -122,7 +152,7 @@ const ProductDetails = () => {
             onClick={(e) => {
               e.stopPropagation();
               navigate("/Checkout", {
-                state: { product: product, quantity: 1 },
+                state: { product: product, quantity: cartitem?cartitem.quantity:1},
               });
             }}
           >

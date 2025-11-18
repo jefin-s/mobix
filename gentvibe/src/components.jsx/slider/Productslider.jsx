@@ -23,13 +23,13 @@ const ProductSlider = () => {
     <div className="relative w-full h-screen overflow-hidden">
       <Slider {...settings} className="h-screen">
         {/* Slide 1 */}
-        <div className="relative h-screen">
+        <div className="relative h-screen ">
           <img
             src={three}
             alt="iPhone"
             className="w-full h-screen object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16">
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16 ">
             <h2 className="text-white text-4xl md:text-6xl font-bold drop-shadow-lg mt-50">
               New iPhone Collection 📱
             </h2>
@@ -40,20 +40,15 @@ const ProductSlider = () => {
         </div>
 
         {/* Slide 2 */}
-        <div className="relative h-screen">
-          <img
-            src={two}
-            alt="Accessories"
-            className="w-full h-screen object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16 ">
-            <h2 className="text-black  text-4xl md:text-6xl font-bold mt-50 drop-shadow-lg">
-              Premium Accessories 💼
-            </h2>
-            <button className="bg-white text-black font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition-all mt-2">
-              Explore Now
-            </button>
-          </div>
+        <div className="relative h-screen ">
+           <video
+    className="w-full h-screen object-cover"
+    src="public/videoplayback.mp4"   // 👈 your local video path
+    autoPlay
+    muted
+    loop
+    playsInline
+  ></video>
         </div>
 
         {/* Slide 3 */}
@@ -63,7 +58,7 @@ const ProductSlider = () => {
             alt="Smart Watch"
             className="w-full h-screen object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16">
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16">
             <h2 className="text-white text-4xl md:text-6xl font-bold mt-50 drop-shadow-lg">
               Smart Watches for Every Style ⌚
             </h2>

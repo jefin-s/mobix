@@ -18,7 +18,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { whishlist } = useContext(Wishcontext);
 
   return (
-   <header className="w-full shadow-sm fixed top-0 left-0 right-0 z-50 bg-white">
+   <header className="w-full  fixed top-0 left-0 right-0 z-50 bg-white">
 
       {/* NAVBAR TOP */}
       <nav className="bg-white px-4 py-3 flex items-center justify-between relative">
@@ -35,7 +35,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <input
             type="text"
             placeholder="Search your products"
-            className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-gray-400 rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 shadow-sm transition duration-200"
+            className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-gray-400 rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400  transition duration-200"
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />

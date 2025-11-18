@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductContext } from "./Productcontext";
 import { useNavigate } from "react-router-dom";
 import Confirmodal from "../Modal/Confirmodal";
@@ -13,18 +13,38 @@ const ManageProduct = () => {
     (item.title ?? "").toLowerCase().includes(searchitem.toLowerCase())
   );
 
+  const queryParams= new URLSearchParams(window.location.search)
+  const initialCategory=queryParams.get("category")||"all"
+  const initialDelete=queryParams.get("deleted")||"all"
+  
+
+
+
   // Product category
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState(initialCategory);
   if (category !== "all") {
     searcheditem = searcheditem.filter((item) => item.category === category);
   }
-
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  params.set("category", category);
+  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
+}, [category]);
   // Filter out-of-stock
-  const [deleted, setDeleted] = useState("all");
+  const [deleted, setDeleted] = useState(initialDelete);
   if (deleted !== "all") {
     const boolValue = deleted === "true";
     searcheditem = searcheditem.filter((item) => item.isDeleted === boolValue);
   }
+  useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  params.set("category", category);   // keep existing category
+  params.set("deleted", deleted);     // update deleted filter
+
+  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
+}, [deleted]);
+ 
 
   // modal logic for update
   const [showUpdatemodal, setShowUdpatemodal] = useState();
@@ -65,6 +85,8 @@ const ManageProduct = () => {
     setdeletmodal(false);
     setSelectWithdeleteId(null);
   };
+  
+  
 
   const navigate = useNavigate();
 
@@ -99,7 +121,7 @@ const ManageProduct = () => {
             onChange={(e) => setDeleted(e.target.value)}
             className="border px-4 py-2 rounded-lg shadow-sm w-full md:w-44"
           >
-            <option value="all">All products</option>
+            <option value="all">All stocks</option>
             <option value="true">Deleted</option>
             <option value="false">In Stock</option>
           </select>
