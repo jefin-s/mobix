@@ -17,7 +17,7 @@ const initialSort=queryParams.get("sort")||"none"
    const[category,setCategory]=useState(initialCategory)
    const[sortOrder,setOrder]=useState(initialSort)
    
-  const { searchTerm } = useContext(SearchContext);
+  const { searchTerm,suggestion} = useContext(SearchContext);
   const { data ,setUrlS} = useFetch(`${base_url}/products`);
 
   // pagination issue solving using url search params

@@ -47,7 +47,7 @@ const Dashboard = () => {
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-5">
             <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
               <h3 className="text-gray-500 font-bold mb-4">Top Users</h3>
               <TopUsersChart />

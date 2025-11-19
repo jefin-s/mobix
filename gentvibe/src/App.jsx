@@ -44,7 +44,7 @@ const App = () => {
           <Route path="/order" element={<Orders />} />
         </Route>
 
-        <Route  path='/admin'element={<AdminLayout />}>
+        <Route  path='/admin' element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="userlist" element={<ManageUser />} />
           <Route path="userorder" element={<Manageorders />} />

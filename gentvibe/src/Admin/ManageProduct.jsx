@@ -6,46 +6,43 @@ import Confirmodal from "../Modal/Confirmodal";
 const ManageProduct = () => {
   const { products, delteProductWithid } = useContext(ProductContext);
   const [status, setStatus] = useState();
-
+  /////////////////////////////////////////////
   // Product searching
   const [searchitem, setSearchitem] = useState("");
   let searcheditem = products.filter((item) =>
     (item.title ?? "").toLowerCase().includes(searchitem.toLowerCase())
   );
+  //////////////////////////////////////////////////////////////
 
-  const queryParams= new URLSearchParams(window.location.search)
-  const initialCategory=queryParams.get("category")||"all"
-  const initialDelete=queryParams.get("deleted")||"all"
-  
-
-
+  //persisting category and  delted drop down section
+  //////////////////////////////////////////////////
+  const queryParams = new URLSearchParams(window.location.search);
+  const initialCategory = queryParams.get("category") || "all";
+  const initialDelete = queryParams.get("deleted") || "all";
 
   // Product category
   const [category, setCategory] = useState(initialCategory);
   if (category !== "all") {
     searcheditem = searcheditem.filter((item) => item.category === category);
   }
-useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  params.set("category", category);
-  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
-}, [category]);
+
   // Filter out-of-stock
   const [deleted, setDeleted] = useState(initialDelete);
   if (deleted !== "all") {
     const boolValue = deleted === "true";
     searcheditem = searcheditem.filter((item) => item.isDeleted === boolValue);
   }
+
   useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams();
 
-  params.set("category", category);   // keep existing category
-  params.set("deleted", deleted);     // update deleted filter
+    params.set("category", category);
+    params.set("deleted", deleted);
 
-  window.history.pushState({}, "", `/prdctpage?${params.toString()}`);
-}, [deleted]);
- 
+    navigate(`/admin/allproducts?${params.toString()}`, { replace: true });
+  }, [category, deleted]);
 
+  //////////////////////////////
   // modal logic for update
   const [showUpdatemodal, setShowUdpatemodal] = useState();
   const [selectupdateId, setSelectwithupdateid] = useState();
@@ -57,7 +54,7 @@ useEffect(() => {
     if (selectupdateId) {
       navigate(`/admin/updatept/${selectupdateId}`);
     }
-    
+
     setShowUdpatemodal(false);
     setSelectwithupdateid(null);
   };
@@ -85,8 +82,6 @@ useEffect(() => {
     setdeletmodal(false);
     setSelectWithdeleteId(null);
   };
-  
-  
 
   const navigate = useNavigate();
 

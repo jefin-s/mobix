@@ -8,18 +8,37 @@ import { CartContext } from "../Context/Cartcontext";
 import { Wishcontext } from "../Context/Wishcontext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import LoginModal from "../../Modal/LoginModal";
+import { useFetch } from "../../hooks/Usefetch";
+import { base_url } from "../../api/api";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
-  const[isOpens,setIsOpens]=useState(false)
+  const { data } = useFetch(`${base_url}/products`);
+  const [isOpens, setIsOpens] = useState(false);
   const { user, logoutUser } = useContext(Authcontext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { cart, totalQuantity } = useContext(CartContext);
   const { whishlist } = useContext(Wishcontext);
 
-  return (
-   <header className="w-full  fixed top-0 left-0 right-0 z-50 bg-white">
+  // logic for auto suggestion at the time of searching an inoi
+  const [suggestion, setSuggestion] = useState([]);
+  const searchTermchange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    if (value.length > 0) {
+      const suggestedproducts = data
+        .filter((item) =>
+          item.title.toLowerCase().includes(value.toLowerCase())
+        )
+        .slice(0, 5);
+      setSuggestion(suggestedproducts);
+    } else {
+      setSuggestion([]);
+    }
+  };
 
+  return (
+    <header className="w-full  fixed top-0 left-0 right-0 z-50 bg-white">
       {/* NAVBAR TOP */}
       <nav className="bg-white px-4 py-3 flex items-center justify-between relative">
         {/* LOGO */}
@@ -36,10 +55,28 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             type="text"
             placeholder="Search your products"
             className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-gray-400 rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400  transition duration-200"
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => searchTermchange(e)}
             value={searchTerm}
           />
         </div>
+        {suggestion.length > 0 && (
+          <ul className="absolute top-full left:20 md:left-90 mt-1 w-full md:w-96 max-w-[250px] bg-white border border-gray-300 rounded-md shadow-md z-50 overflow-hidden">
+            {suggestion.map((item) => (
+              <li
+                key={item.id}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700"
+                onClick={() => {
+                  setSearchTerm(item.title); // set input value
+
+                  setSuggestion([]); // hide suggestions
+                  navigate("/prdctpage"); // go to Products page
+                }}
+              >
+                {item.title}
+              </li>
+            ))}
+          </ul>
+        )}
 
         {/* HAMBURGER MENU (MOBILE) */}
         <button
@@ -119,9 +156,9 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             </button>
           )}
           <LoginModal
-  isOpen={isOpens}              // pass the state
-  onClose={() => setIsOpens(false)} // function to close modal
-/>
+            isOpen={isOpens} // pass the state
+            onClose={() => setIsOpens(false)} // function to close modal
+          />
 
           <li className="text-black">{user ? user.name : ""}</li>
         </ul>
@@ -139,16 +176,10 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           >
             Logout
           </li>
-          <li
-            className="cursor-pointer"
-            onClick={() => navigate("/prdctpage")}
-          >
+          <li className="cursor-pointer" onClick={() => navigate("/prdctpage")}>
             Products
           </li>
-          <li
-            className="cursor-pointer"
-            onClick={() => navigate("/about")}
-          >
+          <li className="cursor-pointer" onClick={() => navigate("/about")}>
             About
           </li>
           <li

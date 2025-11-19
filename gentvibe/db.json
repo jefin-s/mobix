@@ -63,7 +63,27 @@
       "password": "12345678",
       "role": "User",
       "isBlock": false,
-      "cart": [],
+      "cart": [
+        {
+          "id": "1",
+          "title": "iPhone 15 Pro Max",
+          "description": "Apple’s most powerful smartphone with A17 Pro chip, 6.7-inch Super Retina XDR display, and titanium design.",
+          "price": "74999",
+          "discountPercentage": "9",
+          "rating": "5",
+          "stock": 25,
+          "brand": "Apple",
+          "isDeleted": false,
+          "isActive": true,
+          "category": "smartphones",
+          "thumbnail": "https://www.machines.com.my/cdn/shop/products/iPhone_15_Pro_Natural_Titanium_PDP_Image_Position-1__GBEN_44ba327c-18e5-4e6a-8f1a-f5a3869d1c3b.jpg?v=1705481136&width=1445",
+          "images": [
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-blue-titanium.png",
+            "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-15-pro-max-black-titanium.png"
+          ],
+          "quantity": 1
+        }
+      ],
       "orders": [
         {
           "orderId": 1763101467193,

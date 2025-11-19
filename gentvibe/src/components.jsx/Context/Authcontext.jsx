@@ -6,11 +6,14 @@ export const AuthProvider = ({ children }) => {
   const navigate=useNavigate()
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+ const[loading,setloading]=useState(true)
   useEffect(() => {
     const savedUser = localStorage.getItem("currentUser");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
+    setloading(false)
+    
   }, []);
 
   const loginUser = (userData) => {
@@ -26,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <Authcontext.Provider
-      value={{ user, loginUser, logoutUser, searchTerm, setSearchTerm }}
+      value={{ user, loginUser, logoutUser, searchTerm, setSearchTerm,loading}}
     >
       {children}
     </Authcontext.Provider>
