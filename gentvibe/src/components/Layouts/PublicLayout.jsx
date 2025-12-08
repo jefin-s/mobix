@@ -25,6 +25,13 @@ const PublicLayout = () => {
       <main>
         <Outlet />
       </main>
+      {/* Footer */}
+<footer className="mt-10 py-6 bg-gray-100 border-t border-gray-200 text-center">
+  <p className="text-gray-600 text-sm">
+    &copy; {new Date().getFullYear()} Created by <span className="font-semibold">Jefin Basheer</span>
+  </p>
+</footer>
+
     </div>
   );
 };

@@ -15,6 +15,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 md:px-16 pt-20">
+      
       <h1 className="text-2xl font-semibold mb-8 text-gray-800">
         {totalQuantity} {totalQuantity === 1 ? "item" : "items"}
       </h1>
@@ -125,9 +126,12 @@ const Cart = () => {
               </div>
             </div>
           </div>
+          
         </div>
+        
       )}
     </div>
+    
   );
 };
 
