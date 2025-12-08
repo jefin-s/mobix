@@ -1,7 +1,9 @@
 import Slider from "react-slick";
 import two from "/src/assets/acc.jpeg";
 import three from "/src/assets/iphone.jpg";
-import four from "/src/assets/wathc.jpg";
+import four from "/src/assets/ipad.jpg";
+import five from "/src/assets/17 air.webp"
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -30,25 +32,23 @@ const ProductSlider = () => {
             className="w-full h-screen object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16 ">
-            <h2 className="text-white text-4xl md:text-6xl font-bold drop-shadow-lg mt-50">
+            {/* <h2 className="text-white text-4xl md:text-6xl font-bold drop-shadow-lg mt-50">
               New iPhone Collection 📱
             </h2>
             <button className="bg-white text-black font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition-all mt-2">
               Shop Now
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Slide 2 */}
         <div className="relative h-screen ">
-           <video
-    className="w-full h-screen object-cover"
-    src="/videoplayback.mp4"   // 👈 your local video path
-    autoPlay
-    muted
-    loop
-    playsInline
-  ></video>
+      
+   <img
+            src={five}
+            alt="iPhone"
+            className="w-full h-screen object-cover"
+          />
         </div>
 
         {/* Slide 3 */}
@@ -59,12 +59,7 @@ const ProductSlider = () => {
             className="w-full h-screen object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16">
-            <h2 className="text-white text-4xl md:text-6xl font-bold mt-50 drop-shadow-lg">
-              Smart Watches for Every Style ⌚
-            </h2>
-            <button className="bg-white text-black font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition-all mt-2">
-              Discover Now
-            </button>
+          
           </div>
         </div>
       </Slider>

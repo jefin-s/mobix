@@ -10,6 +10,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import LoginModal from "../../Modal/LoginModal";
 import { useFetch } from "../../hooks/Usefetch";
 import { base_url } from "../../api/api";
+import { FaApple } from "react-icons/fa";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { data } = useFetch(`${base_url}/products`);
@@ -46,15 +47,15 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           className="text-2xl font-bold text-black cursor-pointer"
           onClick={() => navigate("/")}
         >
-          icloud
+          <FaApple />
         </div>
 
         {/* SEARCH BAR (visible on mobile + desktop) */}
         <div className="flex-1 flex justify-center md:justify-center mx-2">
           <input
             type="text"
-            placeholder="Search your products"
-            className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-gray-400 rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400  transition duration-200"
+            placeholder="Search "
+            className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-black rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400  transition duration-200"
             onChange={(e) => searchTermchange(e)}
             value={searchTerm}
           />
@@ -196,44 +197,100 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
       </nav>
 
       {/* MOBILE MENU DROPDOWN */}
-      {isOpen && (
-        <ul className="md:hidden flex flex-col bg-white px-6 py-4 gap-4 text-lg border-t absolute left-0 right-0 z-50">
-          <li className="cursor-pointer" onClick={() => navigate("/")}>
-            Home
-          </li>
-          <li
-            className="cursor-pointer bg-teal-100 w-max px-3 py-1 rounded-lg"
-            onClick={logoutUser}
-          >
-            Logout
-          </li>
-          <li className="cursor-pointer" onClick={() => navigate("/prdctpage")}>
-            Products
-          </li>
-          <li className="cursor-pointer" onClick={() => navigate("/about")}>
-            About
-          </li>
-          <li
-            className="cursor-pointer flex items-center gap-2"
-            onClick={() => navigate("/cart")}
-          >
-            <FaShoppingCart /> Cart
-          </li>
-          <li
-            className="cursor-pointer flex items-center gap-2"
-            onClick={() => navigate("/wish")}
-          >
-            <CiHeart /> Wishlist
-          </li>
-          <li
-            className="cursor-pointer flex items-center gap-2"
-            onClick={() => navigate("/login")}
-          >
-            <BsPerson /> Login
-          </li>
-          <li className="font-semibold">{user ? user.name : ""}</li>
-        </ul>
-      )}
+     {isOpen && (
+  <ul className="md:hidden flex flex-col bg-white shadow-xl px-6 py-4 gap-3 text-base absolute left-0 right-0 top-full z-50 border-t border-gray-100 animate-slideDown">
+    <li className="border-b border-gray-100 pb-3 mb-1">
+      <span className="font-semibold text-gray-800 text-sm">{user ? `Hi, ${user.name}` : "Welcome"}</span>
+    </li>
+    
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() =>{ navigate("/")
+        setIsOpen(false)
+      }}
+    >
+      <div className="flex items-center gap-3">
+        
+        <span>Home</span>
+      </div>
+    </li>
+    
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() => {navigate("/prdctpage")
+        setIsOpen(false)}}
+    >
+      <div className="flex items-center gap-3">
+       
+        <span>Products</span>
+      </div>
+    </li>
+    
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() => {navigate("/about")
+        setIsOpen(false)}}
+    >
+      <div className="flex items-center gap-3">
+        
+        <span>About</span>
+      </div>
+    </li>
+    
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() => {navigate("/cart")
+        setIsOpen(false)}
+      }
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+        
+          <span>Cart</span>
+        </div>
+        <span className="bg-teal-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
+      </div>
+    </li>
+    
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() => {navigate("/wish")
+        setIsOpen(false)
+      }}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+        
+          <span>Wishlist</span>
+        </div>
+        <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+      </div>
+    </li>
+    
+    {user ? (
+      <li 
+        className="cursor-pointer px-4 py-2.5 rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-150 mt-3"
+        onClick={logoutUser}
+
+      >
+        <div className="flex items-center gap-3">
+          
+          <span className="font-medium">Logout</span>
+        </div>
+      </li>
+    ) : (
+      <li 
+        className="cursor-pointer px-4 py-2.5 rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:from-teal-600 hover:to-teal-700 active:scale-[0.98] transition-all duration-150 mt-3"
+        onClick={() => navigate("/login")}
+      >
+        <div className="flex items-center gap-3">
+          <BsPerson className="text-white" />
+          <span className="font-medium">Login</span>
+        </div>
+      </li>
+    )}
+  </ul>
+)}
     </header>
   );
 };
