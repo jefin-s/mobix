@@ -250,10 +250,10 @@ const Checkout = () => {
 
   <div className="flex items-center gap-4 justify-center">
   
-    <img src="/public/mastercard.png" className="h-8" />
-    <img src="/public/paytm.png" className="h-8" />
-    <img src="/public/gpay.png" className="h-8" />
-    <img src="/public/razorpay.png" className="h-8" />
+    <img src="/mastercard.png" className="h-8" />
+    <img src="/paytm.png" className="h-8" />
+    <img src="/gpay.png" className="h-8" />
+    <img src="/razorpay.png" className="h-8" />
   </div>
 
 </div>
