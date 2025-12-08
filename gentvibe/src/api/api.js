@@ -1,1 +1,1 @@
-export const base_url="https://icloud-backend-ecom.onrender.com/"
+export const base_url="https://icloud-backend-ecom.onrender.com"
