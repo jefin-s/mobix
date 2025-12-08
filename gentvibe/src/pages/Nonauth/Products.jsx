@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useFetch } from "../../hooks/Usefetch";
-import ProductCard from "../../components.jsx/common/Productcard";
+import ProductCard from "../../components/common/Productcard";
 import { base_url } from "../../api/api";
-import { SearchContext } from "../../components.jsx/Context/Searchcontext";
+import { SearchContext } from "../../components/Context/Searchcontext";
 
 
 const Products = () => {

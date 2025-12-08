@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Authcontext } from '../../components.jsx/Context/Authcontext'
+import { Authcontext } from '../../components/Context/Authcontext'
 import axios from 'axios'
 import { base_url } from '../../api/api'
 

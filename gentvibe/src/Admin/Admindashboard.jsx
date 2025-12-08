@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Authcontext } from '../components.jsx/Context/Authcontext';
+import { Authcontext } from '../components/Context/Authcontext';
 import { HiMenu } from "react-icons/hi";
 import { FaUsers, FaBoxOpen, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 

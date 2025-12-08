@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Wishcontext } from "../../components.jsx/Context/Wishcontext";
+import { Wishcontext } from "../../components/Context/Wishcontext";
 
 const Whishlist = () => {
   const { whishlist, Togglewhishlist } = useContext(Wishcontext);

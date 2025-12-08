@@ -5,7 +5,7 @@ import { registerSchema } from "../../validation.jsx/registerschema";
 import { Navigate, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 import toast from "react-hot-toast";
-import { Authcontext } from "../../components.jsx/Context/Authcontext";
+import { Authcontext } from "../../components/Context/Authcontext";
 
 const initialValues = {
   name: "",

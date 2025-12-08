@@ -5,7 +5,7 @@ import { validationschema } from "../../validation.jsx/loginschema";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { base_url } from "../../api/api";
 
-import { Authcontext } from "../../components.jsx/Context/Authcontext";
+import { Authcontext } from "../../components/Context/Authcontext";
 import toast from "react-hot-toast";
 const initialValues = {
   email: "",

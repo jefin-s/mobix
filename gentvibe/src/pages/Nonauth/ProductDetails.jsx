@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { base_url } from "../../api/api";
 import axios from "axios";
-import { CartContext } from "../../components.jsx/Context/Cartcontext";
+import { CartContext } from "../../components/Context/Cartcontext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-import { Wishcontext } from "../../components.jsx/Context/Wishcontext";
+import { Wishcontext } from "../../components/Context/Wishcontext";
 
 const ProductDetails = () => {
   const { id } = useParams();

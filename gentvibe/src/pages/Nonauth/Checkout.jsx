@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { CartContext } from "../../components.jsx/Context/Cartcontext";
+import { CartContext } from "../../components/Context/Cartcontext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Authcontext } from "../../components.jsx/Context/Authcontext";
+import { Authcontext } from "../../components/Context/Authcontext";
 import { base_url } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
