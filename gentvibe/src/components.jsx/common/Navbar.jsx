@@ -60,23 +60,54 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           />
         </div>
         {suggestion.length > 0 && (
-          <ul className="absolute top-full left:20 md:left-90 mt-1 w-full md:w-96 max-w-[250px] bg-white border border-gray-300 rounded-md shadow-md z-50 overflow-hidden">
-            {suggestion.map((item) => (
-              <li
-                key={item.id}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700"
-                onClick={() => {
-                  setSearchTerm(item.title); // set input value
+  <ul className="
+    absolute top-full left-0 md:left-72
+    mt-2
+    w-full md:w-96 max-w-[360px] 
+    bg-white 
+    border border-gray-200 
+    rounded-sm
+    z-50 overflow-hidden
+  
+  ">
+    {suggestion.map((item) => (
+      <li
+        key={item.id}
+        className="
+          flex items-start gap-3
+          px-3 py-3 
+          cursor-pointer 
+          hover:bg-gray-100 
+          transition-all duration-200
+        "
+        onClick={() => {
+          setSearchTerm(item.title);
+          setSuggestion([]);
+          navigate("/prdctpage");
+        }}
+      >
+        {/* PRODUCT IMAGE */}
+        <img
+          src={item.thumbnail}
+          alt={item.title}
+          className="h-10 w-10 object-cover rounded-md border"
+        />
 
-                  setSuggestion([]); // hide suggestions
-                  navigate("/prdctpage"); // go to Products page
-                }}
-              >
-                {item.title}
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* TEXT */}
+        <div>
+          <p className="text-sm text-gray-900 font-medium">
+            {item.title}
+          </p>
+
+          <p className="text-xs text-blue-600">
+            in {item.category}
+          </p>
+        </div>
+      </li>
+    ))}
+  </ul>
+)}
+
 
         {/* HAMBURGER MENU (MOBILE) */}
         <button
