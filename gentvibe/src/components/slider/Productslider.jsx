@@ -43,7 +43,7 @@ const ProductSlider = () => {
         <div className="relative h-screen ">
            <video
     className="w-full h-screen object-cover"
-    src="public/videoplayback.mp4"   // 👈 your local video path
+    src="/videoplayback.mp4"   // 👈 your local video path
     autoPlay
     muted
     loop
