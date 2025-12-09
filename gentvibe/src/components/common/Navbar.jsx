@@ -174,7 +174,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           {/* LOGIN / LOGOUT */}
           {!user ? (
             <li
-              className="text-black cursor-pointer"
+              className="text-black cursor-pointer "
               onClick={() => setIsOpens(!isOpens)}
             >
               <BsPerson />
@@ -192,7 +192,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             onClose={() => setIsOpens(false)} // function to close modal
           />
 
-          <li className="text-black">{user ? user.name : ""}</li>
+          <li className="text-black font-bold">{user ? user.name : ""}</li>
         </ul>
       </nav>
 
@@ -234,6 +234,16 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
       <div className="flex items-center gap-3">
         
         <span>About</span>
+      </div>
+    </li>
+    <li 
+      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
+      onClick={() => {navigate("/order")
+        setIsOpen(false)}}
+    >
+      <div className="flex items-center gap-3">
+        
+        <span>Orders</span>
       </div>
     </li>
     

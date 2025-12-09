@@ -86,7 +86,7 @@ const Orders = () => {
                 <img
                   src={item.thumbnail}
                   alt=""
-                  className="w-12 h-12 rounded"
+                  className="w-20 h-20 rounded"
                 />
                 <p>{item.title}</p>
                 <p className="font-semibold">x{item.quantity}</p>
