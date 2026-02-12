@@ -12,6 +12,9 @@ body {
   width: 100%;
   overflow-x: hidden;
    font-family: "Manrope", sans-serif;
+   background: linear-gradient(to bottom, #000000, #050816, #000000);
+  color: white;
+  min-height: 100vh;
 }
 
 @keyframes slideDown {

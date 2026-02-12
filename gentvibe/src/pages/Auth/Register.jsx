@@ -48,91 +48,175 @@ const Register = () => {
   });
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      <div className="bg-white/90 backdrop-blur-md shadow-2xl p-8 rounded-2xl w-[360px] border border-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-6 text-black tracking-wide">
-          Create Account
-        </h2>
+  <div className="
+  min-h-screen w-full 
+  flex justify-center items-center
+  bg-gradient-to-b from-black via-[#050816] to-black
+  px-4
+  ">
 
-        <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
-          {/* Name Field */}
-          <div>
-            <label htmlFor="name" className="text-sm text-gray-700 font-medium">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              autoComplete="off"
-              placeholder="Enter your name"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-            />
-            {errors.name && (
-              <small className="text-red-500 text-sm">{errors.name}</small>
-            )}
-          </div>
-          <div>
-            <label htmlFor="email" className="text-sm text-gray-700 font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              placeholder="Enter your email"
-              autoComplete="off"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-            />
-            {errors.email && (
-              <small className="text-red-500 text-sm">{errors.email}</small>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="text-sm text-gray-700 font-medium"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              placeholder="Enter your password"
-              autoComplete="new-password"
-              className="mt-1 w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-            />
-            {errors.password && (
-              <small className="text-red-500 text-sm">{errors.password}</small>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-black text-white py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition duration-300"
-          >
-            Register
-          </button>
-        </form>
+    {/* REGISTER CARD */}
+    <div className="
+    w-full
+    max-w-[440px]
+    min-h-[460px]
+    mx-auto
+    flex flex-col justify-center
+    bg-white/5
+    backdrop-blur-xl
+    border border-white/10
+    rounded-2xl
+    shadow-[0_0_40px_rgba(0,0,0,0.8)]
+    p-8
+    ">
 
-        <p className="text-center text-gray-600 text-sm mt-6">
-          Already have an account?{" "}
-          <span
-            onClick={() => navigate("/login")}
-            className="text-indigo-600 font-medium hover:underline cursor-pointer"
-          >
-            Login here
-          </span>
-        </p>
-      </div>
+      <h2 className="
+      text-3xl font-bold text-center 
+      mb-6 text-white tracking-wide
+      ">
+        Create Account
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
+
+        {/* NAME */}
+        <div>
+          <label className="text-sm text-gray-300 font-medium">
+            Name
+          </label>
+
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+            placeholder="Enter your name"
+            className="
+            mt-1 w-full
+            bg-white/5
+            border border-white/10
+            rounded-xl
+            p-3
+            text-white
+            placeholder-gray-500
+            focus:outline-none
+            focus:border-blue-500
+            focus:bg-white/10
+            transition
+            "
+          />
+
+          {errors.name && (
+            <small className="text-red-400 text-sm">{errors.name}</small>
+          )}
+        </div>
+
+        {/* EMAIL */}
+        <div>
+          <label className="text-sm text-gray-300 font-medium">
+            Email
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            placeholder="Enter your email"
+            className="
+            mt-1 w-full
+            bg-white/5
+            border border-white/10
+            rounded-xl
+            p-3
+            text-white
+            placeholder-gray-500
+            focus:outline-none
+            focus:border-blue-500
+            focus:bg-white/10
+            transition
+            "
+          />
+
+          {errors.email && (
+            <small className="text-red-400 text-sm">{errors.email}</small>
+          )}
+        </div>
+
+        {/* PASSWORD */}
+        <div>
+          <label className="text-sm text-gray-300 font-medium">
+            Password
+          </label>
+
+          <input
+            type="password"
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            placeholder="Enter your password"
+            className="
+            mt-1 w-full
+            bg-white/5
+            border border-white/10
+            rounded-xl
+            p-3
+            text-white
+            placeholder-gray-500
+            focus:outline-none
+            focus:border-blue-500
+            focus:bg-white/10
+            transition
+            "
+          />
+
+          {errors.password && (
+            <small className="text-red-400 text-sm">{errors.password}</small>
+          )}
+        </div>
+
+        {/* BUTTON */}
+        <button
+          type="submit"
+          className="
+          w-full
+          bg-gradient-to-r from-blue-600 to-blue-500
+          hover:from-blue-500 hover:to-blue-400
+          text-white
+          py-3
+          rounded-xl
+          font-semibold
+          shadow-lg
+          transition
+          "
+        >
+          Register
+        </button>
+
+      </form>
+
+      {/* LOGIN LINK */}
+      <p className="text-center text-gray-400 text-sm mt-6">
+        Already have an account?{" "}
+        <span
+          onClick={() => navigate("/login")}
+          className="
+          text-blue-400 font-medium 
+          hover:text-blue-300 
+          transition cursor-pointer
+          ">
+          Login here
+        </span>
+      </p>
+
     </div>
-  );
+
+  </div>
+);
+
 };
 
 export default Register;

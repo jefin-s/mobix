@@ -7,64 +7,97 @@ import five from "/src/assets/17 air.webp"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
+
+
+
 const ProductSlider = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-    fade: true,
-    pauseOnHover: false,
-  };
-
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      <Slider {...settings} className="h-screen">
-        {/* Slide 1 */}
-        <div className="relative h-screen ">
-          <img
-            src={three}
-            alt="iPhone"
-            className="w-full h-screen object-cover"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16 ">
-            {/* <h2 className="text-white text-4xl md:text-6xl font-bold drop-shadow-lg mt-50">
-              New iPhone Collection 📱
-            </h2>
-            <button className="bg-white text-black font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition-all mt-2">
+    <div className="
+    min-h-screen 
+    bg-gradient-to-b from-black via-[#050816] to-black 
+    text-white 
+    flex items-center
+    ">
+
+      {/* CENTER CONTAINER */}
+      <div className="
+      max-w-7xl mx-auto w-full 
+      px-4 sm:px-6 md:px-8
+      flex flex-col md:flex-row 
+      items-center justify-between
+      gap-10
+      ">
+
+        {/* LEFT TEXT */}
+        <div className="max-w-xl text-center md:text-left">
+          <h1 className="
+          text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
+          font-bold leading-tight
+          ">
+            Discover the Best Apple Gadgets
+          </h1>
+
+          <p className="
+          text-gray-400 
+          mt-4 sm:mt-6 
+          text-sm sm:text-base md:text-lg
+          ">
+            Explore the latest iPhones, iPads, MacBooks, AirPods, and more.
+          </p>
+
+          {/* BUTTONS */}
+          <div className="
+          flex flex-col sm:flex-row 
+          gap-4 sm:gap-5 
+          mt-6 sm:mt-8 
+          justify-center md:justify-start
+          ">
+            <button className="
+            bg-blue-600 hover:bg-blue-700 
+            px-6 sm:px-8 
+            py-2.5 sm:py-3 
+            rounded-full 
+            font-semibold shadow-lg transition
+            ">
               Shop Now
-            </button> */}
+            </button>
+
+            <button className="
+            border border-gray-600 hover:border-white 
+            px-6 sm:px-8 
+            py-2.5 sm:py-3 
+            rounded-full font-semibold transition
+            ">
+              Browse Products
+            </button>
           </div>
         </div>
 
-        {/* Slide 2 */}
-        <div className="relative h-screen ">
-      
-   <img
-            src={five}
-            alt="iPhone"
-            className="w-full h-screen object-cover"
-          />
-        </div>
+        {/* RIGHT IMAGE — NOW VISIBLE ON MOBILE */}
+        <div className="
+        flex justify-center items-center 
+        w-full md:w-auto
+        ">
 
-        {/* Slide 3 */}
-        <div className="relative h-screen">
           <img
-            src={four}
-            alt="Smart Watch"
-            className="w-full h-screen object-cover"
+            src="/bannner.png"
+            alt="Product"
+            className="
+            w-[260px] 
+            sm:w-[340px] 
+            md:w-[420px] 
+            lg:w-[520px]
+            object-contain 
+            drop-shadow-2xl
+            "
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent flex flex-col items-start justify-center p-10 translate-y-16">
-          
-          </div>
         </div>
-      </Slider>
+
+      </div>
     </div>
   );
 };
+
 
 export default ProductSlider;

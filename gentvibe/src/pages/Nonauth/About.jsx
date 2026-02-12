@@ -6,7 +6,7 @@ const About = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="w-full bg-linear-to-b from-white to-gray-100 px-6 md:px-16 lg:px-24 py-12 rounded-2xl shadow-md pt-20">
+    <section className="w-full bg-gradient-to-b from-black via-[#050816] to-black px-6 md:px-16 lg:px-24 py-12 text-white shadow-md pt-20">
         
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
         {/* Left: About Content */}

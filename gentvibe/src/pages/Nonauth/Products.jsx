@@ -113,7 +113,7 @@ const [debounceValue,setDebounceValue]=useState(searchTerm)
 }, [category, sortOrder]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-8 pt-20">
+    <div className="min-h-screen bg-gradient-to-b from-black via-[#050816] to-black text-white py-10 px-4 sm:px-8 pt-20">
       
       {/* Heading */}
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">

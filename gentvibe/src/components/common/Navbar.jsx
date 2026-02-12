@@ -2,18 +2,15 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Authcontext } from "../Context/Authcontext";
 import { BsPerson } from "react-icons/bs";
-import { FaShoppingCart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
+import { FaShoppingCart, FaApple, FaHeart, FaRegHeart } from "react-icons/fa";
 import { CartContext } from "../Context/Cartcontext";
 import { Wishcontext } from "../Context/Wishcontext";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import LoginModal from "../../Modal/LoginModal";
 import { useFetch } from "../../hooks/Usefetch";
 import { base_url } from "../../api/api";
-import { FaApple } from "react-icons/fa";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
-  const { data } = useFetch(`${base_url}/products`);
+  const { data = [] } = useFetch(`${base_url}/products`);
   const [isOpens, setIsOpens] = useState(false);
   const { user, logoutUser } = useContext(Authcontext);
   const navigate = useNavigate();
@@ -21,11 +18,12 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { cart, totalQuantity } = useContext(CartContext);
   const { whishlist } = useContext(Wishcontext);
 
-  // logic for auto suggestion at the time of searching an inoi
   const [suggestion, setSuggestion] = useState([]);
+
   const searchTermchange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+
     if (value.length > 0) {
       const suggestedproducts = data
         .filter((item) =>
@@ -39,142 +37,141 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   };
 
   return (
-    <header className="w-full  fixed top-0 left-0 right-0 z-50 bg-white">
-      {/* NAVBAR TOP */}
-      <nav className="bg-white px-4 py-3 flex items-center justify-between relative">
+    <header
+      className="w-full fixed top-0 left-0 right-0 z-50 
+      bg-black/80 backdrop-blur-md 
+      
+      shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+    >
+      <nav className="px-8 py-4 flex items-center justify-between relative text-white">
+
         {/* LOGO */}
         <div
-          className="text-2xl font-bold text-black cursor-pointer"
+          className="text-3xl cursor-pointer hover:scale-110 transition duration-300"
           onClick={() => navigate("/")}
         >
           <FaApple />
         </div>
 
-        {/* SEARCH BAR (visible on mobile + desktop) */}
-        <div className="flex-1 flex justify-center md:justify-center mx-2">
+        {/* SEARCH */}
+        <div className="flex-1 flex justify-center mx-4 relative">
           <input
             type="text"
-            placeholder="Search "
-            className="w-full md:w-96 max-w-[250px] md:max-w-none px-3 py-1.5 border border-black rounded-full text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400  transition duration-200"
-            onChange={(e) => searchTermchange(e)}
+            placeholder="Search products..."
             value={searchTerm}
+            onChange={searchTermchange}
+            className="w-full md:w-96 
+            px-5 py-2.5 
+            bg-white/10 
+            backdrop-blur-md 
+            border border-white/20 
+            rounded-full 
+            text-white 
+            placeholder-gray-400 
+            text-sm 
+            focus:outline-none 
+            focus:ring-2 focus:ring-white/40 
+            transition duration-300"
           />
+
+          {/* Suggestions */}
+          {suggestion.length > 0 && (
+            <ul className="absolute top-full mt-3 w-full md:w-96 
+              bg-black/95 backdrop-blur-lg 
+              border border-white/10 
+              rounded-xl overflow-hidden z-50">
+
+              {suggestion.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex items-center gap-3 px-4 py-3 
+                  hover:bg-white/10 cursor-pointer transition"
+                  onClick={() => {
+                    setSearchTerm(item.title);
+                    setSuggestion([]);
+                    navigate("/prdctpage");
+                  }}
+                >
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="h-10 w-10 rounded-md object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-medium">{item.title}</p>
+                    <p className="text-xs text-gray-400">
+                      in {item.category}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        {suggestion.length > 0 && (
-  <ul className="
-    absolute top-full left-0 md:left-72
-    mt-2
-    w-full md:w-96 max-w-[360px] 
-    bg-white 
-    border border-gray-200 
-    rounded-sm
-    z-50 overflow-hidden
-  
-  ">
-    {suggestion.map((item) => (
-      <li
-        key={item.id}
-        className="
-          flex items-start gap-3
-          px-3 py-3 
-          cursor-pointer 
-          hover:bg-gray-100 
-          transition-all duration-200
-        "
-        onClick={() => {
-          setSearchTerm(item.title);
-          setSuggestion([]);
-          navigate("/prdctpage");
-        }}
-      >
-        {/* PRODUCT IMAGE */}
-        <img
-          src={item.thumbnail}
-          alt={item.title}
-          className="h-10 w-10 object-cover rounded-md border"
-        />
-
-        {/* TEXT */}
-        <div>
-          <p className="text-sm text-gray-900 font-medium">
-            {item.title}
-          </p>
-
-          <p className="text-xs text-blue-600">
-            in {item.category}
-          </p>
-        </div>
-      </li>
-    ))}
-  </ul>
-)}
-
-
-        {/* HAMBURGER MENU (MOBILE) */}
-        <button
-          className="md:hidden text-3xl text-black ml-2"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          ☰
-        </button>
 
         {/* DESKTOP MENU */}
-        <ul className="hidden md:flex gap-8 text-lg items-center">
+        <ul className="hidden md:flex gap-8 text-sm items-center">
+
           <li
-            className="hover:text-blue-400 cursor-pointer text-black"
+            className="cursor-pointer text-gray-300 hover:text-white transition"
             onClick={() => navigate("/")}
           >
             Home
           </li>
 
           <li
-            className="hover:text-blue-400 cursor-pointer text-black"
+            className="cursor-pointer text-gray-300 hover:text-white transition"
             onClick={() => navigate("/prdctpage")}
           >
             Products
           </li>
+
           <li
-            className="cursor-pointer hover:text-blue-400"
+            className="cursor-pointer text-gray-300 hover:text-white transition"
             onClick={() => navigate("/order")}
           >
             My Orders
           </li>
+
           <li
-            className="hover:text-blue-400 cursor-pointer text-black"
+            className="cursor-pointer text-gray-300 hover:text-white transition"
             onClick={() => navigate("/about")}
           >
             About
           </li>
 
-          {/* CART ICON */}
+          {/* CART */}
           <div
-            className="relative cursor-pointer"
+            className="relative cursor-pointer hover:scale-110 transition"
             onClick={() => navigate("/cart")}
           >
-            <FaShoppingCart className="text-2xl text-black" />
+            <FaShoppingCart className="text-xl text-gray-300 hover:text-white" />
             {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 
+              bg-gradient-to-r from-red-500 to-pink-500 
+              text-white text-xs font-semibold 
+              rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
                 {totalQuantity}
               </span>
             )}
           </div>
 
-          {/* WISHLIST ICON */}
+          {/* WISHLIST */}
           <li
-            className="text-black cursor-pointer"
+            className="cursor-pointer hover:scale-110 transition"
             onClick={() => navigate("/wish")}
           >
             {whishlist.length > 0 ? (
-              <FaHeart className="text-red-500 text-xl" />
+              <FaHeart className="text-red-500 text-lg" />
             ) : (
-              <FaRegHeart className="text-gray-600 text-xl" />
+              <FaRegHeart className="text-gray-400 hover:text-white text-lg transition" />
             )}
           </li>
 
-          {/* LOGIN / LOGOUT */}
+          {/* AUTH */}
           {!user ? (
             <li
-              className="text-black cursor-pointer "
+              className="cursor-pointer text-gray-300 hover:text-white transition"
               onClick={() => setIsOpens(!isOpens)}
             >
               <BsPerson />
@@ -182,125 +179,73 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           ) : (
             <button
               onClick={logoutUser}
-              className="text-black rounded-md hover:text-red-500"
+              className="text-gray-300 hover:text-red-500 transition"
             >
               Logout
             </button>
           )}
+
           <LoginModal
-            isOpen={isOpens} // pass the state
-            onClose={() => setIsOpens(false)} // function to close modal
+            isOpen={isOpens}
+            onClose={() => setIsOpens(false)}
           />
 
-          <li className="text-black font-bold">{user ? user.name : ""}</li>
+          <li className="text-sm font-semibold text-white">
+            {user ? user.name : ""}
+          </li>
         </ul>
+
+        {/* MOBILE BUTTON */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          ☰
+        </button>
       </nav>
 
-      {/* MOBILE MENU DROPDOWN */}
-     {isOpen && (
-  <ul className="md:hidden flex flex-col bg-white shadow-xl px-6 py-4 gap-3 text-base absolute left-0 right-0 top-full z-50 border-t border-gray-100 animate-slideDown">
-    <li className="border-b border-gray-100 pb-3 mb-1">
-      <span className="font-semibold text-gray-800 text-sm">{user ? `Hi, ${user.name}` : "Welcome"}</span>
-    </li>
-    
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() =>{ navigate("/")
-        setIsOpen(false)
-      }}
-    >
-      <div className="flex items-center gap-3">
-        
-        <span>Home</span>
-      </div>
-    </li>
-    
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() => {navigate("/prdctpage")
-        setIsOpen(false)}}
-    >
-      <div className="flex items-center gap-3">
-       
-        <span>Products</span>
-      </div>
-    </li>
-    
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() => {navigate("/about")
-        setIsOpen(false)}}
-    >
-      <div className="flex items-center gap-3">
-        
-        <span>About</span>
-      </div>
-    </li>
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() => {navigate("/order")
-        setIsOpen(false)}}
-    >
-      <div className="flex items-center gap-3">
-        
-        <span>Orders</span>
-      </div>
-    </li>
-    
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() => {navigate("/cart")
-        setIsOpen(false)}
-      }
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-        
-          <span>Cart</span>
-        </div>
-        <span className="bg-teal-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
-      </div>
-    </li>
-    
-    <li 
-      className="cursor-pointer px-4 py-2.5 rounded-lg hover:bg-gray-50 active:scale-[0.98] transition-all duration-150"
-      onClick={() => {navigate("/wish")
-        setIsOpen(false)
-      }}
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-        
-          <span>Wishlist</span>
-        </div>
-        <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
-      </div>
-    </li>
-    
-    {user ? (
-      <li 
-        className="cursor-pointer px-4 py-2.5 rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-150 mt-3"
-        onClick={logoutUser}
+      {/* MOBILE MENU */}
+      {isOpen && (
+        <ul className="md:hidden flex flex-col 
+          bg-black/95 backdrop-blur-lg 
+          border-t border-white/10 
+          px-6 py-6 gap-4 text-white">
 
-      >
-        <div className="flex items-center gap-3">
-          
-          <span className="font-medium">Logout</span>
-        </div>
-      </li>
-    ) : (
-      <li 
-        className="cursor-pointer px-4 py-2.5 rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:from-teal-600 hover:to-teal-700 active:scale-[0.98] transition-all duration-150 mt-3"
-        onClick={() => navigate("/login")}
-      >
-        <div className="flex items-center gap-3">
-          <BsPerson className="text-white" />
-          <span className="font-medium">Login</span>
-        </div>
-      </li>
-    )}
-  </ul>
-)}
+          <li onClick={() => {navigate("/"); setIsOpen(false);}} className="hover:bg-white/10 px-3 py-2 rounded-lg cursor-pointer">
+            Home
+          </li>
+
+          <li onClick={() => {navigate("/prdctpage"); setIsOpen(false);}} className="hover:bg-white/10 px-3 py-2 rounded-lg cursor-pointer">
+            Products
+          </li>
+
+          <li onClick={() => {navigate("/order"); setIsOpen(false);}} className="hover:bg-white/10 px-3 py-2 rounded-lg cursor-pointer">
+            Orders
+          </li>
+
+          <li onClick={() => {navigate("/about"); setIsOpen(false);}} className="hover:bg-white/10 px-3 py-2 rounded-lg cursor-pointer">
+            About
+          </li>
+
+          {user ? (
+            <li
+              onClick={logoutUser}
+              className="bg-gradient-to-r from-red-500 to-red-600 
+              px-3 py-2 rounded-lg text-center cursor-pointer"
+            >
+              Logout
+            </li>
+          ) : (
+            <li
+              onClick={() => navigate("/login")}
+              className="bg-gradient-to-r from-blue-500 to-blue-600 
+              px-3 py-2 rounded-lg text-center cursor-pointer"
+            >
+              Login
+            </li>
+          )}
+        </ul>
+      )}
     </header>
   );
 };

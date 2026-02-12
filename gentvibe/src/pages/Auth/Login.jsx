@@ -58,78 +58,113 @@ const Login = ({onclose}) => {
       }
     },
   });
+return (
+  <div className="w-full">
 
-  return (
-    // <div className="h-screen w-screen flex justify-center items-center bg-white">
-      <div className="bg-white backdrop-blur-md  p-8 rounded-2xl w-80 sm:w-96 md:w-[360px]">
-       
+    <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
 
-        <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
-          {/* Email Field */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              placeholder="Enter your email"
-              autoComplete="off"
-              className="w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-            />
-            {errors.email && (
-              <small className="text-red-500 text-sm">{errors.email}</small>
-            )}
-          </div>
+      {/* Email */}
+      <div>
+        <label className="block text-sm text-gray-300 mb-1">
+          Email
+        </label>
 
-          {/* Password Field */}
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              placeholder="Enter your password"
-              autoComplete="new-password"
-              className="w-full bg-white border border-gray-300 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
-            />
-            {errors.password && (
-              <small className="text-red-500 text-sm">{errors.password}</small>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-black text-white py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition duration-300"
-          >
-            Login
-          </button>
-        </form>
+        <input
+          type="email"
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+          placeholder="Enter your email"
+          autoComplete="off"
+          className="
+          w-full
+          bg-white/5
+          border border-white/10
+          rounded-xl
+          p-3
+          text-white
+          placeholder-gray-500
+          focus:outline-none
+          focus:border-blue-500
+          focus:bg-white/10
+          transition
+          "
+        />
 
-        <p className="text-center text-gray-600 text-sm mt-6">
-          Don’t have an account?{" "}
-          <Link
-            to="/register"
-            className="text-indigo-600 font-medium hover:underline"
-          >
-            Register here
-          </Link>
-        </p>
+        {errors.email && (
+          <small className="text-red-400 text-sm">{errors.email}</small>
+        )}
       </div>
-    // </div>
-  );
+
+      {/* Password */}
+      <div>
+        <label className="block text-sm text-gray-300 mb-1">
+          Password
+        </label>
+
+        <input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+          placeholder="Enter your password"
+          autoComplete="new-password"
+          className="
+          w-full
+          bg-white/5
+          border border-white/10
+          rounded-xl
+          p-3
+          text-white
+          placeholder-gray-500
+          focus:outline-none
+          focus:border-blue-500
+          focus:bg-white/10
+          transition
+          "
+        />
+
+        {errors.password && (
+          <small className="text-red-400 text-sm">{errors.password}</small>
+        )}
+      </div>
+
+      {/* Button */}
+      <button
+        type="submit"
+        className="
+        w-full
+        bg-gradient-to-r from-blue-600 to-blue-500
+        hover:from-blue-500 hover:to-blue-400
+        text-white
+        py-3
+        rounded-xl
+        font-semibold
+        shadow-lg
+        transition
+        "
+      >
+        Login
+      </button>
+
+    </form>
+
+    {/* Register Link */}
+    <p className="text-center text-gray-400 text-sm mt-6">
+      Don’t have an account?{" "}
+      <Link
+        to="/register"
+        className="text-blue-400 font-medium hover:text-blue-300 transition"
+      >
+        Register here
+      </Link>
+    </p>
+
+  </div>
+);
+
 };
 
 export default Login;
