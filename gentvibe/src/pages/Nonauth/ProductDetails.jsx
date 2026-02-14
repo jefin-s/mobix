@@ -12,20 +12,23 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const { cart,addToCart, isIncart,incementQuantity,decremnetQuantity,removeCartitem } = useContext(CartContext);
 
-  const{Togglewhishlist,alreadyinWhislist}=useContext(Wishcontext)
+  const{toggleWishlist, alreadyInWishlist}=useContext(Wishcontext)
   const navigate = useNavigate();
    
   useEffect(() => {
+  const fetchProduct = async () => {
     try {
-      axios.get(`${base_url}/products/${id}`).then((response) => {
-        setProduct(response.data);
-        console.log(response.data);
-        
-      });
+      const response = await axios.get(`${base_url}/Products/${id}`);
+      setProduct(response.data.data);
+      console.log(response.data)
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching product:", error);
     }
-  }, [id]);
+  };
+
+  fetchProduct();
+}, [id]);
+
 
 
   if (!product)
@@ -59,11 +62,11 @@ const ProductDetails = () => {
           <div className="cursor-pointer text-red-500 hover:scale-110 transition-transform">
             <button onClick={ 
               (e)=>{
-                 Togglewhishlist(product)
+                toggleWishlist(product)
 
               }
             }>
-{alreadyinWhislist(product.id)?(<FaHeart className="text-2xl" />):( <FaRegHeart className="text-gray-700 text-lg" />)}
+{ alreadyInWishlist(product.id)?(<FaHeart className="text-2xl" />):( <FaRegHeart className="text-gray-700 text-lg" />)}
  
             </button>
             

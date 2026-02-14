@@ -7,22 +7,41 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
  const[loading,setloading]=useState(true)
-  useEffect(() => {
+
+ const [AccessToken,setAccessToken]=useState(null)
+useEffect(() => {
+  try {
     const savedUser = localStorage.getItem("currentUser");
-    if (savedUser) {
+
+    if (savedUser && savedUser !== "undefined") {
       setUser(JSON.parse(savedUser));
     }
-    setloading(false)
-    
-  }, []);
 
-  const loginUser = (userData) => {
+  } catch (error) {
+    console.error("LocalStorage parse error:", error);
+    localStorage.removeItem("currentUser");
+  }
+
+  setloading(false);
+
+}, []);
+
+
+  const loginUser = (userData,token) => {
     setUser(userData);
     localStorage.setItem("currentUser", JSON.stringify(userData));
+    if(token){
+      setAccessToken(token)
+     
+
+      // localStorage.setItem("token",token)
+    }
   };
   const logoutUser = () => {
     setUser(null);
+    setAccessToken(null)
     localStorage.removeItem("currentUser");
+   
     navigate('/')
     toast.success("Logout successfully")
   };

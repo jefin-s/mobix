@@ -16,25 +16,28 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { cart, totalQuantity } = useContext(CartContext);
-  const { whishlist } = useContext(Wishcontext);
+  const { wishlist } = useContext(Wishcontext);
 
   const [suggestion, setSuggestion] = useState([]);
 
-  const searchTermchange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
+const searchTermchange = (e) => {
+  const value = e.target.value;
+  setSearchTerm(value);
 
-    if (value.length > 0) {
-      const suggestedproducts = data
-        .filter((item) =>
-          item.title.toLowerCase().includes(value.toLowerCase())
-        )
-        .slice(0, 5);
-      setSuggestion(suggestedproducts);
-    } else {
-      setSuggestion([]);
-    }
-  };
+  const products = data?.data?.items || [];
+
+  if (value.length > 0) {
+    const suggestedproducts = products
+      .filter((item) =>
+        item.title.toLowerCase().includes(value.toLowerCase())
+      )
+      .slice(0, 5);
+
+    setSuggestion(suggestedproducts);
+  } else {
+    setSuggestion([]);
+  }
+};
 
   return (
     <header
@@ -161,7 +164,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             className="cursor-pointer hover:scale-110 transition"
             onClick={() => navigate("/wish")}
           >
-            {whishlist.length > 0 ? (
+            {wishlist.length > 0 ? (
               <FaHeart className="text-red-500 text-lg" />
             ) : (
               <FaRegHeart className="text-gray-400 hover:text-white text-lg transition" />

@@ -14,12 +14,13 @@ const initialValues = {
 
 const Login = ({onclose}) => {
   const { user, loginUser } = useContext(Authcontext);
-  if (user) {
-    if (user.role === "admin") {
-      return <Navigate to="/admin" replace />;
-    }
-    return <Navigate to="/" replace />;
+if (user) {
+  if (user?.role?.toLowerCase() === "admin") {
+    return <Navigate to="/admin" replace />;
   }
+  return <Navigate to="/" replace />;
+}
+
 
   const navigate = useNavigate();
 
@@ -27,37 +28,51 @@ const Login = ({onclose}) => {
     initialValues: initialValues,
     // validation schema from validation.jsx
     validationSchema: validationschema,
+onSubmit: async (values) => {
+  try {
 
-    onSubmit: async (values) => {
-      try {
-        const response = await axios.get(`${base_url}/users`);
-        const users = response.data;
-        const matchedUser = users.find(
-          (user) =>
-            user.email === values.email && user.password === values.password
-        );
-       
-        if (matchedUser) {
-          if(matchedUser.isBlock){
-            toast.error("Admin is Blocked You")
-            return 
-          }
-          toast.success("Login successful!");
-          loginUser(matchedUser);
-          if(onclose) onclose();
-          if (matchedUser.role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/");
-          }
-        } else {
-          toast.error("Invalid email or password");
-        }
-      } catch (error) {
-        console.error("Login failed:", error);
-      }
-    },
-  });
+    const response = await axios.post(
+      `${base_url}/auth/login`,
+      values,
+      
+   
+    );
+
+    const data = response.data;
+
+    toast.success("Login successful!");
+
+    loginUser(
+      data.users||data.Users,
+      data.accessToken||data.AccessToken
+    );
+
+    if (onclose) onclose();
+
+    const role = data.role?.toLowerCase()?.trim();
+
+    if (role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
+
+  } catch (error) {
+
+    console.log("LOGIN ERROR:", error);
+
+    const message =
+      error?.response?.data?.message ||
+      "Invalid email or password";
+
+    toast.error(message);
+  }
+}
+
+
+
+
+});
 return (
   <div className="w-full">
 

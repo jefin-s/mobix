@@ -8,9 +8,11 @@ import toast from "react-hot-toast";
 import { Authcontext } from "../../components/Context/Authcontext";
 
 const initialValues = {
-  name: "",
+ 
   email: "",
   password: "",
+  username:"",
+  phoneNumber:""
 };
 
 const Register = () => {
@@ -22,29 +24,36 @@ const Register = () => {
 
   const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: initialValues,
-    validationSchema: registerSchema,
-    onSubmit: async (values) => {
-      try {
-        const newUser = {
-          name: values.name,
-          email: values.email,
-          password: values.password,
-          role: "User",
-          isBlock: false,
-          cart: [],
-          orders: [],
-          wishlist: [],
-          created_at: new Date().toISOString(),
-        };
-        await axios.post(`${base_url}/users`, newUser);
+   validationSchema: registerSchema,
+  onSubmit: async (values) => {
+  console.log("Submitting form", values);
 
-        toast.success("Register Succesfully")
-        navigate("/login");
-      } catch (error) {
-        console.error("Registration failed:", error);
-        toast.error("Failed to register user.");
-      }
-    },
+  try {
+    const newUser = {
+      // name: values.name,
+      email: values.email,
+      password: values.password,
+      username: values.username,
+      phoneNumber:values.phoneNumber
+    };
+
+    console.log("Sending request to:", `${base_url}/auth/register`);
+    console.log("Payload:", newUser);
+
+    const res = await axios.post(`${base_url}/auth/register`, newUser);
+
+    console.log("Response:", res);
+
+    toast.success("Register Successfully");
+    navigate("/login");
+
+  } catch (error) {
+    console.log("Register error:", error);
+    toast.error(error.response.data.message);
+  }
+}
+
+,
   });
 
   return (
@@ -79,38 +88,39 @@ const Register = () => {
 
       <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
 
-        {/* NAME */}
-        <div>
-          <label className="text-sm text-gray-300 font-medium">
-            Name
-          </label>
+       {/* USERNAME */}
+<div>
+  <label className="text-sm text-gray-300 font-medium">
+    Username
+  </label>
 
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.name}
-            placeholder="Enter your name"
-            className="
-            mt-1 w-full
-            bg-white/5
-            border border-white/10
-            rounded-xl
-            p-3
-            text-white
-            placeholder-gray-500
-            focus:outline-none
-            focus:border-blue-500
-            focus:bg-white/10
-            transition
-            "
-          />
+  <input
+    type="text"
+    name="username"
+    onChange={handleChange}
+    onBlur={handleBlur}
+    value={values.username}
+    placeholder="Enter your username"
+    className="
+    mt-1 w-full
+    bg-white/5
+    border border-white/10
+    rounded-xl
+    p-3
+    text-white
+    placeholder-gray-500
+    focus:outline-none
+    focus:border-blue-500
+    focus:bg-white/10
+    transition
+    "
+  />
 
-          {errors.name && (
-            <small className="text-red-400 text-sm">{errors.name}</small>
-          )}
-        </div>
+  {errors.username && (
+    <small className="text-red-400 text-sm">{errors.username}</small>
+  )}
+</div>
+
 
         {/* EMAIL */}
         <div>
@@ -177,6 +187,39 @@ const Register = () => {
             <small className="text-red-400 text-sm">{errors.password}</small>
           )}
         </div>
+        {/* PHONE NUMBER */}
+<div>
+  <label className="text-sm text-gray-300 font-medium">
+    Phone Number
+  </label>
+
+  <input
+    type="text"
+    name="phoneNumber"
+    onChange={handleChange}
+    onBlur={handleBlur}
+    value={values.phoneNumber}
+    placeholder="Enter phone number"
+    className="
+    mt-1 w-full
+    bg-white/5
+    border border-white/10
+    rounded-xl
+    p-3
+    text-white
+    placeholder-gray-500
+    focus:outline-none
+    focus:border-blue-500
+    focus:bg-white/10
+    transition
+    "
+  />
+
+  {errors.phoneNumber && (
+    <small className="text-red-400 text-sm">{errors.phoneNumber}</small>
+  )}
+</div>
+
 
         {/* BUTTON */}
         <button
