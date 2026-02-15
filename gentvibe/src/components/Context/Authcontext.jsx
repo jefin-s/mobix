@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
  const[loading,setloading]=useState(true)
 
- const [AccessToken,setAccessToken]=useState(null)
+
 useEffect(() => {
   try {
     const savedUser = localStorage.getItem("currentUser");
@@ -31,16 +31,17 @@ useEffect(() => {
     setUser(userData);
     localStorage.setItem("currentUser", JSON.stringify(userData));
     if(token){
-      setAccessToken(token)
-     
+    sessionStorage.setItem("token",token)
+      console.log(token);
 
       // localStorage.setItem("token",token)
     }
   };
   const logoutUser = () => {
     setUser(null);
-    setAccessToken(null)
+   
     localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("token")
    
     navigate('/')
     toast.success("Logout successfully")

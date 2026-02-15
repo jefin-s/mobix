@@ -16,7 +16,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { cart, totalQuantity } = useContext(CartContext);
-  const { wishlist } = useContext(Wishcontext);
+  const { whishlist } = useContext(Wishcontext);
 
   const [suggestion, setSuggestion] = useState([]);
 
@@ -164,7 +164,7 @@ const searchTermchange = (e) => {
             className="cursor-pointer hover:scale-110 transition"
             onClick={() => navigate("/wish")}
           >
-            {wishlist.length > 0 ? (
+            {whishlist.length > 0 ? (
               <FaHeart className="text-red-500 text-lg" />
             ) : (
               <FaRegHeart className="text-gray-400 hover:text-white text-lg transition" />

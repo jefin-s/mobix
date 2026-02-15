@@ -7,7 +7,7 @@
   const ProductCard = ({ product }) => {
     const navigate = useNavigate();
     const { addToCart, isIncart } = useContext(CartContext);
-    const { Togglewhishlist, alreadyInWishlist } = useContext(Wishcontext);
+    const {  toggleWishlist,alreadyInWishlist } = useContext(Wishcontext);
 
     const gotoProduct = () => navigate(`/prdctdet/${product.id}`);
   console.log(product)
@@ -33,7 +33,7 @@
           <button
             onClick={(e) => { 
               e.stopPropagation();
-              Togglewhishlist(product);
+              toggleWishlist(product);
             }}
             className="absolute top-3 right-3 bg-white/90 hover:bg-white text-gray-800 hover:text-red-500 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 shadow-md"
           >

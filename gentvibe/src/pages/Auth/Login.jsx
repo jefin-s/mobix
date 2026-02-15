@@ -12,6 +12,8 @@ const initialValues = {
   password: "",
 };
 
+
+
 const Login = ({onclose}) => {
   const { user, loginUser } = useContext(Authcontext);
 if (user) {
@@ -34,8 +36,7 @@ onSubmit: async (values) => {
     const response = await axios.post(
       `${base_url}/auth/login`,
       values,
-      
-   
+      { withCredentials: true }
     );
 
     const data = response.data;
@@ -43,13 +44,14 @@ onSubmit: async (values) => {
     toast.success("Login successful!");
 
     loginUser(
-      data.users||data.Users,
-      data.accessToken||data.AccessToken
+      data.users || data.Users,
+      data.accessToken || data.AccessToken
     );
 
     if (onclose) onclose();
 
-    const role = data.role?.toLowerCase()?.trim();
+    const role =
+      (data.users || data.Users)?.role?.toLowerCase()?.trim();
 
     if (role === "admin") {
       navigate("/admin");
@@ -59,8 +61,6 @@ onSubmit: async (values) => {
 
   } catch (error) {
 
-    console.log("LOGIN ERROR:", error);
-
     const message =
       error?.response?.data?.message ||
       "Invalid email or password";
@@ -68,6 +68,7 @@ onSubmit: async (values) => {
     toast.error(message);
   }
 }
+
 
 
 

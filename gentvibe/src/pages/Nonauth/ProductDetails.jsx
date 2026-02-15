@@ -10,7 +10,7 @@ import { Wishcontext } from "../../components/Context/Wishcontext";
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const { cart,addToCart, isIncart,incementQuantity,decremnetQuantity,removeCartitem } = useContext(CartContext);
+  const {  cart,addToCart, isIncart,incementQuantity,decremnetQuantity,removeCartitem } = useContext(CartContext);
 
   const{toggleWishlist, alreadyInWishlist}=useContext(Wishcontext)
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const ProductDetails = () => {
     return <p className="text-center text-gray-600 mt-10">Loading...</p>;
 
   // cart is an array of object it retirn a single objeect and inthis id wil mathc it return a single object so we can cartitemm .quantit
-  const cartitem=cart.find((item)=>item.id===product.id)
+  const cartitem= cart.find((item)=>item.id===product.id)
 
 
   return (

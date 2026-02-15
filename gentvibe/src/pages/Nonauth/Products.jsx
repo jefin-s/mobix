@@ -13,7 +13,7 @@ const Products = () => {
   const { searchTerm } = useContext(SearchContext);
 
   const { data, setUrl, loading } = useFetch("");
-
+ const [categories,setCategories]=useState([]);
 
   
 
@@ -31,10 +31,25 @@ const Products = () => {
     setUrl(url);
 
   }, [currentPage, category, sortOrder, searchTerm]);
+  useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${base_url}/Category/GetAllCategories`);
+      const result = await response.json();
+      setCategories(result.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  fetchCategories();
+}, []);
+
 
   // 🔥 Extract Backend Data
   const products = data?.data?.items || [];
-  const totalCount = data?.data?.totalCount || 0;
+ const totalCount = data?.data?.totalRecords || 0;
+
   const totalPages = Math.ceil(totalCount / perPage);
 
   const goPrev = () => {
@@ -65,21 +80,22 @@ const Products = () => {
 
         {/* Category */}
         <select
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
-            setCurrentPage(1);
-          }}
-          className="border px-4 py-2 rounded-lg shadow-sm"
-        >
-         <option value="">All Categories</option>
-<option value="iphones">iphones</option>
-<option value="Audio">Audio</option>
-<option value="Wearables">Wearables</option>
-<option value="Accessories">Accessories</option>
-<option value="Laptops">Laptops</option>
+  value={category}
+  onChange={(e) => {
+    setCategory(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="border px-4 py-2 rounded-lg shadow-sm"
+>
+  <option value="">All Categories</option>
 
-        </select>
+  {categories.map((cat) => (
+    <option key={cat.name} value={cat.name}>
+      {cat.name}
+    </option>
+  ))}
+</select>
+
 
         {/* Sorting */}
         <select

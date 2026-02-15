@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
   export const CartContext = createContext();
 
   export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+    const [cart , setCart] = useState([]);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
