@@ -10,7 +10,7 @@ import { useFetch } from "../../hooks/Usefetch";
 import { base_url } from "../../api/api";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
-  const { data = [] } = useFetch(`${base_url}/products`);
+  const { data = [] } = useFetch(`${base_url}/Products/GetAllItems`);
   const [isOpens, setIsOpens] = useState(false);
   const { user, logoutUser } = useContext(Authcontext);
   const navigate = useNavigate();

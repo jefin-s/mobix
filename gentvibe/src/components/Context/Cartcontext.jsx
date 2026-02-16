@@ -1,117 +1,120 @@
-  import React, { createContext, useEffect, useState } from "react";
-  import axios from "axios";
-  import { base_url } from "../../api/api";
+import { createContext, useEffect, useState } from "react";
+import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 
-  export const CartContext = createContext();
+export const CartContext = createContext();
 
-  export const CartProvider = ({ children }) => {
-    const [cart , setCart] = useState([]);
-    const [user, setUser] = useState(null);
+export const CartProvider = ({ children }) => {
 
-    useEffect(() => {
-      const storedUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (storedUser) {
-        setUser(storedUser);
-        fetchCart(storedUser.id);
-      }
-    }, []); 
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const fetchCart = async (userId) => {
-      try {
-        const res = await axios.get(`${base_url}/users/${userId}`);
-        setCart(res.data.cart || []);
-      } catch (error) {
-        console.error("Error fetching cart:", error);
-      }
-    };
+  // 🔥 Fetch Cart
+  const fetchCart = async () => {
+    try {
+      setLoading(true);
 
-    const addToCart = async (product) => {
-      if (!user) {
-       toast.warning("Please log in to add items to cart!");
-        return;
-      }  
+      const res = await axiosInstance.get("/Cart/GetCartItems");
 
-      const existingItem=cart.find((item)=>item.id==product.id)
-      let updatedcart;
-      if(existingItem){
-          updatedcart=cart.map((item)=>item.id===product.id?{...item,quantity:item.quantity+1}:item)
-      }
-      else{
-          updatedcart=[...cart,{...product,quantity:1}]
-      }
-      // const updatedCart = [...cart, product];
-      setCart(updatedcart);
+      setCart(res.data.data);
 
-      try {
-        await axios.patch(`${base_url}/users/${user.id}`, {
-          cart: updatedcart,
-        });
-       toast.success("Item succesfully added to cart")
-      } catch (error) {
-        console.error("Error updating cart:", error);
-        toast.error("An error to updating the cart")
-      }
-    };
-    const removeCartitem= async(productId)=>{
-      if(!user){
-          toast.warning("please login to remove")
-          
-      }
-      const updatedCart=cart.filter((item)=>item.id!=productId)
-      setCart(updatedCart)
-      try{
-          await axios.patch(`${base_url}/users/${user.id}`,{
-              cart:updatedCart
-
-          })
-      }
-      catch(err){
-          console.log(err);
-          
-      }
+    } catch (error) {
+      console.log("Cart fetch error:", error);
+    } finally {
+      setLoading(false);
     }
-  //  to  increment the quantity 
-    const incementQuantity= async(productId)=>{
-      const updatedCart=cart.map((item)=>item.id===productId?{...item,quantity:item.quantity+1}:item)
-    setCart(updatedCart)
-    try{
-        await  axios.patch(`${base_url}/users/${user.id}`,{
-          cart:updatedCart
-        })
-    }
-    catch(err){
-      console.log(err);
-      
-    }
-    }
-  //   Function for decremneting the quantity
-    const decremnetQuantity= async(productId)=>{
-      const updatedCart=cart.map((item)=>item.id===productId?{...item,quantity:item.quantity>1?item.quantity-1:1}:item)
-    setCart(updatedCart)
-    try{
-        await  axios.patch(`${base_url}/users/${user.id}`,{
-          cart:updatedCart
-        })
-    }
-    catch(err){
-      console.log(err);
-      
-    }
-    }
-    const totalQuantity= cart.reduce((acc,item)=>acc+item.quantity,0)
-    const totalprice=cart.reduce((acc,item)=>acc+item.price*item.quantity,0)
-    const isIncart=(productId)=>{
-      return cart.some((item)=> item.id===productId)
-    }
-    
-    
-  
-    
-    
-    return (
-      <CartContext.Provider value={{ cart, addToCart ,removeCartitem,incementQuantity,decremnetQuantity,isIncart,totalQuantity,totalprice}}>
-        {children}
-      </CartContext.Provider>
-    );
   };
+
+ useEffect(() => {
+  const token = sessionStorage.getItem("token");
+
+  if (token) {
+    fetchCart();
+  }
+}, []);
+
+
+  // 🔥 Add to Cart
+  const addToCart = async (productId,quantity=1) => {
+    try {
+
+      const res = await axiosInstance.post("/Cart/add",{
+           productId: productId,
+      quantity: quantity
+      });
+
+      toast.success(res.data.message);
+
+      fetchCart();
+
+    } catch (error) {
+      toast.error("Please login first");
+    }
+  };
+  const updateCartQuantity = async (productId, quantity) => {
+  try {
+
+    await axiosInstance.put("Cart/Update", {
+      productId: productId,
+      quantity: quantity
+    });
+
+    fetchCart();
+
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to update cart");
+  }
+};
+
+
+  // 🔥 Remove from Cart
+  const removeFromCart = async (productId) => {
+    try {
+
+      await axiosInstance.delete(`/Cart/${productId}`);
+
+      toast.success("Removed from cart");
+
+      fetchCart();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clearCart = async () => {
+  try {
+
+    const res = await axiosInstance.delete("Cart/clear-cart");
+
+    toast.success(res.data.message);
+
+    setCart([]); // instantly clear UI
+
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to clear cart");
+  }
+};
+
+
+  // 🔥 Check if item exists
+  const isIncart = (productId) => {
+    return cart?.some(item => item.productId === productId);
+  };
+
+  return (
+    <CartContext.Provider
+      value={{
+        cart,
+        loading,
+        addToCart,
+        removeFromCart,
+        isIncart
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};

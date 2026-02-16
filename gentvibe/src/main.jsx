@@ -22,11 +22,11 @@ createRoot(document.getElementById("root")).render(
           <CartProvider>
             <WishProvider>
               <Userprovider>
-                <OrderProvider>
+                {/* <OrderProvider> */}
                   <ProductProvider>
                     <App />
                   </ProductProvider>
-                </OrderProvider>
+                {/* </OrderProvider> */}
               </Userprovider>
             </WishProvider>
           </CartProvider>

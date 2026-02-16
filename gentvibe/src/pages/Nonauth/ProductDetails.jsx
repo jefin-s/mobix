@@ -130,7 +130,7 @@ const ProductDetails = () => {
               className="w-full bg-linear-to-r cursor-pointer from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
               onClick={(e) => {
                 e.stopPropagation();
-                addToCart(product);
+                addToCart(product.id);
               }}
             >
               <svg
@@ -164,6 +164,7 @@ const ProductDetails = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

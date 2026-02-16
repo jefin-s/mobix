@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Cart = () => {
 
   const {
-    cartItems,
+    cart,
     grandTotal,
     removeCartitem,
     incementQuantity,
@@ -22,7 +22,7 @@ const Cart = () => {
         {totalQuantity} {totalQuantity === 1 ? "item" : "items"}
       </h1>
 
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <div className="text-center text-gray-500 text-lg">
           Your cart is empty 🛒
         </div>

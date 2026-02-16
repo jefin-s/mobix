@@ -55,7 +55,7 @@ const App = () => {
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />
-    </div>
+    </div> 
   );
 };
 
