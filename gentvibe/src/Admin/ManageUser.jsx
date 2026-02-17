@@ -7,6 +7,7 @@ import Confirmodal from "../Modal/Confirmodal";
 const ManageUser = () => {
   const navigate = useNavigate();
   const { users, deletewithuserid } = useContext(Usercontext);
+  console.log(users)
 
   // Delete Modal
   const [showDeletemodal, setShowDeletemodal] = useState(false);
@@ -125,17 +126,25 @@ const ManageUser = () => {
                   </button>
                 </td>
                 <td className="py-3 px-6 text-center">
-                  <button
-                    className={`px-4 py-1 text-sm font-medium rounded-lg text-white transition ${
-                      item.isBlock
-                        ? "bg-green-600 hover:bg-green-700"
-                        : "bg-red-600 hover:bg-red-700"
-                    }`}
-                    onClick={() => handleWithid(item.id)}
-                  >
-                    {item.isBlock ? "Unblock" : "Block"}
-                  </button>
-                </td>
+  <button
+    disabled={item.role === "Admin"}
+    className={`px-4 py-1 text-sm font-medium rounded-lg text-white transition
+      ${item.role === "Admin"
+        ? "bg-gray-400 cursor-not-allowed"
+        : item.isBlock
+        ? "bg-green-600 hover:bg-green-700"
+        : "bg-red-600 hover:bg-red-700"
+      }`}
+    onClick={() => handleWithid(item.id)}
+  >
+    {item.role === "Admin"
+      ? "Admin"
+      : item.isBlock
+      ? "Unblock"
+      : "Block"}
+  </button>
+</td>
+
               </tr>
             ))}
           </tbody>

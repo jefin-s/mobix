@@ -1,170 +1,154 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import { base_url } from "../api/api";
+import axiosInstance from "../api/axiosInstance";
+import { toast } from "react-toastify";
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // 🔹 GET ALL PRODUCTS
+  // ✅ FETCH PRODUCTS
   const fetchproducts = async () => {
+
     try {
-      const response = await axios.get(
-        `${base_url}/Products/GetAllItems`
+
+      setLoading(true);
+
+      const response = await axiosInstance.get(
+        "/Products/GetAllItems"
       );
 
       setProducts(response.data.data);
-      setLoading(false);
 
     } catch (error) {
-      console.log("Product fetch error:", error);
+
+      console.log(error);
+
+      toast.error("Failed to fetch products");
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
   useEffect(() => {
+
     fetchproducts();
+
   }, []);
 
-  // 🔹 ADD PRODUCT (Admin)
-  const addProducts = async (newproduct) => {
-    try {
+  // ✅ ADD PRODUCT
+const addProducts = async (formData) => {
 
-      const formData = new FormData();
+  try {
 
-      Object.keys(newproduct).forEach(key => {
-        formData.append(key, newproduct[key]);
-      });
+    const res = await axiosInstance.post(
+      "/Products/Addproduct",
+      formData
+    );
 
-      await axios.post(
-        `${base_url}/Products/Addproduct`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
-      );
+    toast.success("Product added successfully");
 
-      fetchproducts();
+    fetchproducts();
 
-    } catch (error) {
-      console.log("Add product error:", error);
+    return { success: true };
+
+  } catch (error) {
+
+    if (error.response?.data?.errors) {
+
+      return {
+        success: false,
+        errors: error.response.data.errors
+      };
+
     }
-  };
 
-  // 🔹 DELETE PRODUCT (Soft Delete)
+    toast.error("Failed to add product");
+
+    return { success: false };
+
+  }
+
+};
+
+
+  // ✅ DELETE PRODUCT
   const deleteProductWithId = async (id) => {
+
     try {
-      await axios.patch(
-        `${base_url}/Products/Delete/${id}`
+
+      await axiosInstance.patch(
+        `/Products/Delete/${id}`
       );
+
+      toast.success("Product deleted");
+
       fetchproducts();
+
     } catch (error) {
-      console.log("Delete error:", error);
+
+      console.log(error);
+
+      toast.error("Delete failed");
+
     }
   };
 
-  // 🔹 UPDATE PRODUCT
+  // ✅ UPDATE PRODUCT
   const updateProduct = async (id, updatedData) => {
+
     try {
 
       const formData = new FormData();
+
       Object.keys(updatedData).forEach(key => {
+
         formData.append(key, updatedData[key]);
+
       });
 
-      await axios.put(
-        `${base_url}/Products/Update/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }
+      await axiosInstance.put(
+        `/Products/Update/${id}`,
+        formData
       );
+
+      toast.success("Product updated");
 
       fetchproducts();
 
-    } catch (error) {
-      console.log("Update error:", error);
-    }
-  };
+      return true;
 
-  // 🔹 SEARCH PRODUCTS
-  const searchProducts = async (searchTerm) => {
-    try {
-      const res = await axios.get(
-        `${base_url}/Products/search?searchTerm=${searchTerm}`
-      );
-      setProducts(res.data.data);
     } catch (error) {
+
       console.log(error);
-    }
-  };
 
-  // 🔹 GET BY CATEGORY
-  const getByCategory = async (category) => {
-    try {
-      const res = await axios.get(
-        `${base_url}/Products/Category?category=${category}`
-      );
-      setProducts(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      toast.error("Update failed");
 
-  // 🔹 PAGINATED PRODUCTS
-  const getPaginatedProducts = async (pageNumber = 1, pageSize = 10) => {
-    try {
-      const res = await axios.get(
-        `${base_url}/Products/Paginated?pageNumber=${pageNumber}&pageSize=${pageSize}`
-      );
-      setProducts(res.data.data.items);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // 🔹 COMBINED FILTER PRODUCTS
-  const getCombinedProducts = async (
-    pageNumber = 1,
-    pageSize = 10,
-    category = "",
-    search = "",
-    sortBy = ""
-  ) => {
-    try {
-      const res = await axios.get(
-        `${base_url}/Products/GetproductsCombined?pageNumber=${pageNumber}&pageSize=${pageSize}&category=${category}&search=${search}&sortBy=${sortBy}`
-      );
-
-      setProducts(res.data.data.items);
-
-    } catch (error) {
-      console.log(error);
+      return false;
     }
   };
 
   return (
-    <ProductContext.Provider
-      value={{
-        products,
-        loading,
-        fetchproducts,
-        addProducts,
-        deleteProductWithId,
-        updateProduct,
-        searchProducts,
-        getByCategory,
-        getPaginatedProducts,
-        getCombinedProducts
-      }}
-    >
+
+    <ProductContext.Provider value={{
+
+      products,
+      loading,
+      fetchproducts,
+      addProducts,
+      deleteProductWithId,
+      updateProduct
+
+    }}>
+
       {children}
+
     </ProductContext.Provider>
+
   );
 };

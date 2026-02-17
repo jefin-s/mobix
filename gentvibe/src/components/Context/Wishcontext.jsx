@@ -1,70 +1,100 @@
 import { createContext, useEffect, useState } from "react";
-import { base_url } from "../../api/api";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 
-export const Wishcontext= createContext()
-export  const WishProvider=({children})=>{
-    const[whishlist,setWhishlist]=useState([])
-    const[user,setuser]=useState(null)
+export const Wishcontext = createContext();
 
-    useEffect(()=>{
-       const storedUser=JSON.parse(localStorage.getItem("currentUser"))
-       if(storedUser){
-        setuser(storedUser)
-        fethWishlistofUser(storedUser.id)
-        
-       }
-    },[]) 
+export const WishProvider = ({ children }) => {
 
-   const fethWishlistofUser=async(userId)=>{
-    try{
-        const  response=await axios.get(`${base_url}/users/${userId}`)
-        setWhishlist(response.data.whishlist||[])
+  const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+  // ✅ Fetch Wishlist
+  const fetchWishlist = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await axiosInstance.get("/WishList");
+
+      setWishlist(res.data.data);
+
     }
-     catch(error){
-        console.log(error)
-     }
-   }
-   const Togglewhishlist =async(product)=>{
-      if(!user){
-        alert("please login");
-        return 
-        
-      }
-      const existing=whishlist.find((item)=>item.id===product.id)
-      let updatedWishlist;
-      if(existing){
-        updatedWishlist=whishlist.filter((item)=>item.id!==product.id)
-        toast.success("removed from wishlist")
+    catch (error) {
 
-      }
-      else{
-        updatedWishlist=[...whishlist,product]
-        toast.success("added to whish list")
-      }
-      setWhishlist(updatedWishlist)
+      console.log("Wishlist fetch error", error);
 
-      try{
-        await axios.patch(`${base_url}/users/${user.id}`,{
-            whishlist:updatedWishlist
-        })
+    }
+    finally {
 
-      }
-      catch(error){
-        console.log(error);
-        
-      }
-      
-   }
-   const alreadyInWishlist=(ProductId)=>{
-    return whishlist.some((item)=>item.id===ProductId)
-   }
-   
-   return(
-    <Wishcontext.Provider value={{whishlist,Togglewhishlist,alreadyInWishlist}}>
-{children}
+      setLoading(false);
+
+    }
+
+  };
+
+
+  // ✅ Load on start
+  useEffect(() => {
+
+    const token = sessionStorage.getItem("token");
+
+    if (token)
+      fetchWishlist();
+
+  }, []);
+
+
+
+
+  // ✅ Toggle Wishlist
+  const toggleWishlist = async (productId) => {
+
+    try {
+
+      const res = await axiosInstance.post(`/WishList/${productId}`);
+
+      toast.success(res.data.message);
+
+      fetchWishlist();
+
+    }
+    catch (error) {
+
+      toast.error("Wishlist update failed");
+
+    }
+
+  };
+
+
+
+  // ✅ Check exists
+  const alreadyInWishlist = (productId) => {
+
+    return wishlist.some(item => item.productId === productId);
+
+  };
+
+
+
+  return (
+
+    <Wishcontext.Provider
+      value={{
+        wishlist,
+        loading,
+        toggleWishlist,
+        alreadyInWishlist
+      }}
+    >
+
+      {children}
+
     </Wishcontext.Provider>
-   )
-   
-}
+
+  );
+
+};

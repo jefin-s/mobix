@@ -10,7 +10,9 @@ import { Wishcontext } from "../../components/Context/Wishcontext";
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const {  cart,addToCart, isIncart,incementQuantity,decremnetQuantity,removeCartitem } = useContext(CartContext);
+  const {  cart,addToCart, isIncart,   removeCartitem,
+        incementQuantity,
+        decremnetQuantity, } = useContext(CartContext);
 
   const{toggleWishlist, alreadyInWishlist}=useContext(Wishcontext)
   const navigate = useNavigate();
@@ -35,7 +37,10 @@ const ProductDetails = () => {
     return <p className="text-center text-gray-600 mt-10">Loading...</p>;
 
   // cart is an array of object it retirn a single objeect and inthis id wil mathc it return a single object so we can cartitemm .quantit
-  const cartitem= cart.find((item)=>item.id===product.id)
+ const cartitem = cart.find(
+  (item) => item.productId === product.id
+);
+
 
 
   return (
@@ -62,7 +67,7 @@ const ProductDetails = () => {
           <div className="cursor-pointer text-red-500 hover:scale-110 transition-transform">
             <button onClick={ 
               (e)=>{
-                toggleWishlist(product)
+                toggleWishlist(product.id)
 
               }
             }>
@@ -98,7 +103,7 @@ const ProductDetails = () => {
             <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 sm:mt-0">
                   <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
                     <button
-                      onClick={() => decremnetQuantity(product.id)}
+                      onClick={() => decremnetQuantity(product.id,cartitem.quantity)}
                       className="px-3 py-1 text-gray-700 hover:bg-gray-100"
                     >
                       −
@@ -107,7 +112,7 @@ const ProductDetails = () => {
                       {cartitem?cartitem.quantity:"no"}
                     </span>
                     <button
-                      onClick={() => incementQuantity(product.id)}
+                      onClick={() => incementQuantity(product.id,cartitem.quantity)}
                       className="px-3 py-1 text-gray-700 hover:bg-gray-100"
                     >
                       +
@@ -115,7 +120,7 @@ const ProductDetails = () => {
                   </div>
 
                   <button
-                    onClick={() => removeCartitem(product.id)}
+                    onClick={() => removeCartitem(cartitem.product.id)}
                     className="text-red-500 hover:text-red-600 font-medium text-sm"
                   >
                     Remove
@@ -164,7 +169,7 @@ const ProductDetails = () => {
         </div>
       </div>
     </div>
-    
+
   );
 };
 

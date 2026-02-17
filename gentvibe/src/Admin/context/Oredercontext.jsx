@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
+import toast from "react-hot-toast";
 
 export const OrderContext = createContext();
 
@@ -43,6 +44,7 @@ const updateOrderstatus = async (id, newStatus) => {
         newStatus: newStatus
       }
     );
+    toast.success("Order Updated SuccessFully")
 
     setOrders(prev =>
       prev.map(order =>
@@ -52,8 +54,10 @@ const updateOrderstatus = async (id, newStatus) => {
       )
     );
 
-  } catch (error) {
+  }
+   catch (error) {
     console.log(error);
+    toast.error(error.response.data.message)
   }
 };
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Confirmodal from "../Modal/Confirmodal";
 
 const ManageProduct = () => {
-  const { products, delteProductWithid } = useContext(ProductContext);
+  const { products, deleteProductWithId } = useContext(ProductContext);
   const [status, setStatus] = useState();
   /////////////////////////////////////////////
   // Product searching
@@ -72,7 +72,7 @@ const ManageProduct = () => {
 
   const confirmDelete = () => {
     if (selectwithdeleteId) {
-      delteProductWithid(selectwithdeleteId);
+      deleteProductWithId(selectwithdeleteId);
     }
     setdeletmodal(false);
     setSelectWithdeleteId(null);

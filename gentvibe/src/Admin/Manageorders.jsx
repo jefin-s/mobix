@@ -94,20 +94,24 @@ const Manageorders = () => {
 
                   {/* Status */}
                   <td className="p-4">
-                    <select
-                      value={order.status}
-                      onChange={(e) =>
-                        updateOrderstatus(order.id, e.target.value)
-                      }
-                      className="border rounded px-2 py-1"
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Shipping">Shipping</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Cancelled">Cancelled</option>
-                      <option value="Returned">Returned</option>
-                    </select>
+                  <select
+  value={order.orderStatus}
+  onChange={(e) =>
+    updateOrderstatus(order.id, Number(e.target.value))
+  }
+  className="border rounded px-2 py-1"
+>
+
+  <option value={0}>Pending</option>
+  <option value={1}>Confirmed</option>
+  <option value={2}>Packed</option>
+  <option value={3}>Shipped</option>
+  <option value={4}>Delivered</option>
+  <option value={5}>Cancelled</option>
+
+</select>
+
+
                   </td>
                 </tr>
               ))}

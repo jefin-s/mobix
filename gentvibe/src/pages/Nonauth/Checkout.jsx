@@ -1,265 +1,448 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../components/Context/Cartcontext";
+import { OrderContext } from "../../components/Context/UserOrderContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Authcontext } from "../../components/Context/Authcontext";
-import { base_url } from "../../api/api";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
 
-
 const Checkout = () => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+
+  // ADDRESS STATES
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [addressLine1, setAddressLine1] = useState("");
+  const [addressLine2, setAddressLine2] = useState("");
   const [city, setCity] = useState("");
-  const [pincode, setPicode] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [country, setCountry] = useState("India");
+  const [isDefault, setIsDefault] = useState(false);
+
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
   const [paymentMethod, setPaymentMethod] = useState("cod");
-  const location =useLocation()
-  const buyNowData=location.state?.product||null
-  const buyNowQuantity=location.state?.quantity||1
-  
-  const { user } = useContext(Authcontext);
-  const { cart, totalQuantity, totalprice } = useContext(CartContext);
+
+  const [loading, setLoading] = useState(false);
+
+  const { grandTotal, clearCart } = useContext(CartContext);
+  const { placeCartOrder, buyNowOrder } = useContext(OrderContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const placeorder = async () => {
-    if (paymentMethod !== "cod") {
-      toast.info("Only Cash on Delivery is available currently.");
-      return;
-    }
+  const buyNowData = location.state?.product || null;
+  const buyNowQuantity = location.state?.quantity || 1;
 
-    if (!name || !address || !city || !pincode || !phoneNumber) {
-      toast.warning("Please fill all shipping details");
-      return;
-    }
+  const total =
+    buyNowData
+      ? buyNowData.price * buyNowQuantity
+      : grandTotal;
 
-    if (!buyNowData&&cart.length === 0) {
-      toast.warning("Your cart is empty");
-      return;
-    }
+
+  // FETCH ADDRESSES
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  const fetchAddresses = async () => {
 
     try {
-      const res = await axios.get(`${base_url}/users/${user.id}`);
-      const userData = res.data;
-      //  if the buy now data is  exist return  an array name as order items store an array array containg  spead the buy now data adn set quantiry is 1
-     const orderitems=buyNowData?[{...buyNowData,quantity:buyNowQuantity}]:cart;
-     const totalAmount=buyNowData?buyNowData.price*buyNowQuantity:totalprice
-      const newOrder = {
-        orderId: Date.now(),
-        items: orderitems,
-        totalAmount: totalAmount,
-        status: "Pending",
-        paymentMethod: "Cash on Delivery",
-        address: {
-          name,
-          address,
-          city,
-          pincode,
-          phoneNumber,
-        },
-        created_at: new Date().toISOString(),
-      };
 
-      const updatedData = {
-        ...userData,
-        orders: [...userData.orders, newOrder],
-        cart: buyNowData?userData.cart:[],
-      };
+      const res = await axiosInstance.get("/Address/getaddresses");
 
-      await axios.patch(`${base_url}/users/${user.id}`, updatedData);
-      toast.success("Order placed successfully!");
-      navigate("/order");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      console.log(res.data.data)
+      setAddresses(res.data.data);
+
+      const defaultAddr = res.data.data.find(x => x.isDefault);
+
+      if (defaultAddr)
+        setSelectedAddress(defaultAddr.addressId);
+
     }
+    catch {
+
+      toast.error("Failed to load addresses");
+
+    }
+
   };
 
- return (
-  <div className="min-h-screen w-full bg-gray-100 pt-24 pb-10 px-6 flex flex-col md:flex-row gap-10 justify-center">
 
-    {/* LEFT SECTION */}
-    <div className="w-full md:w-1/2 bg-white  rounded p-8 space-y-8 border border-gray-200">
+  // SAVE ADDRESS
+  const saveAddress = async () => {
 
-      {/* Shipping Details */}
-      <div>
-        <h1 className="text-2xl font-bold mb-5 text-gray-800">
-          Shipping Details
-        </h1>
-        <form className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="border  p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
-            onChange={(e) => setName(e.target.value)}
-            disabled={paymentMethod !== "cod"}
-          />
-          <input
-            type="text"
-            placeholder="Phone Number"
-            className="border  p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            disabled={paymentMethod !== "cod"}
-          />
+    const res = await axiosInstance.post(
 
-          <input
-            type="text"
-            placeholder="Address"
-            className="border p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300 col-span-2"
-            onChange={(e) => setAddress(e.target.value)}
-            disabled={paymentMethod !== "cod"}
-          />
+      "/Address/addaddress",
 
-          <input
-            type="text"
-            placeholder="City"
-            className="border -lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
-            onChange={(e) => setCity(e.target.value)}
-            disabled={paymentMethod !== "cod"}
-          />
-          <input
-            type="text"
-            placeholder="Pincode"
-            className="border -lg p-3 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-300"
-            onChange={(e) => setPicode(e.target.value)}
-            disabled={paymentMethod !== "cod"}
-          />
-        </form>
-      </div>
- <hr className="my-3" />
-      {/* Payment Method */}
-      <div>
-        <h1 className="text-2xl font-bold mb-5 text-gray-800">
-          Payment Method
-        </h1>
-        <div className="space-y-4">
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="radio"
-              name="payment"
-              value="online"
-              checked={paymentMethod === "online"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-5 h-5 cursor-pointer"
-            />
-            <span className="text-gray-700 text-lg">Online Payment (Razorpay)</span>
-          </label>
+      {
+        fullName,
+        phone,
+        addressLine1,
+        addressLine2,
+        city,
+        state,
+        pincode,
+        country,
+        isDefault
+      }
 
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="radio"
-              name="payment"
-              value="cod"
-              checked={paymentMethod === "cod"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-5 h-5 cursor-pointer"
-            />
-            <span className="text-gray-700 text-lg">Cash on Delivery</span>
-          </label>
-        </div>
-      </div>
+    );
+
+    return res.data.data;
+
+  };
+
+
+  // RAZORPAY PAYMENT
+  const startRazorpayPayment = async (addressId) => {
+
+    try {
+
+      const res = await axiosInstance.post(
+
+        "/Payment/CreateOrder",
+
+        {
+          amount: total
+        }
+
+      );
+
+      const order = res.data;
+
+
+      const options = {
+
+        key: order.key,
+
+        amount: order.amount * 100,
+
+        currency: order.currency,
+
+        order_id: order.orderId,
+
+
+        handler: async function (response) {
+
+          await axiosInstance.post(
+
+            "/Payment/VerifyPayment",
+
+            {
+
+              razorpayOrderId: response.razorpay_order_id,
+
+              razorpayPaymentId: response.razorpay_payment_id,
+
+              razorpaySignature: response.razorpay_signature
+
+            }
+
+          );
+
+
+          if (buyNowData) {
+
+            await buyNowOrder(
+
+              buyNowData.id,
+
+              buyNowQuantity,
+
+              addressId
+
+            );
+
+          }
+          else {
+
+            await placeCartOrder(addressId);
+
+            clearCart();
+
+          }
+
+
+          toast.success("Payment Successful");
+
+          navigate("/order");
+
+        }
+
+      };
+
+
+      const razor = new window.Razorpay(options);
+
+      razor.open();
+
+    }
+
+    catch {
+
+      toast.error("Payment Failed");
+
+    }
+
+  };
+
+
+  // PLACE ORDER
+  const placeorder = async () => {
+
+    setLoading(true);
+
+    try {
+
+      let addressId = selectedAddress;
+
+
+      if (!addressId) {
+
+        addressId = await saveAddress();
+
+      }
+
+      
+
+      // COD
+      if (paymentMethod === "cod") {
+
+        if (buyNowData) {
+
+          await buyNowOrder(
+
+            buyNowData.id,
+
+            buyNowQuantity,
+
+            addressId
+
+          );
+
+        }
+        else {
+
+          await placeCartOrder(addressId);
+
+          clearCart();
+
+        }
+
+        toast.success("Order placed");
+
+        navigate("/order");
+
+      }
+
+
+      // ONLINE PAYMENT
+      else {
+
+        await startRazorpayPayment(addressId);
+
+      }
+
+    }
+
+    catch {
+
+      toast.error("Order Failed");
+
+    }
+
+    setLoading(false);
+
+  };
+
+
+  return (
+
+    <div className="min-h-screen bg-black pt-24 pb-10 px-6 flex justify-center">
+
+      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-6">
+
+
+        {/* LEFT */}
+
+        <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
+
+          <h2 className="text-white text-lg font-semibold mb-4">
+
+            Select Address
+
+          </h2>
+
+
+         {
+  addresses.map(addr => (
+
+    <div
+      key={addr.addressId}
+
+      onClick={() => setSelectedAddress(addr.addressId)}
+
+      className={`border p-3 mb-3 rounded cursor-pointer
+
+      ${selectedAddress === addr.addressId
+        ? "border-white bg-zinc-800"
+        : "border-zinc-700"}
+
+      `}
+    >
+
+      <p className="text-white">{addr.fullName}</p>
+
+      <p className="text-gray-400">{addr.addressLine1}</p>
+
+      <p className="text-gray-400">{addr.city}</p>
+
+      <p className="text-gray-400">{addr.phone}</p>
+
     </div>
 
-  {/* RIGHT SECTION */}
-<div className="w-full md:w-1/3 h-fit bg-white shadow-xl rounded p-8 border border-gray-300">
-
-  <h1 className="text-2xl font-bold text-gray-800 mb-6">
-    Order Summary
-  </h1>
-
-  {/* BUY NOW */}
-  {buyNowData ? (
-    <div className="space-y-4">
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Subtotal</span>
-        <span>₹{buyNowData.price * buyNowQuantity}</span>
-      </div>
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Shipping</span>
-        <span className="text-green-600 font-medium">FREE</span>
-      </div>
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Tax (18%)</span>
-        <span>₹0.00</span>
-      </div>
-
-      <hr className="my-3" />
-
-      <div className="flex justify-between text-lg font-bold text-gray-900 mb-4">
-        <span>Total</span>
-        <span>₹{buyNowData.price * buyNowQuantity}</span>
-      </div>
-
-    </div>
-  ) : (
-    <div className="space-y-4">
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Subtotal</span>
-        <span>₹{totalprice}</span>
-      </div>
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Shipping</span>
-        <span className="text-green-600 font-medium">FREE</span>
-      </div>
-
-      <div className="flex justify-between text-gray-600 text-sm">
-        <span>Tax (18%)</span>
-        <span>₹0.00</span>
-      </div>
-
-      <hr className="my-3" />
-
-      <div className="flex justify-between text-lg font-bold text-gray-900 mb-4">
-        <span>Total</span>
-        <span>₹{totalprice}</span>
-      </div>
-
-    </div>
-  )}
-
-  {/* COMPLETE PAYMENT BUTTON */}
-  <button
-    className={`w-full py-3 rounded-xl text-lg font-semibold shadow-sm transition-all ${
-      paymentMethod === "cod"
-        ? "bg-gray-500 text-white hover:bg-gray-600"
-        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-    }`}
-    onClick={placeorder}
-    disabled={paymentMethod !== "cod"}
-  >
-    Complete Payment
-  </button>
-
-  {/* TERMS TEXT */}
-  <p className="text-xs text-gray-500 mt-3 text-center">
-    By completing your purchase, you agree to our Terms of Service and Privacy Policy.
-  </p>
-
-  <hr className="my-6" />
-
-  {/* SECURE PAYMENT ICONS */}
-  <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center justify-center">
-    Secure Payment
-  </h3>
-
-  <div className="flex items-center gap-4 justify-center">
-  
-    <img src="/mastercard.png" className="h-8" />
-    <img src="/paytm.png" className="h-8" />
-    <img src="/gpay.png" className="h-8" />
-    <img src="/razorpay.png" className="h-8" />
-  </div>
-
-</div>
-
-  </div>
-);
+  ))
 }
+
+
+          <hr className="my-4 border-zinc-700" />
+
+
+          <h3 className="text-white mb-2">
+
+            Add New Address
+
+          </h3>
+
+
+          <input placeholder="Full Name" className="input-dark"
+            onChange={(e) => setFullName(e.target.value)} />
+
+
+          <input placeholder="Phone" className="input-dark"
+            onChange={(e) => setPhone(e.target.value)} />
+
+
+          <input placeholder="Address Line 1" className="input-dark"
+            onChange={(e) => setAddressLine1(e.target.value)} />
+
+
+          <input placeholder="City" className="input-dark"
+            onChange={(e) => setCity(e.target.value)} />
+
+
+          <input placeholder="State" className="input-dark"
+            onChange={(e) => setState(e.target.value)} />
+
+
+          <input placeholder="Pincode" className="input-dark"
+            onChange={(e) => setPincode(e.target.value)} />
+
+
+          {/* PAYMENT METHOD */}
+
+          <div className="mt-4">
+
+            <label className="text-white flex gap-2">
+
+              <input
+
+                type="radio"
+
+                checked={paymentMethod === "cod"}
+
+                onChange={() => setPaymentMethod("cod")}
+
+              />
+
+              Cash on Delivery
+
+            </label>
+
+
+            <label className="text-white flex gap-2 mt-2">
+
+              <input
+
+                type="radio"
+
+                checked={paymentMethod === "online"}
+
+                onChange={() => setPaymentMethod("online")}
+
+              />
+
+              Online Payment
+
+            </label>
+
+          </div>
+
+
+        </div>
+
+
+
+        {/* RIGHT */}
+
+        <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800 h-fit">
+
+
+          <h2 className="text-white text-lg font-semibold mb-4">
+
+            Order Summary
+
+          </h2>
+
+
+          <div className="flex justify-between text-gray-400 mb-3">
+
+            <span>Total</span>
+
+            <span className="text-white font-semibold">
+
+              ₹{total}
+
+            </span>
+
+          </div>
+
+
+          <button
+
+            onClick={placeorder}
+
+            disabled={loading}
+
+            className="w-full bg-white text-black py-3 rounded"
+
+          >
+
+            {
+
+              loading
+
+                ? "Processing..."
+
+                : "Place Order"
+
+            }
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  );
+
+};
 
 export default Checkout;

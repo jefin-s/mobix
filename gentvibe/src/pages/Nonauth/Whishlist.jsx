@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Wishcontext } from "../../components/Context/Wishcontext";
 
 const Whishlist = () => {
-  const { whishlist, Togglewhishlist } = useContext(Wishcontext);
+  const { wishlist, toggleWishlist } = useContext(Wishcontext);
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-5 pt-24">
@@ -10,22 +10,22 @@ const Whishlist = () => {
         Your Wishlist ❤️
       </h1>
 
-      {whishlist.length === 0 ? (
+      {wishlist.length === 0 ? (
         <p className="text-center text-gray-600 text-xl mt-24">
           Your wishlist is empty.
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {whishlist.map((item) => (
+          {wishlist.map((item) => (
             <div
-              key={item.id}
+              key={item.productId}
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200"
             >
               {/* Image */}
               <div className="flex justify-center bg-gray-100 p-6">
                 <img
                   src={item.thumbnail}
-                  alt={item.title}
+                 alt={item.productName}
                   className="h-44 object-contain drop-shadow-sm"
                 />
               </div>
@@ -33,7 +33,7 @@ const Whishlist = () => {
               {/* Content */}
               <div className="p-6">
                 <h2 className="text-lg font-bold text-gray-900 line-clamp-1">
-                  {item.title}
+                  {item.productName}
                 </h2>
 
                 <p className="text-gray-700 font-semibold mt-2">
@@ -49,7 +49,7 @@ const Whishlist = () => {
 
                 {/* Remove */}
                 <button
-                  onClick={() => Togglewhishlist(item)}
+                  onClick={() => toggleWishlist(item.productId)}
                   className="w-full mt-5 bg-red-600 text-white py-2.5 rounded-lg font-semibold hover:bg-red-700 active:scale-95 transition-all duration-200"
                 >
                   Remove

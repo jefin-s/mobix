@@ -1,179 +1,352 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { base_url } from '../api/api'
-import axios from 'axios'
-import toast from 'react-hot-toast'
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ProductContext } from "./Productcontext";
+import axiosInstance from "../api/axiosInstance";
+import { toast } from "react-toastify";
 
 const Updateproduct = () => {
-  const navigate = useNavigate()
-  const { p_id } = useParams()
 
-  const [productsWithid, setProductWithid] = useState({
-    title: '',
-    price: '',
-    description: '',
-    discountPercentage: '',
-    rating: '',
-    stock: '',
-    brand: '',
-    isActive: '',
-    category: '',
-    thumbnail: '',
-  })
+  const navigate = useNavigate();
+  const { p_id } = useParams();
+  const { updateProduct } = useContext(ProductContext);
 
-  const handlechange = (e) => {
-    const { name, value } = e.target
-    setProductWithid({ ...productsWithid, [name]: value })
-  }
+  const [preview, setPreview] = useState(null);
 
-  const fetchproductforUpdate = async () => {
+  const [product, setProduct] = useState({
+
+    Title: "",
+    Price: "",
+    Stock: "",
+    Discountpercentage: "",
+    Description: "",
+    Brand: "",
+    CategoryID: "",
+    ImageFiles: []
+
+  });
+
+
+  // ✅ Fetch Product
+  const fetchProduct = async () => {
+
     try {
-      const product_data = await axios.get(`${base_url}/products/${p_id}`)
-      setProductWithid(product_data.data)
-    } catch (error) {
-      console.log(error)
+
+      const res = await axiosInstance.get(`/Products/${p_id}`);
+
+      const data = res.data.data;
+
+      setProduct({
+
+        Title: data.title ?? "",
+        Price: data.price ?? "",
+        Stock: data.stock ?? "",
+        Discountpercentage: data.discount ?? "",
+        Description: data.description ?? "",
+        Brand: data.brand ?? "",
+        CategoryID: data.categoryId?? "",
+        ImageFiles: []
+
+      });
+
+      setPreview(data.thumbnail);
+
     }
-  }
+    catch (error) {
+
+      console.log(error);
+
+      toast.error("Fetch failed");
+
+    }
+
+  };
+
 
   useEffect(() => {
-    fetchproductforUpdate()
-  }, [])
 
+    fetchProduct();
+
+  }, []);
+
+
+
+
+  // ✅ Handle input change
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setProduct({
+
+      ...product,
+      [name]: value
+
+    });
+
+  };
+
+
+
+  // ✅ Handle image change
+  const handleImageChange = (e) => {
+
+    const files = Array.from(e.target.files);
+
+    setProduct({
+
+      ...product,
+      ImageFiles: files
+
+    });
+
+    setPreview(URL.createObjectURL(files[0]));
+
+  };
+
+
+
+  // ✅ Submit update
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    await axios.put(`${base_url}/products/${p_id}`, productsWithid)
-    toast.success('Product Updated Successfully ✅')
-    navigate('/admin/allproducts')
-  }
+
+    e.preventDefault();
+
+    const success = await updateProduct(p_id, product);
+
+    if (success) {
+
+      navigate("/admin/allproducts");
+
+    }
+
+  };
+
+
+
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50 flex items-center justify-center py-12 px-4">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
-        <h1 className="text-center text-3xl font-bold text-blue-600 mb-2">
+
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 flex justify-center items-center p-6">
+
+
+      <div className="bg-white shadow-2xl rounded-2xl w-full max-w-3xl p-8 border">
+
+
+        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+
           Update Product
-        </h1>
-        <p className="text-center text-gray-500 mb-6">
-          Editing Product ID: <span className="font-semibold">{p_id}</span>
-        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-         
-          {productsWithid.thumbnail && (
-            <div className="flex justify-center mb-4">
-              <img
-                src={productsWithid.thumbnail}
-                alt={productsWithid.title || 'Product image'}
-                className="w-32 h-32 object-cover rounded-xl border shadow-sm"
-              />
+        </h2>
+
+
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+
+          {/* Image Preview */}
+
+          <div className="flex justify-center">
+
+            <div className="w-32 h-32 border-2 border-blue-400 rounded-xl overflow-hidden shadow">
+
+              {preview ?
+
+                <img
+                  src={preview}
+                  alt="preview"
+                  className="w-full h-full object-cover"
+                />
+
+                :
+
+                <div className="flex items-center justify-center h-full text-gray-400">
+
+                  No Image
+
+                </div>
+
+              }
+
             </div>
-          )}
 
-        
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <InputField
-              label="Product Title"
-              name="title"
-              value={productsWithid.title}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Price"
-              name="price"
-              value={productsWithid.price}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Category"
-              name="category"
-              value={productsWithid.category}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Image URL"
-              name="thumbnail"
-              value={productsWithid.thumbnail}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Brand"
-              name="brand"
-              value={productsWithid.brand}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Stock"
-              name="stock"
-              value={productsWithid.stock}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Ratings"
-              name="rating"
-              value={productsWithid.rating}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Offer (%)"
-              name="discountPercentage"
-              value={productsWithid.discountPercentage}
-              onChange={handlechange}
-            />
-
-            <InputField
-              label="Status (Active / Inactive)"
-              name="isActive"
-              value={productsWithid.isActive}
-              onChange={handlechange}
-            />
           </div>
+
+
+
+          {/* File Upload */}
+
+          <input
+
+            type="file"
+            multiple
+            onChange={handleImageChange}
+
+            className="
+            w-full
+            bg-gray-50
+            border-2
+            border-dashed
+            border-blue-400
+            rounded-lg
+            p-3
+            cursor-pointer
+            hover:bg-blue-50
+            "
+
+          />
+
+
+
+          {/* Input Grid */}
+
+          <div className="grid grid-cols-2 gap-4">
+
+
+            <Input label="Title" name="Title" value={product.Title} onChange={handleChange} />
+
+            <Input label="Price" name="Price" value={product.Price} onChange={handleChange} />
+
+            <Input label="Stock" name="Stock" value={product.Stock} onChange={handleChange} />
+
+            <Input label="Discount %" name="Discountpercentage" value={product.Discountpercentage} onChange={handleChange} />
+
+            <Input label="Brand" name="Brand" value={product.Brand} onChange={handleChange} />
+
+            <Input label="Category ID" name="CategoryID" value={product.CategoryID} onChange={handleChange} />
+
+
+          </div>
+
+
 
           {/* Description */}
+
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+
+            <label className="font-semibold text-gray-700 mb-1">
+
               Description
+
             </label>
+
             <textarea
-              name="description"
-              value={productsWithid.description}
-              onChange={handlechange}
-              placeholder="Enter product description..."
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+
+              name="Description"
+              value={product.Description}
+              onChange={handleChange}
+              placeholder="Enter Description"
+
+              className="
+              w-full
+              bg-gray-50
+              border-2
+              border-gray-300
+              rounded-lg
+              px-4
+              py-2
+              text-gray-800
+              placeholder-gray-400
+              focus:outline-none
+              focus:border-blue-500
+              focus:bg-white
+              focus:ring-2
+              focus:ring-blue-200
+              "
+
             />
+
           </div>
 
+
+
           {/* Submit Button */}
+
           <button
+
             type="submit"
-            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-300"
+
+            className="
+            w-full
+            bg-blue-600
+            text-white
+            py-3
+            rounded-xl
+            font-semibold
+            hover:bg-blue-700
+            transition
+            duration-300
+            shadow-lg
+            "
+
           >
+
             Update Product
+
           </button>
+
+
+
         </form>
+
+
       </div>
+
+
     </div>
-  )
-}
+
+  );
+
+};
 
 
-const InputField = ({ label, name, value, onChange }) => (
+
+
+// ✅ Colored Input Component
+
+const Input = ({ label, name, value, onChange }) => (
+
   <div className="flex flex-col">
-    <label className="text-gray-700 font-medium mb-1">{label}</label>
+
+
+    <label className="font-semibold text-gray-700 mb-1">
+
+      {label}
+
+    </label>
+
+
     <input
-      type="text"
+
       name={name}
       value={value}
       onChange={onChange}
-      placeholder={label}
-      className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-    />
-  </div>
-)
+      placeholder={`Enter ${label}`}
 
-export default Updateproduct
+      className="
+      w-full
+      bg-gray-50
+      border-2
+      border-gray-300
+      rounded-lg
+      px-4
+      py-2
+      text-gray-800
+      placeholder-gray-400
+      focus:outline-none
+      focus:border-blue-500
+      focus:bg-white
+      focus:ring-2
+      focus:ring-blue-200
+      transition
+      duration-200
+      "
+
+    />
+
+
+  </div>
+
+);
+
+
+
+export default Updateproduct;
