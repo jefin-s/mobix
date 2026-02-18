@@ -13,6 +13,7 @@ import { ProductProvider } from "./Admin/Productcontext.jsx";
 import Modal from "react-modal";
 import { WishProvider } from "./components/Context/Wishcontext.jsx";
 import { OrdersProvider } from "./components/Context/UserOrderContext.jsx";
+import { CategoryProvider } from "./Admin/context/CategoryContext.jsx";
 Modal.setAppElement("#root");
 
 createRoot(document.getElementById("root")).render(
@@ -25,7 +26,10 @@ createRoot(document.getElementById("root")).render(
               <Userprovider>
                 <OrdersProvider>
                   <ProductProvider>
+                    <CategoryProvider>
+                    
                     <App />
+                    </CategoryProvider>
                   </ProductProvider>
                   </OrdersProvider>
               </Userprovider>

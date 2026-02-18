@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Authcontext } from '../components/Context/Authcontext';
 import { HiMenu } from "react-icons/hi";
-import { FaUsers, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaChevronRight } from "react-icons/fa";
+import { FaUsers, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaChevronRight,FaTags } from "react-icons/fa";
 
 const Admindashboard = () => {
   const navigate = useNavigate();
@@ -85,6 +85,21 @@ const Admindashboard = () => {
               </>
             )}
           </button>
+          <button
+  onClick={() => navigate("category")}
+  className="flex items-center gap-4 w-full p-3 rounded-lg hover:bg-gray-700/50 hover:translate-x-1 transition-all group"
+>
+  <FaTags className="w-5 h-5 flex-shrink-0" />
+
+  {isExpanded && (
+    <>
+      <span className="flex-1 text-left">Category</span>
+
+      <FaChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+    </>
+  )}
+</button>
+
         </nav>
 
         {/* Logout */}

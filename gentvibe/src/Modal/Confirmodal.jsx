@@ -10,6 +10,8 @@ const Confirmodal = ({title,message,confirmText,cancelText,confirmDelete,cancelD
           </h2>
           <p className="text-gray-600 mb-6">
            {message}
+
+           
           </p>
           <div className="flex justify-center gap-4">
             <button

@@ -23,6 +23,7 @@ import ManageProduct from "./Admin/ManageProduct";
 import AddForm from "./Admin/AddForm";
 import DetailedUser from "./Admin/DetailedUser";
 import Updateproduct from "./Admin/Updateproduct";
+import ManageCategory from "./Admin/ManageCategory";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="userlist" element={<ManageUser />} />
           <Route path="userorder" element={<Manageorders />} />
           <Route path="allproducts" element={<ManageProduct />} />
+          <Route path="category" element={<ManageCategory/>}/>
           <Route path="addform" element={<AddForm />} />
           <Route path="detailuser/:userid" element={<DetailedUser />} />
           <Route path="updatept/:p_id" element={<Updateproduct/>}/>

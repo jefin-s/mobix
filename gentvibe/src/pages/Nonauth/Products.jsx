@@ -89,7 +89,7 @@ const Products = () => {
 >
   <option value="">All Categories</option>
 
-  {categories.map((cat) => (
+  {categories?.map((cat) => (
     <option key={cat.name} value={cat.name}>
       {cat.name}
     </option>
