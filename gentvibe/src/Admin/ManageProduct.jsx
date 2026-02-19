@@ -2,45 +2,72 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductContext } from "./Productcontext";
 import { useNavigate } from "react-router-dom";
 import Confirmodal from "../Modal/Confirmodal";
+import { CategoryContext } from "./context/CategoryContext";
 
 const ManageProduct = () => {
-  const { products, deleteProductWithId } = useContext(ProductContext);
+  const {
+    products,
+    deleteProductWithId,
+    fetchproducts,
+    totalRecords,
+    pageSize,
+  } = useContext(ProductContext);
+  console.log(products);
+  const { categories } = useContext(CategoryContext);
+  console.log(categories);
   const [status, setStatus] = useState();
   /////////////////////////////////////////////
   // Product searching
   const [searchitem, setSearchitem] = useState("");
-  let searcheditem = products.filter((item) =>
-    (item.title ?? "").toLowerCase().includes(searchitem.toLowerCase())
-  );
+  const [currentpage,setCurrentPage]=useState(1)
+  // let searcheditem = products.filter((item) =>
+  //   (item.title ?? "").toLowerCase().includes(searchitem.toLowerCase())
+  // );
   //////////////////////////////////////////////////////////////
 
   //persisting category and  delted drop down section
   //////////////////////////////////////////////////
-  const queryParams = new URLSearchParams(window.location.search);
-  const initialCategory = queryParams.get("category") || "all";
-  const initialDelete = queryParams.get("deleted") || "all";
+  // const queryParams = new URLSearchParams(window.location.search);
+  // const initialCategory = queryParams.get("category") || "all";
+  // const initialDelete = queryParams.get("deleted") || "all";
 
   // Product category
-  const [category, setCategory] = useState(initialCategory);
-  if (category !== "all") {
-    searcheditem = searcheditem.filter((item) => item.category === category);
-  }
+  const [category, setCategory] = useState(null);
+  // if (category !== "all") {
+  //   searcheditem = searcheditem.filter((item) => item.category === category);
+  // }
 
   // Filter out-of-stock
-  const [deleted, setDeleted] = useState(initialDelete);
-  if (deleted !== "all") {
-    const boolValue = deleted === "true";
-    searcheditem = searcheditem.filter((item) => item.isDeleted === boolValue);
-  }
+  // const [deleted, setDeleted] = useState(initialDelete);
+  // if (deleted !== "all") {
+  //   const boolValue = deleted === "true";
+  //   searcheditem = searcheditem.filter((item) => item.isDeleted === boolValue);
+  // }
+
+  // useEffect(() => {
+  //   const params = new URLSearchParams();
+
+  //   params.set("category", category);
+  //   params.set("deleted", deleted);
+
+  //   navigate(`/admin/allproducts?${params.toString()}`, { replace: true });
+  // }, [category, deleted]);
+
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchproducts(currentpage,pageSize,category, searchitem);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [category, searchitem,currentpage]);
+  const totalPage=Math.ceil(totalRecords/pageSize);
+    
 
   useEffect(() => {
-    const params = new URLSearchParams();
 
-    params.set("category", category);
-    params.set("deleted", deleted);
+setCurrentPage(1);
 
-    navigate(`/admin/allproducts?${params.toString()}`, { replace: true });
-  }, [category, deleted]);
+}, [searchitem, category]);
 
   //////////////////////////////
   // modal logic for update
@@ -69,12 +96,17 @@ const ManageProduct = () => {
     setSelectWithdeleteId(itemId);
     setdeletmodal(true);
   };
-
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (selectwithdeleteId) {
-      deleteProductWithId(selectwithdeleteId);
+      const success = await deleteProductWithId(selectwithdeleteId);
+
+      if (success) {
+        fetchproducts(1, 10, category === "all" ? null : category, searchitem);
+      }
     }
+
     setdeletmodal(false);
+
     setSelectWithdeleteId(null);
   };
 
@@ -101,25 +133,20 @@ const ManageProduct = () => {
           />
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="border px-4 py-2 rounded-lg shadow-sm w-full md:w-44"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+            className="border px-4 py-2 rounded-lg shadow-sm"
           >
-            <option value="all">All products</option>
-            <option value="smartphones">Smart Phones</option>
-            <option value="audio">Audio</option>
-            <option value="wearables">Wearables</option>
-            <option value="accessories">Accessories</option>
-            <option value="laptops">Laptops</option>
+            <option value="">All Categories</option>
+
+            {categories?.map((cat) => (
+              <option key={cat.name} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
           </select>
-          <select
-            value={deleted}
-            onChange={(e) => setDeleted(e.target.value)}
-            className="border px-4 py-2 rounded-lg shadow-sm w-full md:w-44"
-          >
-            <option value="all">All stocks</option>
-            <option value="true">Deleted</option>
-            <option value="false">In Stock</option>
-          </select>
+
           <button
             className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 shadow-md w-full md:w-auto"
             onClick={() => navigate("/admin/addform")}
@@ -145,14 +172,14 @@ const ManageProduct = () => {
           </thead>
 
           <tbody className="text-gray-700">
-            {searcheditem.length === 0 ? (
+            {products.length === 0 ? (
               <tr>
                 <td colSpan={7} className="py-6 text-center text-gray-500">
                   No products found.
                 </td>
               </tr>
             ) : (
-              searcheditem.map((item, index) => (
+              products.map((item, index) => (
                 <tr
                   key={item.id}
                   className="hover:bg-gray-50 transition duration-150 border-b"
@@ -194,6 +221,42 @@ const ManageProduct = () => {
           </tbody>
         </table>
       </div>
+      <div className="flex justify-center mt-6 gap-2">
+
+<button
+
+onClick={() => setCurrentPage(prev => prev - 1)}
+
+disabled={currentpage === 1}
+
+className="px-4 py-2 bg-gray-300 rounded"
+>
+
+Previous
+
+</button>
+
+<span className="px-4 py-2 text-amber-300" >
+
+Page {currentpage} of {totalPage}
+
+</span>
+
+<button
+
+onClick={() => setCurrentPage(prev => prev + 1)}
+
+disabled={currentpage === totalPage}
+
+className="px-4 py-2 bg-gray-300 rounded"
+>
+
+Next
+
+</button>
+
+</div>
+
 
       {showdeletemodal && (
         <Confirmodal

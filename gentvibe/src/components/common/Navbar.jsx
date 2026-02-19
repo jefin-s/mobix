@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Authcontext } from "../Context/Authcontext";
 import { BsPerson } from "react-icons/bs";
-import { FaShoppingCart, FaApple, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaShoppingCart, FaApple, FaHeart, FaRegHeart,FaBoxOpen, FaHome,FaClipboardList,FaInfoCircle,FaSignOutAlt } from "react-icons/fa";
 import { CartContext } from "../Context/Cartcontext";
 import { Wishcontext } from "../Context/Wishcontext";
 import LoginModal from "../../Modal/LoginModal";
@@ -115,78 +115,167 @@ const searchTermchange = (e) => {
         {/* DESKTOP MENU */}
         <ul className="hidden md:flex gap-8 text-sm items-center">
 
-          <li
-            className="cursor-pointer text-gray-300 hover:text-white transition"
-            onClick={() => navigate("/")}
-          >
-            Home
-          </li>
+          {/* Home */}
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+  onClick={() => navigate("/")}
+>
+  <FaHome className="text-xl" />
 
-          <li
-            className="cursor-pointer text-gray-300 hover:text-white transition"
-            onClick={() => navigate("/prdctpage")}
-          >
-            Products
-          </li>
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100
+  transition duration-200 whitespace-nowrap">
 
-          <li
-            className="cursor-pointer text-gray-300 hover:text-white transition"
-            onClick={() => navigate("/order")}
-          >
-            My Orders
-          </li>
+    Home
 
-          <li
-            className="cursor-pointer text-gray-300 hover:text-white transition"
-            onClick={() => navigate("/about")}
-          >
-            About
-          </li>
+  </span>
+</li>
 
-          {/* CART */}
-          <div
-            className="relative cursor-pointer hover:scale-110 transition"
-            onClick={() => navigate("/cart")}
-          >
-            <FaShoppingCart className="text-xl text-gray-300 hover:text-white" />
-            {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 
-              bg-gradient-to-r from-red-500 to-pink-500 
-              text-white text-xs font-semibold 
-              rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
-                {totalQuantity}
-              </span>
-            )}
-          </div>
 
-          {/* WISHLIST */}
-          <li
-            className="cursor-pointer hover:scale-110 transition"
-            onClick={() => navigate("/wish")}
-          >
-            {wishlist.length > 0 ? (
-              <FaHeart className="text-red-500 text-lg" />
-            ) : (
-              <FaRegHeart className="text-gray-400 hover:text-white text-lg transition" />
-            )}
-          </li>
+{/* Products */}
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+  onClick={() => navigate("/prdctpage")}
+>
+  <FaBoxOpen className="text-xl" />
 
-          {/* AUTH */}
-          {!user ? (
-            <li
-              className="cursor-pointer text-gray-300 hover:text-white transition"
-              onClick={() => setIsOpens(!isOpens)}
-            >
-              <BsPerson />
-            </li>
-          ) : (
-            <button
-              onClick={logoutUser}
-              className="text-gray-300 hover:text-red-500 transition"
-            >
-              Logout
-            </button>
-          )}
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Products
+
+  </span>
+
+</li>
+
+
+{/* Orders */}
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+  onClick={() => navigate("/order")}
+>
+  <FaClipboardList className="text-xl" />
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Orders
+
+  </span>
+
+</li>
+
+
+{/* About */}
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+  onClick={() => navigate("/about")}
+>
+  <FaInfoCircle className="text-xl" />
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    About
+
+  </span>
+
+</li>
+
+
+{/* Cart */}
+<li
+  className="relative group cursor-pointer hover:scale-110 transition"
+  onClick={() => navigate("/cart")}
+>
+
+  <FaShoppingCart className="text-xl text-gray-300 hover:text-white" />
+
+  {cart.length > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-xs h-5 w-5 flex items-center justify-center rounded-full">
+      {totalQuantity}
+    </span>
+  )}
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Cart
+
+  </span>
+
+</li>
+
+
+{/* Wishlist */}
+<li
+  className="relative group cursor-pointer hover:scale-110 transition"
+  onClick={() => navigate("/wish")}
+>
+
+  {wishlist.length > 0 ?
+    <FaHeart className="text-red-500 text-lg" />
+    :
+    <FaRegHeart className="text-gray-400 text-lg hover:text-white" />
+  }
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Wishlist
+
+  </span>
+
+</li>
+
+
+{/* Login */}
+{!user ? (
+
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+  onClick={() => setIsOpens(!isOpens)}
+>
+
+  <BsPerson className="text-xl" />
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Login
+
+  </span>
+
+</li>
+
+) : (
+
+
+<li
+  className="relative group cursor-pointer text-gray-300 hover:text-red-500 transition"
+  onClick={logoutUser}
+>
+
+  <FaSignOutAlt className="text-xl" />
+
+  <span className="absolute left-1/2 -translate-x-1/2 top-9
+  bg-black text-white text-xs px-2 py-1 rounded
+  opacity-0 group-hover:opacity-100 transition">
+
+    Logout
+
+  </span>
+
+</li>
+
+)}
 
           <LoginModal
             isOpen={isOpens}
@@ -194,7 +283,7 @@ const searchTermchange = (e) => {
           />
 
           <li className="text-sm font-semibold text-white">
-            {user ? user.name : ""}
+            {user ? user.username.charAt(0).toUpperCase()+user.username.slice(1) : ""}
           </li>
         </ul>
 

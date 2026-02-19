@@ -61,6 +61,14 @@ const Cart = () => {
                 key={item.productId}
                 className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 flex justify-between items-center"
               >
+                <div>
+                 <img
+  src={item.thumbnail}
+  alt={item.productName}
+  className="w-24 h-24 object-cover rounded-lg border border-gray-200"
+/>
+
+                </div>
 
                 <div>
 

@@ -9,10 +9,12 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  
 
   const { searchTerm } = useContext(SearchContext);
 
   const { data, setUrl, loading } = useFetch("");
+  
  const [categories,setCategories]=useState([]);
 
   

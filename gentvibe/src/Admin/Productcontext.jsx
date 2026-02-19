@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export const ProductContext = createContext();
 
@@ -8,38 +8,92 @@ export const ProductProvider = ({ children }) => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalRecords, setTotalRecords] = useState(0);
+const [pageSize] = useState(10);
+
 
   // ✅ FETCH PRODUCTS
-  const fetchproducts = async () => {
+  // const fetchproducts = async () => {
 
-    try {
+  //   try {
 
-      setLoading(true);
+  //     setLoading(true);
 
-      const response = await axiosInstance.get(
-        "/Products/GetAllItems"
-      );
+  //     const response = await axiosInstance.get(
+  //       "/Products/GetAllItems"
+  //     );
 
-      setProducts(response.data.data);
+  //     setProducts(response.data.data);
 
-    } catch (error) {
+  //   } catch (error) {
 
-      console.log(error);
+  //     console.log(error);
 
-      toast.error("Failed to fetch products");
+  //     toast.error("Failed to fetch products");
 
-    } finally {
+  //   } finally {
 
-      setLoading(false);
+  //     setLoading(false);
 
-    }
-  };
+  //   }
+  // };
+  const fetchproducts = async (
+  pageNumber = 1,
+  pageSize = 10,
+  category = null,
+  search = null,
+  sortBy = null
+) => {
 
-  useEffect(() => {
+  try {
 
-    fetchproducts();
+    setLoading(true);
 
-  }, []);
+    const response = await axiosInstance.get(
+      "/Products/GetproductsCombined",
+      {
+        params: {
+
+          pageNumber,
+
+          pageSize,
+
+          category,
+
+          search,
+
+          sortBy
+
+        }
+      }
+    );
+
+    setProducts(response.data.data.items);
+setTotalRecords(response.data.data.totalRecords)
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    toast.error("Failed to fetch products");
+
+  }
+
+  finally {
+
+    setLoading(false);
+
+  }
+
+};
+
+
+  // useEffect(() => {
+
+  //   fetchproducts();
+
+  // }, []);
 
   // ✅ ADD PRODUCT
 const addProducts = async (formData) => {
@@ -53,7 +107,7 @@ const addProducts = async (formData) => {
 
     toast.success("Product added successfully");
 
-    fetchproducts();
+    // fetchproducts();
 
     return { success: true };
 
@@ -88,13 +142,14 @@ const addProducts = async (formData) => {
 
       toast.success("Product deleted");
 
-      fetchproducts();
+      return true
 
     } catch (error) {
 
       console.log(error);
 
       toast.error("Delete failed");
+      return false;
 
     }
   };
@@ -119,7 +174,7 @@ const addProducts = async (formData) => {
 
       toast.success("Product updated");
 
-      fetchproducts();
+      // fetchproducts();
 
       return true;
 
@@ -127,7 +182,7 @@ const addProducts = async (formData) => {
 
       console.log(error);
 
-      toast.error("Update failed");
+      toast.error(error.response?.data?.message);
 
       return false;
     }
@@ -142,7 +197,9 @@ const addProducts = async (formData) => {
       fetchproducts,
       addProducts,
       deleteProductWithId,
-      updateProduct
+      updateProduct,
+      totalRecords,
+      pageSize
 
     }}>
 

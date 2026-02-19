@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
 
@@ -16,7 +16,11 @@ export const CategoryProvider = ({ children }) => {
       toast.error("Failed to fetch categories");
     }
   };
+  useEffect(() => {
 
+    fetchCategories();
+
+  }, []);
   const addCategory = async (categoryData) => {
     try {
       await axiosInstance.post("/Category/Addcategory", categoryData);
