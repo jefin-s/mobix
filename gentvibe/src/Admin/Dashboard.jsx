@@ -14,7 +14,7 @@ const Dashboard = () => {
   const { user, logoutUser } = useContext(Authcontext);
   const { users } = useContext(Usercontext);
   const { orders, totalrevenue } = useContext(OrderContext);
-  const { products } = useContext(ProductContext);
+  const { products,totalRecords } = useContext(ProductContext);
  
 
   return (
@@ -22,7 +22,7 @@ const Dashboard = () => {
     
    <div className="p-6 space-y-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-yellow-300">
             <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition">
               <h3 className="text-gray-400 text-sm">TOTAL CUSTOMERS</h3>
               <p className="text-3xl font-bold">{users.length}</p>
@@ -30,7 +30,7 @@ const Dashboard = () => {
             </div>
             <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition">
               <h3 className="text-gray-400 text-sm">PRODUCTS</h3>
-              <p className="text-3xl font-bold">{products.length}</p>
+              <p className="text-3xl font-bold">{totalRecords}</p>
               <div className="w-full h-2 bg-gray-200 rounded mt-2">
                 <div className="w-3/4 h-2 bg-blue-500 rounded"></div>
               </div>

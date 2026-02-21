@@ -1,23 +1,33 @@
-import { useContext, useMemo } from "react";
-import { Usercontext } from "../context/Userscontext";
+import { useMemo } from "react";
 
-export const useTopUsers = () => {
-  const { users } = useContext(Usercontext);
+export const useTopUsersFromOrders = (orders) => {
+  return useMemo(() => {
+    if (!orders || orders.length === 0) return [];
 
-  const topUsers = useMemo(() => {
-    return users.map(user => {
-      const totalItems = (user.orders || []).reduce((acc, order) => {
-        return acc + order.items.reduce((iAcc, item) => iAcc + item.quantity, 0);
-      }, 0);
+    const userMap = {};
 
-      return {
-        name: user.name,
-        value: totalItems
-      };
-    })
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5);
-  }, [users]);
+    orders.forEach(order => {
+      const phone = order.shippingPhone || "Unknown";
 
-  return topUsers;
+      const totalQty = (order.items || []).reduce(
+        (acc, item) => acc + (item.quantity || 0),
+        0
+      );
+
+      if (!userMap[phone]) {
+        userMap[phone] = {
+          name: order.shippingFullName || "Unknown",
+          value: 0
+        };
+      }
+
+      userMap[phone].value += totalQty;
+    });
+
+    return Object.values(userMap)
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
+
+  }, [orders]);
+  
 };

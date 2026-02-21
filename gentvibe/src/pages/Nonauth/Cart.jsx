@@ -11,7 +11,7 @@ const Cart = () => {
     incementQuantity,
     decremnetQuantity,
     totalQuantity,
-    clearCart // ✅ added
+    clearCart 
   } = useContext(CartContext);
 
   const navigate = useNavigate();

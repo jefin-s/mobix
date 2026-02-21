@@ -3,6 +3,7 @@ import { useFetch } from "../../hooks/Usefetch";
 import ProductCard from "../../components/common/Productcard";
 import { base_url } from "../../api/api";
 import { SearchContext } from "../../components/Context/Searchcontext";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const Products = () => {
 
@@ -12,6 +13,7 @@ const Products = () => {
   
 
   const { searchTerm } = useContext(SearchContext);
+  const debounceSearch=useDebounce(searchTerm,400)
 
   const { data, setUrl, loading } = useFetch("");
   
@@ -21,7 +23,7 @@ const Products = () => {
 
   const perPage = 10;
 
-  // 🔥 Direct API Call (No Debounce, No Persistence)
+ 
   useEffect(() => {
 
     let url = `${base_url}/Products/GetproductsCombined?pageNumber=${currentPage}&pageSize=${perPage}`;
@@ -32,7 +34,7 @@ const Products = () => {
 
     setUrl(url);
 
-  }, [currentPage, category, sortOrder, searchTerm]);
+  }, [currentPage, category, sortOrder, debounceSearch]);
   useEffect(() => {
   const fetchCategories = async () => {
     try {
@@ -115,18 +117,23 @@ const Products = () => {
 
       </div>
 
-      {/* Loading */}
-      {loading && (
-        <p className="text-center text-white">Loading products...</p>
-      )}
+     
+     {/* Loading */}
+{loading && (
+  <p className="text-center text-white">Loading products...</p>
+)}
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+{!loading && products.length === 0 && (
+  <p className="text-center text-white">No Products Found</p>
+)}
 
+{!loading && products.length > 0 && (
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+    {products.map((product) => (
+      <ProductCard key={product.id} product={product} />
+    ))}
+  </div>
+)}
       {/* Pagination */}
       <div className="flex justify-center items-center mt-12 gap-3 flex-wrap">
 

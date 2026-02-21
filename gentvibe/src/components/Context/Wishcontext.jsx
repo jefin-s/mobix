@@ -63,7 +63,7 @@ export const WishProvider = ({ children }) => {
     }
     catch (error) {
 
-      toast.error("Wishlist update failed");
+      toast.error(error.response?.data?.message);
 
     }
 

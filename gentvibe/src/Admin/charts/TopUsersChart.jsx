@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BarChart,
   Bar,
@@ -7,23 +7,24 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  CartesianGrid
+  CartesianGrid,
+  Cell
 } from "recharts";
-import { useTopUsers } from "./Topuser";
+
+import { OrderContext } from "../context/Oredercontext";
+import { useTopUsersFromOrders } from "./Topuser";
+
+
 
 const TopUsersChart = () => {
-  const data = useTopUsers();
+    const { orders } = useContext(OrderContext);
+    const  data=useTopUsersFromOrders(orders)
+
+
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-200">
       
-      {/* Top Tabs (Dummy UI — purely design) */}
-      
-
-      {/* Legend Header */}
-    
-
-      {/* Chart Section */}
       <div className="w-full h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
@@ -34,6 +35,7 @@ const TopUsersChart = () => {
               tick={{ fill: "#374151" }}
               label={{ value: "Users", position: "insideBottom", dy: 10 }}
             />
+
             <YAxis
               tick={{ fill: "#374151" }}
               label={{
@@ -48,28 +50,29 @@ const TopUsersChart = () => {
               contentStyle={{
                 borderRadius: "10px",
                 background: "#fff",
-                border: "1px solid #ddd",
+                border: "1px solid #ddd"
               }}
             />
 
-            {/* Dynamic Colors like the sample */}
             <Bar
               dataKey="value"
               barSize={40}
               radius={[6, 6, 0, 0]}
-              fill="#4ade80" // default (green)
-              formatter={(entry, index) => entry}
             >
               {data.map((entry, index) => {
-                let color = "#4ade80"; // Good (green)
+                let color = "#4ade80"; // Green
 
-                if (entry.value < 80 && entry.value >= 60) color = "#facc15"; // Average
-                else if (entry.value < 60 && entry.value >= 40) color = "#f97316"; // Below Average
-                else if (entry.value < 40) color = "#ef4444"; // WeakBack
+                if (entry.value < 80 && entry.value >= 60)
+                  color = "#facc15"; // Yellow
+                else if (entry.value < 60 && entry.value >= 40)
+                  color = "#f97316"; // Orange
+                else if (entry.value < 40)
+                  color = "#ef4444"; // Red
 
-                return <cell key={index} fill={color} />;
+                return <Cell key={`cell-${index}`} fill={color} />;
               })}
             </Bar>
+
           </BarChart>
         </ResponsiveContainer>
       </div>

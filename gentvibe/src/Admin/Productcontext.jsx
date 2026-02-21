@@ -89,11 +89,11 @@ setTotalRecords(response.data.data.totalRecords)
 };
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   fetchproducts();
+    fetchproducts();
 
-  // }, []);
+  }, []);
 
   // ✅ ADD PRODUCT
 const addProducts = async (formData) => {

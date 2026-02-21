@@ -24,6 +24,7 @@ import AddForm from "./Admin/AddForm";
 import DetailedUser from "./Admin/DetailedUser";
 import Updateproduct from "./Admin/Updateproduct";
 import ManageCategory from "./Admin/ManageCategory";
+import DetailedOrderPage from "./pages/Nonauth/DetailedOrderPage";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/wish" element={<Whishlist />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order" element={<Orders />} />
+          <Route path="ordrdtails/:orderid" element={<DetailedOrderPage/>}/>
         </Route>
 
         <Route  path='/admin' element={<AdminLayout />}>
@@ -54,6 +56,7 @@ const App = () => {
           <Route path="addform" element={<AddForm />} />
           <Route path="detailuser/:userid" element={<DetailedUser />} />
           <Route path="updatept/:p_id" element={<Updateproduct/>}/>
+          
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

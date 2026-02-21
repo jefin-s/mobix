@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CategoryContext } from "./context/CategoryContext";
 import Confirmodal from "../Modal/Confirmodal";
 import toast from "react-hot-toast";
-import { use } from "react";
+
 const ManageCategory = () => {
   const [showModal, setShowModal] = useState(false);
   const [handleUpdateId, setHandleUpdateId] = useState(null);
@@ -27,10 +27,8 @@ const ManageCategory = () => {
   const handleAddCategory = () => {
     if (!categoryName.trim()) {
       toast.error("Please Enter Your Category");
-
       return;
     }
-
     setShowModal(true);
   };
 
@@ -51,15 +49,13 @@ const ManageCategory = () => {
     <>
       <div className="bg-white p-6 rounded-xl shadow-md">
         {/* Heading */}
-
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-800">
             Manage Category
           </h2>
 
-          {/* Add Category Input */}
-
-          <div className="flex gap-2 text-pink-400">
+          {/* Add Category */}
+          <div className="flex gap-2 text-black">
             <input
               type="text"
               placeholder="Enter category name"
@@ -70,7 +66,17 @@ const ManageCategory = () => {
 
             <button
               onClick={handleAddCategory}
-              className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+              className="
+                bg-gradient-to-r from-purple-600 to-purple-500
+                hover:from-purple-500 hover:to-purple-400
+                text-white
+                px-5 py-2
+                rounded-lg
+                font-medium
+                shadow-md
+                transition
+                duration-200
+              "
             >
               Add
             </button>
@@ -78,17 +84,13 @@ const ManageCategory = () => {
         </div>
 
         {/* Table */}
-
         <table className="w-full text-black">
           <thead>
             <tr className="border-b text-gray-500 text-sm">
               <th className="text-left py-3">Category ID</th>
-
               <th className="text-left py-3">Category Name</th>
               <th className="text-left py-3">Active</th>
-
               <th className="text-left py-3">Status</th>
-
               <th className="text-left py-3">Action</th>
               <th className="text-left py-3">Edit</th>
             </tr>
@@ -101,51 +103,87 @@ const ManageCategory = () => {
                   <td className="py-3">#CAT{cat.id}</td>
 
                   <td>{cat.name}</td>
+
+                  {/* Toggle Active */}
                   <td>
                     <button
-                      className="text-red-500 hover:text-red-700 border-4"
-                      onClick={() => toggleCategoryStatus(cat.id, cat.isActive)}
+                      onClick={() =>
+                        toggleCategoryStatus(cat.id, cat.isActive)
+                      }
+                      className={`
+                        px-3 py-1 rounded-full text-sm font-medium transition
+                        ${
+                          cat.isActive
+                            ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                            : "bg-green-100 text-green-700 hover:bg-green-200"
+                        }
+                      `}
                     >
-                      {cat.isActive ? "inActive" : "active"}
+                      {cat.isActive ? "InActive" : "Active"}
                     </button>
                   </td>
+
+                  {/* Status */}
                   <td>
                     <span
-                      className={`font-medium ${cat.isActive ? "text-purple-600" : "text-red-500"}`}
+                      className={`font-medium ${
+                        cat.isActive
+                          ? "text-purple-600"
+                          : "text-red-500"
+                      }`}
                     >
                       {cat.isDeleted
                         ? "Deleted"
                         : cat.isActive
-                          ? "Active"
-                          : "inactive"}
+                        ? "Active"
+                        : "Inactive"}
                     </span>
                   </td>
 
+                  {/* Delete */}
                   <td>
                     <button
                       onClick={() => deleteCategory(cat.id)}
-                      className="text-red-500 hover:text-red-700 border-4"
+                      className="
+                        px-3 py-1
+                        bg-red-100 text-red-600
+                        hover:bg-red-200
+                        rounded-md
+                        text-sm
+                        font-medium
+                        transition
+                      "
                     >
                       Delete
                     </button>
                   </td>
+
+                  {/* Edit */}
                   <td>
-                  <button
-                    onClick={() => {
-                      setHandleUpdateId(cat.id);
-                      setUpdateCategoryName(cat.name);
-                      setshoweditmodal(true);
-                    }}
-                    className="text-red-500 hover:text-red-700 border-4"
-                  >
-                    edit
-                  </button>
+                    <button
+                      onClick={() => {
+                        setHandleUpdateId(cat.id);
+                        setUpdateCategoryName(cat.name);
+                        setshoweditmodal(true);
+                      }}
+                      className="
+                        px-3 py-1
+                        bg-blue-100 text-blue-600
+                        hover:bg-blue-200
+                        rounded-md
+                        text-sm
+                        font-medium
+                        transition
+                      "
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="text-center py-4 text-gray-500">
+                <td colSpan="6" className="text-center py-4 text-gray-500">
                   No Categories Found
                 </td>
               </tr>
@@ -154,6 +192,7 @@ const ManageCategory = () => {
         </table>
       </div>
 
+      {/* Add Confirm Modal */}
       {showModal && (
         <Confirmodal
           title="Add Category"
@@ -164,13 +203,11 @@ const ManageCategory = () => {
           cancelDelete={cancelcategory}
         />
       )}
+
+      {/* Edit Modal */}
       {showeditmodal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          {/* Modal Box */}
-
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
-            {/* Close Button */}
-
             <button
               onClick={() => setshoweditmodal(false)}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
@@ -178,13 +215,9 @@ const ManageCategory = () => {
               ✕
             </button>
 
-            {/* Title */}
-
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Update Category
             </h2>
-
-            {/* Input */}
 
             <input
               type="text"
@@ -194,12 +227,10 @@ const ManageCategory = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-amber-800"
             />
 
-            {/* Buttons */}
-
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setshoweditmodal(false)}
-                className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+                className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition"
               >
                 Cancel
               </button>
@@ -208,19 +239,29 @@ const ManageCategory = () => {
                 onClick={() => {
                   if (!updateCategoryName.trim()) {
                     toast.error("Category name required");
-
                     return;
                   }
 
                   updateCategory(handleUpdateId, {
                     title: updateCategoryName,
-                    isActive:true,
+                    isActive: true,
                   });
 
-                  setshoweditmodal(false);  
+                  setshoweditmodal(false);
                 }}
                 disabled={!updateCategoryName.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300"
+                className="
+                  px-5 py-2
+                  bg-gradient-to-r from-blue-600 to-blue-500
+                  hover:from-blue-500 hover:to-blue-400
+                  text-white
+                  rounded-lg
+                  font-medium
+                  shadow-md
+                  transition
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                "
               >
                 Update
               </button>

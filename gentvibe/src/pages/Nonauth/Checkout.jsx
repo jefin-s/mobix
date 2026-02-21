@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react"; 
 import { CartContext } from "../../components/Context/Cartcontext";
 import { OrderContext } from "../../components/Context/UserOrderContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,8 +6,7 @@ import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
 
 const Checkout = () => {
-
-  // ADDRESS STATES
+  // Address States
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [addressLine1, setAddressLine1] = useState("");
@@ -22,7 +21,6 @@ const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
 
   const [paymentMethod, setPaymentMethod] = useState("cod");
-
   const [loading, setLoading] = useState(false);
 
   const { grandTotal, clearCart } = useContext(CartContext);
@@ -39,44 +37,26 @@ const Checkout = () => {
       ? buyNowData.price * buyNowQuantity
       : grandTotal;
 
-
-  // FETCH ADDRESSES
+  // Fetch addresses
   useEffect(() => {
     fetchAddresses();
   }, []);
 
   const fetchAddresses = async () => {
-
     try {
-
       const res = await axiosInstance.get("/Address/getaddresses");
-
-      console.log(res.data.data)
       setAddresses(res.data.data);
-
       const defaultAddr = res.data.data.find(x => x.isDefault);
-
-      if (defaultAddr)
-        setSelectedAddress(defaultAddr.addressId);
-
-    }
-    catch {
-
+      if (defaultAddr) setSelectedAddress(defaultAddr.addressId);
+    } catch {
       toast.error("Failed to load addresses");
-
     }
-
   };
 
-
-  // SAVE ADDRESS
+  // Save new address
   const saveAddress = async () => {
-
-    const res = await axiosInstance.post(
-
-      "/Address/addaddress",
-
-      {
+    try {
+      const res = await axiosInstance.post("/Address/addaddress", {
         fullName,
         phone,
         addressLine1,
@@ -86,363 +66,196 @@ const Checkout = () => {
         pincode,
         country,
         isDefault
-      }
-
-    );
-
-    return res.data.data;
-
+      });
+      return res.data.data; // return new addressId
+    } catch {
+      toast.error("Failed to save address");
+      return null;
+    }
   };
 
-
-  // RAZORPAY PAYMENT
-  const startRazorpayPayment = async (addressId) => {
+const startRazorpayPayment = async (orderId) => {
 
     try {
 
-      const res = await axiosInstance.post(
+        const res = await axiosInstance.post(`/Payment/create/${orderId}`);
 
-        "/Payment/CreateOrder",
+        const razorpayOrder = res.data.data;
 
-        {
-          amount: total
-        }
+        const options = {
 
-      );
+            key: razorpayOrder.key,
 
-      const order = res.data;
+            amount: razorpayOrder.amount,
 
+            currency: razorpayOrder.currency,
 
-      const options = {
+            order_id: razorpayOrder.orderId,
 
-        key: order.key,
+            handler: async function (response) {
 
-        amount: order.amount * 100,
+                await axiosInstance.post("/Payment/verify", {
 
-        currency: order.currency,
+                    razorpayOrderId: response.razorpay_order_id,
 
-        order_id: order.orderId,
+                    razorpayPaymentId: response.razorpay_payment_id,
 
+                    razorpaySignature: response.razorpay_signature,
 
-        handler: async function (response) {
+                });
 
-          await axiosInstance.post(
+                toast.success("Payment Successful");
 
-            "/Payment/VerifyPayment",
+                if (!buyNowData) clearCart();
 
-            {
-
-              razorpayOrderId: response.razorpay_order_id,
-
-              razorpayPaymentId: response.razorpay_payment_id,
-
-              razorpaySignature: response.razorpay_signature
+                navigate("/order");
 
             }
 
-          );
+        };
 
+        const razor = new window.Razorpay(options);
 
-          if (buyNowData) {
-
-            await buyNowOrder(
-
-              buyNowData.id,
-
-              buyNowQuantity,
-
-              addressId
-
-            );
-
-          }
-          else {
-
-            await placeCartOrder(addressId);
-
-            clearCart();
-
-          }
-
-
-          toast.success("Payment Successful");
-
-          navigate("/order");
-
-        }
-
-      };
-
-
-      const razor = new window.Razorpay(options);
-
-      razor.open();
+        razor.open();
 
     }
 
     catch {
 
-      toast.error("Payment Failed");
+        toast.error("Payment Failed");
 
     }
 
-  };
+};
 
+const getPaymentMethodValue = () => {
+  return paymentMethod === "cod" ? 1 : 2;
+};
 
-  // PLACE ORDER
-  const placeorder = async () => {
+  // Place order
+  const placeOrder = async () => {
+  setLoading(true);
 
-    setLoading(true);
+  try {
 
-    try {
+    let addressId = selectedAddress;
 
-      let addressId = selectedAddress;
+    if (!addressId) {
+      addressId = await saveAddress();
+      if (!addressId) return;
+    }
 
+    let orderId;
 
-      if (!addressId) {
+    if (buyNowData) {
 
-        addressId = await saveAddress();
+      orderId = await buyNowOrder(
+        buyNowData.id,
+        buyNowQuantity,
+        addressId,
+        getPaymentMethodValue()
+      );
 
-      }
+    } else {
 
-      
-
-      // COD
-      if (paymentMethod === "cod") {
-
-        if (buyNowData) {
-
-          await buyNowOrder(
-
-            buyNowData.id,
-
-            buyNowQuantity,
-
-            addressId
-
-          );
-
-        }
-        else {
-
-          await placeCartOrder(addressId);
-
-          clearCart();
-
-        }
-
-        toast.success("Order placed");
-
-        navigate("/order");
-
-      }
-
-
-      // ONLINE PAYMENT
-      else {
-
-        await startRazorpayPayment(addressId);
-
-      }
+      orderId = await placeCartOrder(
+        addressId,
+        getPaymentMethodValue()
+      );
 
     }
 
-    catch {
 
-      toast.error("Order Failed");
+    if (paymentMethod === "cod") {
+
+      toast.success("Order Placed Successfully");
+
+      if (!buyNowData) clearCart();
+
+      navigate("/order");
+
+    } else {
+
+      await startRazorpayPayment(orderId);
 
     }
 
-    setLoading(false);
+  }
+  catch (error) {
 
-  };
+    toast.error("Order Failed");
 
+  }
+
+  setLoading(false);
+};
 
   return (
-
     <div className="min-h-screen bg-black pt-24 pb-10 px-6 flex justify-center">
-
       <div className="w-full max-w-6xl grid md:grid-cols-2 gap-6">
 
-
-        {/* LEFT */}
-
+        {/* LEFT: Address */}
         <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
+          <h2 className="text-white text-lg font-semibold mb-4">Select Address</h2>
 
-          <h2 className="text-white text-lg font-semibold mb-4">
-
-            Select Address
-
-          </h2>
-
-
-         {
-  addresses.map(addr => (
-
-    <div
-      key={addr.addressId}
-
-      onClick={() => setSelectedAddress(addr.addressId)}
-
-      className={`border p-3 mb-3 rounded cursor-pointer
-
-      ${selectedAddress === addr.addressId
-        ? "border-white bg-zinc-800"
-        : "border-zinc-700"}
-
-      `}
-    >
-
-      <p className="text-white">{addr.fullName}</p>
-
-      <p className="text-gray-400">{addr.addressLine1}</p>
-
-      <p className="text-gray-400">{addr.city}</p>
-
-      <p className="text-gray-400">{addr.phone}</p>
-
-    </div>
-
-  ))
-}
-
+          {addresses.map(addr => (
+            <div
+              key={addr.addressId}
+              onClick={() => setSelectedAddress(addr.addressId)}
+              className={`border p-3 mb-3 rounded cursor-pointer
+                ${selectedAddress === addr.addressId
+                  ? "border-white bg-zinc-800"
+                  : "border-zinc-700"}`}
+            >
+              <p className="text-white">{addr.fullName}</p>
+              <p className="text-gray-400">{addr.addressLine1}</p>
+              <p className="text-gray-400">{addr.city}</p>
+              <p className="text-gray-400">{addr.phone}</p>
+            </div>
+          ))}
 
           <hr className="my-4 border-zinc-700" />
 
-
-          <h3 className="text-white mb-2">
-
-            Add New Address
-
-          </h3>
-
-
-          <input placeholder="Full Name" className="input-dark"
-            onChange={(e) => setFullName(e.target.value)} />
-
-
-          <input placeholder="Phone" className="input-dark"
-            onChange={(e) => setPhone(e.target.value)} />
-
-
-          <input placeholder="Address Line 1" className="input-dark"
-            onChange={(e) => setAddressLine1(e.target.value)} />
-
-
-          <input placeholder="City" className="input-dark"
-            onChange={(e) => setCity(e.target.value)} />
-
-
-          <input placeholder="State" className="input-dark"
-            onChange={(e) => setState(e.target.value)} />
-
-
-          <input placeholder="Pincode" className="input-dark"
-            onChange={(e) => setPincode(e.target.value)} />
-
-
-          {/* PAYMENT METHOD */}
+          <h3 className="text-white mb-2">Add New Address</h3>
+          <input placeholder="Full Name" className="input-dark" onChange={(e) => setFullName(e.target.value)} />
+          <input placeholder="Phone" className="input-dark" onChange={(e) => setPhone(e.target.value)} />
+          <input placeholder="Address Line 1" className="input-dark" onChange={(e) => setAddressLine1(e.target.value)} />
+          <input placeholder="Address Line 2" className="input-dark" onChange={(e) => setAddressLine2(e.target.value)} />
+          <input placeholder="City" className="input-dark" onChange={(e) => setCity(e.target.value)} />
+          <input placeholder="State" className="input-dark" onChange={(e) => setState(e.target.value)} />
+          <input placeholder="Pincode" className="input-dark" onChange={(e) => setPincode(e.target.value)} />
 
           <div className="mt-4">
-
             <label className="text-white flex gap-2">
-
-              <input
-
-                type="radio"
-
-                checked={paymentMethod === "cod"}
-
-                onChange={() => setPaymentMethod("cod")}
-
-              />
-
+              <input type="radio" checked={paymentMethod === "cod"} onChange={() => setPaymentMethod("cod")} />
               Cash on Delivery
-
             </label>
-
-
             <label className="text-white flex gap-2 mt-2">
-
-              <input
-
-                type="radio"
-
-                checked={paymentMethod === "online"}
-
-                onChange={() => setPaymentMethod("online")}
-
-              />
-
+              <input type="radio" checked={paymentMethod === "online"} onChange={() => setPaymentMethod("online")} />
               Online Payment
-
             </label>
-
           </div>
-
-
         </div>
 
-
-
-        {/* RIGHT */}
-
+        {/* RIGHT: Order Summary */}
         <div className="bg-zinc-900 p-6 rounded-lg border border-zinc-800 h-fit">
-
-
-          <h2 className="text-white text-lg font-semibold mb-4">
-
-            Order Summary
-
-          </h2>
-
-
+          <h2 className="text-white text-lg font-semibold mb-4">Order Summary</h2>
           <div className="flex justify-between text-gray-400 mb-3">
-
             <span>Total</span>
-
-            <span className="text-white font-semibold">
-
-              ₹{total}
-
-            </span>
-
+            <span className="text-white font-semibold">₹{total}</span>
           </div>
-
-
           <button
-
-            onClick={placeorder}
-
+            onClick={placeOrder}
             disabled={loading}
-
             className="w-full bg-white text-black py-3 rounded"
-
           >
-
-            {
-
-              loading
-
-                ? "Processing..."
-
-                : "Place Order"
-
-            }
-
+            {loading ? "Processing..." : "Place Order"}
           </button>
-
-
         </div>
-
 
       </div>
-
-
     </div>
-
   );
-
 };
 
 export default Checkout;

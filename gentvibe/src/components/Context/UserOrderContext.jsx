@@ -5,157 +5,116 @@ import toast from "react-hot-toast";
 export const OrderContext = createContext();
 
 export const OrdersProvider = ({ children }) => {
-
-const [myOrders, setMyOrders] = useState([]);
-
-
+  const [myOrders, setMyOrders] = useState([]);
+  const [orderDetails, setOrderDetails] = useState(null);
 
 
-const placeCartOrder = async (addressId) => {
 
-try{
+  const fetchOrderDetails = async (orderId) => {
 
-const res = await axiosInstance.post(
+  try {
 
-"/Order/CreateOrder",
+    const res = await axiosInstance.get(
+      `/Order/details/${orderId}`
+    );
 
-{
+    setOrderDetails(res.data.data);
 
-addressId: addressId
+  }
+  catch (error) {
 
-}
+    toast.error("Failed to fetch order details");
 
-);
-
-toast.success(res.data.message);
-
-return res.data.data;
-
-}
-catch(error){
-
-toast.error(error.response?.data?.message);
-
-}
+  }
 
 };
+  const placeCartOrder = async (addressId, paymentMethod) => {
+    try {
+      const res = await axiosInstance.post(
+        "/Order/CreateOrder",
 
+        {
+          addressId: addressId,
+          paymentMethod: paymentMethod,
+        },
+      );
 
+      toast.success(res.data.message);
 
+      return res.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
 
-//  BUY NOW ORDER
+  //  BUY NOW ORDER
 
-const buyNowOrder = async (productId, qty, addressId) => {
+  const buyNowOrder = async (productId, qty, addressId, paymentMethod) => {
+    try {
+      const res = await axiosInstance.post(
+        `/Order/BuyNow/${productId}`,
 
-try{
+        {
+          productId,
+          qty,
+          addressId,
+          paymentMethod,
+        },
+      );
 
-const res = await axiosInstance.post(
+      toast.success(res.data.message);
 
-`/Order/BuyNow/${productId}`,
+      return res.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
 
-{
+      return null;
+    }
+  };
 
-productId,
+  // 🟢 FETCH MY ORDERS
 
-qty,
+  const fetchMyOrders = async () => {
+    try {
+      const res = await axiosInstance.get("/Order/Myorders");
 
-addressId
+      setMyOrders(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-}
+  // 🟢 CANCEL ORDER
 
-);
+  const cancelOrder = async (orderId) => {
+    try {
+      const res = await axiosInstance.put(`/Order/CancelOrder/${orderId}`);
+      
+      toast.success(res.data.message);
 
-toast.success(res.data.message);
+      fetchMyOrders();
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  };
 
-return res.data.data;
+  return (
+    <OrderContext.Provider
+      value={{
+        placeCartOrder,
 
-}
-catch(error){
+        buyNowOrder,
 
-toast.error(error.response?.data?.message);
+        fetchMyOrders,
 
-}
+        cancelOrder,
 
-};
-
-
-
-
-// 🟢 FETCH MY ORDERS
-
-const fetchMyOrders = async () => {
-
-try{
-
-const res = await axiosInstance.get(
-
-"/Order/Myorders"   
-
-);
-
-setMyOrders(res.data.data);
-
-}
-catch(error){
-
-console.log(error);
-
-}
-
-};
-
-
-
-
-// 🟢 CANCEL ORDER
-
-const cancelOrder = async (orderId) => {
-
-try{
-
-const res = await axiosInstance.put(
-
-`/Order/CancelOrder/${orderId}`
-
-);
-
-toast.success(res.data.message);
-
-fetchMyOrders();
-
-}
-catch(error){
-
-toast.error(error.response?.data?.message);
-
-}
-
-};
-
-
-
-return (
-
-<OrderContext.Provider
-value={{
-
-placeCartOrder,
-
-buyNowOrder,
-
-fetchMyOrders,
-
-cancelOrder,
-
-myOrders
-
-}}
->
-
-{children}
-
-</OrderContext.Provider>
-
-);
-
+        myOrders,
+        fetchOrderDetails,
+        orderDetails
+      }}
+    >
+      {children}
+    </OrderContext.Provider>
+  );
 };
